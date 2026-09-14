@@ -254,13 +254,27 @@ class Einstellungen:
         self.setze_ebenen([("Qualitaetsprofil", werte)])
 
     def _verwerfen(self) -> None:
-        """Leert den Zwischenspeicher.
+        """Leert den Zwischenspeicher -- dieses und aller verbundenen Stapel.
 
         Weil eine Aenderung ueber die Formeln beliebig weit ausstrahlen kann,
         wird nicht versucht, nur die betroffenen Eintraege zu bestimmen. Bei
         rund 700 Parametern ist die vollstaendige Neuberechnung schnell genug.
+
+        Die Stapel einer Maschine greifen aufeinander zu: Ein Extruder faellt
+        auf den globalen Stapel zurueck, und extruderValues() im globalen
+        Stapel liest die Extruder. Eine Aenderung an einem Stapel muss deshalb
+        auch die Zwischenspeicher der anderen leeren. Sonst schnitte die
+        Engine nach einer geaenderten Duesentemperatur weiter mit dem
+        zuvor im Extruder zwischengespeicherten Wert.
         """
         self._zwischenspeicher.clear()
+        maschine = getattr(self, "maschine", None)
+        if maschine is None:
+            return
+        for stapel in [getattr(maschine, "einstellungen", None)] + list(
+                getattr(maschine, "extruder", []) or []):
+            if stapel is not None and stapel is not self:
+                stapel._zwischenspeicher.clear()
 
     # ------------------------------------------------------------- Abfragen
 

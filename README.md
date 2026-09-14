@@ -41,7 +41,8 @@ ruft deren CuraEngine auf. Es schreibt ausschließlich in die eigenen Ordner
 
 ## Voraussetzungen
 
-* UltiMaker Cura 5.13 (macOS oder Windows), installiert
+* UltiMaker Cura 5.13, installiert
+* macOS (geprüft) oder Windows (vorgesehen, bisher nicht erprobt)
 * Python 3.9 oder neuer
 * keine weiteren Pakete — die Oberfläche kommt ohne zusätzliche Bibliotheken aus
 
@@ -94,10 +95,16 @@ vor Vorgabewert:
 |---|---|
 | `*` | selbst gesetzt |
 | `a` | Vorgabewert des gewählten Umfangs (etwa der Beton-Auswahl) |
-| `p` | aus dem Qualitätsprofil des Druckers |
+| `p` | aus Qualitätsprofil, Materialprofil oder Düsenvariante |
 | `f` | von Cura aus anderen Parametern berechnet |
 | ohne | Vorgabewert der Definitionsdatei |
 | grau | die `enabled`-Bedingung ist nicht erfüllt |
+
+Angezeigt wird immer der Wert, der tatsächlich an CuraEngine geht. Bei
+Parametern mit `settable_per_extruder` ist das der Wert des Extruderstapels,
+in dem Material und Düse liegen — beim Ender-3 mit Generic PLA also 200 °C
+Düsentemperatur, nicht der Vorgabewert 210 °C des globalen Stapels. Bei
+mehreren Extrudern zeigt die Liste den ersten.
 
 ## Bezeichnungen
 
@@ -112,7 +119,7 @@ Definitionsdateien — dieselben Begriffe wie in der Arbeit und im Sweep.
 | Umfang | Anzahl | Grundlage |
 |---|---|---|
 | Wirksame Parameter | 246 | im Sweep nachgewiesene Wirkung auf den G-Code |
-| Beton-3D-Druck | 109 | die in Kapitel 6 herausgearbeitete Auswahl |
+| Beton-3D-Druck | 105 | die in Kapitel 6 herausgearbeitete Auswahl |
 | Alle Parameter | 644 | sämtliche Druckeinstellungen der Definition |
 
 Die nicht angebotenen bleiben in allen Fällen geladen, weil die Formeln der
@@ -120,21 +127,44 @@ angebotenen auf sie zugreifen. Die Machine Settings folgen dem Umfang
 nicht und werden stets vollständig angeboten.
 
 Ein Umfang kann eigene Vorgabewerte mitbringen (`vorgaben` in der zugehörigen
-JSON-Datei). Die Beton-Auswahl setzt so `adhesion_type` auf `none`: Gedruckt
-wird auf den Untergrund oder in eine Schalung, eine Haftungshilfe hat dort
-keine Funktion. Diese Werte liegen als eigene Ebene **unter** den eigenen
-Änderungen — der Parameter bleibt also voll einstellbar, startet aber mit dem
+JSON-Datei). Diese Werte liegen als eigene Ebene **unter** den eigenen
+Änderungen — ein Parameter bleibt also voll einstellbar, startet aber mit dem
 für den Anwendungsfall sinnvollen Wert, und beim Umschalten des Umfangs
-verschwindet die Vorgabe restlos wieder.
+verschwindet die Vorgabe restlos wieder. Vorgabewerte dürfen auch für
+Parameter gelten, die der Umfang nicht anbietet; sie sind dann festgesetzt.
 
-**Grenzen** (`g`). Die Werte `minimum_value` und `maximum_value` aus den
-Definitionsdateien werden ausschließlich von Curas Oberfläche geprüft.
-CuraEngine wertet sie nicht aus — nachweisbar daran, dass eine Düsenbreite
-von 30 mm verarbeitet wird, obwohl in der Definitionsdatei 10 mm als
-Höchstwert steht. Der Schalter hebt also keine Sicherung der Engine auf,
-sondern nur die Prüfung in diesem Programm. Nötig ist das für Anwendungen
-außerhalb des Kunststoffdrucks, etwa Betondruck mit Bahnbreiten im
-Zentimeterbereich.
+Die Beton-Auswahl bringt zwölf Vorgabewerte mit, darunter `adhesion_type =
+none`, abgeschalteten Einzug und abgeschaltete Kühlung. Vier davon —
+Enable Print Cooling, Fan Speed, Printing Temperature und Build Plate
+Temperature — werden nicht zur Bearbeitung angeboten. Die Begründung steht in
+Kapitel 6 der Arbeit.
+
+**Grenzen** (`g`). Die Definitionsdateien kennen zwei Arten von Grenzen:
+harte Grenzen (`minimum_value`, `maximum_value`) und Warnschwellen
+(`minimum_value_warning`, `maximum_value_warning`). In `fdmprinter.def.json`
+tragen 439 der 719 Parameter eine harte Grenze und 386 eine Warnschwelle.
+
+Bei eingeschalteter Prüfung weist das Programm eine Eingabe außerhalb einer
+harten Grenze zurück; eine Eingabe außerhalb einer Warnschwelle wird mit einem
+Hinweis angenommen. Der Schalter hebt nur die Prüfung der harten Grenzen auf.
+
+CuraEngine selbst prüft keine der beiden Arten. Nachgemessen mit dem Ender-3:
+
+| Parameter | Grenze | übergeben | im G-Code |
+|---|---|---|---|
+| Printing Temperature | hart: höchstens 365 °C | 500 °C | `M104 S500` |
+| Print Speed | hart: höchstens 707 mm/s | 2000 mm/s | Vorschübe bis 1585 mm/s |
+| Layer Height | nur Warnung ab 0,32 mm | 20 mm | Druck mit 20 mm Schichthöhe |
+
+Der Schalter hebt also keine Sicherung der Engine auf, sondern nur die
+Eingabeprüfung dieses Programms.
+
+Viele Grenzen hängen als Formel vom Düsendurchmesser ab — die Warnschwelle der
+Schichthöhe liegt beim 0,8-fachen, die der Bahnbreite beim Zweifachen. Vor dem
+Abschalten sollte deshalb unter *Parameter → Machine Settings* der
+tatsächliche Düsendurchmesser gesetzt werden: Bei einer 24-mm-Düse liegen
+dieselben Schwellen bei 19,2 mm und 48 mm, und die Abschaltung ist für diese
+Größen gar nicht nötig.
 
 ## Aufbau
 
@@ -182,12 +212,13 @@ Stützmaterial) holen ihren Wert aus einem bestimmten Extruder.
 ## Nachweis der Übereinstimmung
 
 Cura schreibt vor jedem Schnitt den vollständigen Wertesatz in sein Protokoll
-(`~/Library/Application Support/cura/5.13/cura.log`). Ein Vergleich damit
-ergab für vier Fälle **vollständige Übereinstimmung aller übergebenen Werte**:
+(`~/Library/Application Support/cura/5.13/cura.log`). Das Skript
+`pruefung/abgleich.py` stellt diese Werte denen des Programms gegenüber. Für
+drei Fälle ergab es **vollständige Übereinstimmung aller übergebenen Werte**
+(zuletzt geprüft am 14.09.2026):
 
 | Fall | global | Extruder |
 |---|---|---|
-| Ender-3, Schichthöhe 4 mm | 714/714 | 583/583 |
 | Ender-3, Generate Support | 714/714 | 583/583 |
 | Ender-3, Fuzzy Skin | 714/714 | 583/583 |
 | CR-X (2 Extruder), Support über den rechten Extruder | 714/714 | 584/584 und 583/583 |

@@ -232,7 +232,7 @@ class Anwendung:
             schluessel = self._parameter_der_kategorie(kategorie, bereich)
             if not schluessel:
                 continue
-            aktiv = sum(1 for s in schluessel if self.einstellungen.aktiviert(s))
+            aktiv = sum(1 for s in schluessel if self._stapel(s).aktiviert(s))
             geaendert = sum(1 for s in schluessel
                             if self.einstellungen.ist_geaendert(s))
             zeilen.append((kategorie, len(schluessel), aktiv, geaendert))
@@ -590,10 +590,33 @@ class Anwendung:
 
     # ------------------------------------------------------ Parameterliste
 
+    def _stapel(self, schluessel: str) -> werte_modul.Einstellungen:
+        """Der Stapel, dessen Wert fuer diesen Parameter an die Engine geht.
+
+        Parameter mit settable_per_extruder werden aus dem Extruderstapel
+        uebergeben (engine.teile_werte). Dort liegen Material und Duese; der
+        globale Stapel fuehrt an diesen Stellen leere Behaelter. Angezeigt
+        werden muss deshalb der Wert des Extruders -- sonst stuende etwa bei
+        Printing Temperature der Vorgabewert der Definition (210 °C) in der
+        Liste, geschnitten wuerde aber mit dem Wert des Materials (200 °C).
+        Bei mehreren Extrudern gilt die Anzeige dem ersten; so verfaehrt auch
+        Curas Oberflaeche, die den gerade aktiven Extruder zeigt.
+        """
+        definition = self.definitionen.get(schluessel)
+        if (self.maschine is not None and self.maschine.extruder
+                and getattr(definition, "settable_per_extruder", False)):
+            return self.maschine.extruder[0]
+        return self.einstellungen
+
+    def _geaendert(self, schluessel: str) -> bool:
+        """Ob der Wert selbst gesetzt wurde -- global oder im Extruder."""
+        return (self.einstellungen.ist_geaendert(schluessel)
+                or self._stapel(schluessel).ist_geaendert(schluessel))
+
     def _wert_anzeige(self, schluessel: str) -> str:
         """Der Wert eines Parameters in lesbarer Form."""
         definition = self.definitionen[schluessel]
-        wert = self.einstellungen.wert(schluessel)
+        wert = self._stapel(schluessel).wert(schluessel)
         if definition.type == "bool":
             return "ja" if wert else "nein"
         if definition.type == "enum":
@@ -609,7 +632,8 @@ class Anwendung:
     def _zeichne_parameter(self, schluessel: str, breite: int,
                            aktuell: bool) -> str:
         definition = self.definitionen[schluessel]
-        aktiv = self.einstellungen.aktiviert(schluessel)
+        stapel = self._stapel(schluessel)
+        aktiv = stapel.aktiviert(schluessel)
         name = self.sprache.beschriftung(definition)
         einheit = self.sprache.einheit(definition)
         wert = self._wert_anzeige(schluessel)
@@ -618,14 +642,14 @@ class Anwendung:
 
         # Kennzeichnung: was bestimmt diesen Wert gerade?
         # Reihenfolge wie bei der Aufloesung selbst: eigener Wert vor
-        # Qualitaetsprofil vor Formel aus der Definitionsdatei.
-        if self.einstellungen.ist_geaendert(schluessel):
+        # Umfangsvorgabe vor Profil (Qualitaet, Material, Duese) vor Formel.
+        if self._geaendert(schluessel):
             zeichen, farbe = "*", t.HELLGRUEN
-        elif self.einstellungen.aus_auswahl(schluessel):
+        elif stapel.aus_auswahl(schluessel):
             zeichen, farbe = "a", t.HELLGELB
-        elif self.einstellungen.aus_profil(schluessel):
+        elif stapel.aus_profil(schluessel):
             zeichen, farbe = "p", t.CYAN
-        elif self.einstellungen.haengt_ab_von(schluessel):
+        elif stapel.haengt_ab_von(schluessel):
             zeichen, farbe = "f", t.HELLBLAU
         else:
             zeichen, farbe = " ", t.GRAU
@@ -671,7 +695,7 @@ class Anwendung:
                 erste = text.split("\n")[0]
                 for zeile in (textwrap.wrap(erste, breite - 4)[:2] or [""]):
                     b.zeile("  " + b.f(t.GRAU, zeile))
-                if not self.einstellungen.aktiviert(aktueller):
+                if not self._stapel(aktueller).aktiviert(aktueller):
                     b.zeile("  " + b.f(t.GELB,
                             "Zurzeit nicht wirksam: die Bedingung dieses "
                             "Parameters ist nicht erfuellt."))
@@ -680,7 +704,7 @@ class Anwendung:
 
             zusatz = (liste.suchhinweis()
                       or "* eigener Wert · a aus der Auswahl · p aus "
-                         "Qualitaetsprofil · f berechnet · grau = Bedingung "
+                         "Profil/Material/Duese · f berechnet · grau = Bedingung "
                          "nicht erfuellt · " + liste.blaetteranzeige())
             self._fuss(b, [("Enter", "aendern"), ("i", "Einzelheiten"),
                            ("r", "zuruecksetzen"), ("/", "suchen"),
@@ -747,7 +771,7 @@ class Anwendung:
         self._wert_eingeben(schluessel)
 
     def _bool_umschalten(self, schluessel: str) -> None:
-        neu = not bool(self.einstellungen.wert(schluessel))
+        neu = not bool(self._stapel(schluessel).wert(schluessel))
         self.einstellungen.setze(schluessel, neu)
         self._sagen(f"{schluessel} = {'ja' if neu else 'nein'}")
 
@@ -758,7 +782,7 @@ class Anwendung:
             self._sagen("Fuer diesen Parameter sind keine Auswahlmoeglichkeiten "
                         "hinterlegt.", t.GELB)
             return
-        jetzt = str(self.einstellungen.wert(schluessel))
+        jetzt = str(self._stapel(schluessel).wert(schluessel))
 
         def zeichnen(wert: str, breite: int, aktuell: bool) -> str:
             marke = "●" if wert == jetzt else "○"
@@ -795,11 +819,11 @@ class Anwendung:
 
     def _wert_eingeben(self, schluessel: str) -> None:
         definition = self.definitionen[schluessel]
-        jetzt = werte_modul.als_text(self.einstellungen.wert(schluessel))
+        jetzt = werte_modul.als_text(self._stapel(schluessel).wert(schluessel))
         einheit = self.sprache.einheit(definition)
         beschriftung = self.sprache.beschriftung(definition)
 
-        minimum, maximum, warn_min, warn_max = self.einstellungen.grenzen(schluessel)
+        minimum, maximum, warn_min, warn_max = self._stapel(schluessel).grenzen(schluessel)
         hinweis = f" {beschriftung}"
         if einheit:
             hinweis += f" [{einheit}]"
@@ -882,15 +906,27 @@ class Anwendung:
         einheit = self.sprache.einheit(definition)
         feld("Wert", wert + (f" {einheit}" if einheit else ""))
 
-        if self.einstellungen.ist_geaendert(schluessel):
+        stapel = self._stapel(schluessel)
+        ebene = stapel.herkunft(schluessel)
+        if self._geaendert(schluessel):
             herkunft = "von Ihnen gesetzt"
-        elif self.einstellungen.aus_auswahl(schluessel):
+        elif stapel.aus_auswahl(schluessel):
             herkunft = f"Vorgabe des Umfangs ({self.umfang.name})"
-        elif self.einstellungen.aus_profil(schluessel):
+        elif ebene == "Material":
+            material = self.maschine.materialien_je_extruder[0]
+            herkunft = ("aus dem Materialprofil"
+                        + (f" ({material.anzeigename})" if material else ""))
+        elif ebene == "Duese":
+            variante = self.maschine.varianten_je_extruder[0]
+            herkunft = ("aus der Duesenvariante"
+                        + (f" ({variante.name})" if variante else ""))
+        elif ebene == "Extruderdefinition":
+            herkunft = "aus der Extruderdefinition"
+        elif stapel.aus_profil(schluessel):
             herkunft = f"aus dem Qualitaetsprofil ({self.profil.name})"
-            if self.einstellungen.profil_ist_formel(schluessel):
+            if stapel.profil_ist_formel(schluessel):
                 herkunft += ", dort als Formel hinterlegt"
-        elif self.einstellungen.haengt_ab_von(schluessel):
+        elif stapel.haengt_ab_von(schluessel):
             herkunft = "aus der Formel der Definitionsdatei berechnet"
         else:
             herkunft = "Vorgabewert der Definitionsdatei"
@@ -901,7 +937,7 @@ class Anwendung:
         feld("Vorgabewert", werte_modul.als_text(
             getattr(definition, "default_value", None)))
 
-        minimum, maximum, warn_min, warn_max = self.einstellungen.grenzen(schluessel)
+        minimum, maximum, warn_min, warn_max = self._stapel(schluessel).grenzen(schluessel)
         if minimum is not None or maximum is not None:
             feld("Grenzen", f"{minimum} bis {maximum}"
                  + ("" if self.grenzen_beachten
@@ -909,17 +945,17 @@ class Anwendung:
         if warn_min is not None or warn_max is not None:
             feld("Empfohlen", f"{warn_min} bis {warn_max}")
 
-        feld("Wirksam", "ja" if self.einstellungen.aktiviert(schluessel) else
+        feld("Wirksam", "ja" if stapel.aktiviert(schluessel) else
              "nein, die Bedingung ist nicht erfuellt")
 
         from UM.Settings.SettingFunction import SettingFunction
         bedingung = getattr(definition, "enabled", None)
         if isinstance(bedingung, SettingFunction):
             feld("Bedingung", str(bedingung))
-        formel = self.einstellungen.wirksame_formel(schluessel)
+        formel = stapel.wirksame_formel(schluessel)
         if isinstance(formel, SettingFunction):
             feld("Formel", str(formel))
-            benutzt = sorted(self.einstellungen.benutzte_schluessel(schluessel))
+            benutzt = sorted(stapel.benutzte_schluessel(schluessel))
             if benutzt:
                 feld("greift zu auf", ", ".join(benutzt))
 
@@ -1393,7 +1429,7 @@ class Anwendung:
 
             filament = kennzahlen.get("filament_mm")
             if filament:
-                durchmesser = float(self.einstellungen.wert("material_diameter") or 1.75)
+                durchmesser = float(self._stapel("material_diameter").wert("material_diameter") or 1.75)
                 masse = engine.material_gramm(filament, durchmesser)
                 feld("Filament", f"{filament / 1000:.2f} m  "
                                  f"(rund {masse:.0f} g bei PLA)")
@@ -1625,7 +1661,7 @@ class Anwendung:
             "*   von Ihnen gesetzt",
             "a   Vorgabewert des gewaehlten Umfangs (etwa der Beton-Auswahl)",
             "f   von Cura aus anderen Parametern berechnet",
-            "p   aus dem Qualitaetsprofil des Druckers",
+            "p   aus Qualitaetsprofil, Materialprofil oder Duese",
             "grau  die enabled-Bedingung ist nicht erfuellt; der Wert wird "
             "trotzdem uebergeben",
         ])
