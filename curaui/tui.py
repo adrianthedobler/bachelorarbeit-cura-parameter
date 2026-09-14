@@ -191,7 +191,7 @@ class Anwendung:
 
     def _drucker_laden(self, name: str) -> None:
         """Laedt eine Druckerdefinition und setzt alle Werte neu auf."""
-        alte_aenderungen = (self.einstellungen.benutzeraenderungen()
+        alte_aenderungen = (self._eigene_aenderungswerte()
                             if self.einstellungen else {})
 
         self.maschine = aufbau.Maschine(self.inst, name, self._materialien)
@@ -210,7 +210,7 @@ class Anwendung:
         uebernommen = 0
         for schluessel, wert in alte_aenderungen.items():
             if schluessel in self.definitionen:
-                self.einstellungen.setze(schluessel, wert)
+                self._eingabe_setzen(schluessel, wert)
                 uebernommen += 1
 
         fehlend = auswahl_modul.fehlende(self.umfang, self.definitionen)
@@ -234,7 +234,7 @@ class Anwendung:
                 continue
             aktiv = sum(1 for s in schluessel if self._stapel(s).aktiviert(s))
             geaendert = sum(1 for s in schluessel
-                            if self.einstellungen.ist_geaendert(s))
+                            if self._geaendert(s))
             zeilen.append((kategorie, len(schluessel), aktiv, geaendert))
         return zeilen
 
@@ -348,7 +348,7 @@ class Anwendung:
 
         angeboten = sum(len(self._parameter_des_bereichs(kennung))
                         for kennung, _name, _text in self.BEREICHE)
-        geaendert = len(self.einstellungen.benutzeraenderungen())
+        geaendert = len(self._eigene_aenderungen())
         parameter = f"{angeboten} angeboten"
         if geaendert:
             parameter += f", {geaendert} geaendert"
@@ -495,7 +495,7 @@ class Anwendung:
                 if not schluessel:
                     continue
                 geaendert = sum(1 for s in schluessel
-                                if self.einstellungen.ist_geaendert(s))
+                                if self._geaendert(s))
                 gesammelt.append((kennung, name, beschreibung,
                                   len(schluessel), geaendert))
             return gesammelt
@@ -608,8 +608,63 @@ class Anwendung:
             return self.maschine.extruder[0]
         return self.einstellungen
 
+    def _eingabe_setzen(self, schluessel: str, wert: Any) -> None:
+        """Uebernimmt eine Eingabe aus der Oberflaeche.
+
+        Alle Aenderungen der Oberflaeche laufen ueber diese Methode; das
+        Pruefskript pruefung/abgleich.py benutzt sie ebenfalls, damit es
+        denselben Eingabeweg prueft.
+
+        Parameter mit settable_per_extruder legt Cura im Stapel des Extruders
+        ab, nicht im globalen (nachweisbar am Einstellungsblock ;SETTING_3 im
+        G-Code). Das ist mehr als eine Formsache: Traegt der Extruderstapel
+        selbst einen Wert -- etwa Wall Thickness aus dem Qualitaetsprofil --,
+        dann verdeckt dieser eine Eingabe im globalen Stapel, und die Engine
+        erhielte den alten Wert. Die Oberflaeche zeigt den ersten Extruder;
+        dorthin geht die Eingabe.
+        """
+        stapel = self._stapel(schluessel)
+        if stapel is self.einstellungen:
+            self.einstellungen.setze(schluessel, wert)
+            return
+        stapel.setze(schluessel, wert)
+        # Eine aeltere Eingabe im globalen Stapel entfernen, damit dort
+        # wieder derselbe Wert steht wie in Cura.
+        if self.einstellungen.ist_geaendert(schluessel):
+            self.einstellungen.zuruecksetzen(schluessel)
+
+    def _eingabe_zuruecksetzen(self, schluessel: str) -> None:
+        """Nimmt eine eigene Eingabe zurueck -- global und im Extruder."""
+        for stapel in (self.einstellungen, self._stapel(schluessel)):
+            if schluessel != "extruder_nr" and stapel.ist_geaendert(schluessel):
+                stapel.zuruecksetzen(schluessel)
+
+    def _eigene_aenderungswerte(self) -> Dict[str, Any]:
+        """Alle eigenen Eingaben mit Wert, globale und die des ersten Extruders."""
+        werte = dict(self.einstellungen.benutzeraenderungen())
+        if self.maschine is not None and self.maschine.extruder:
+            for schluessel, wert in self.maschine.extruder[0].benutzeraenderungen().items():
+                # extruder_nr setzt der Zusammenbau selbst, keine Eingabe.
+                if schluessel != "extruder_nr":
+                    werte[schluessel] = wert
+        return werte
+
+    def _eigene_aenderungen(self) -> List[str]:
+        return sorted(self._eigene_aenderungswerte())
+
+    def _alle_eingaben_zuruecksetzen(self) -> None:
+        """Verwirft alle eigenen Eingaben in allen Stapeln."""
+        self.einstellungen.alles_zuruecksetzen()
+        if self.maschine is not None:
+            for stapel in self.maschine.extruder:
+                for schluessel in list(stapel.benutzeraenderungen()):
+                    if schluessel != "extruder_nr":
+                        stapel.zuruecksetzen(schluessel)
+
     def _geaendert(self, schluessel: str) -> bool:
         """Ob der Wert selbst gesetzt wurde -- global oder im Extruder."""
+        if schluessel == "extruder_nr":
+            return self.einstellungen.ist_geaendert(schluessel)
         return (self.einstellungen.ist_geaendert(schluessel)
                 or self._stapel(schluessel).ist_geaendert(schluessel))
 
@@ -730,8 +785,8 @@ class Anwendung:
             if gedrueckt == "i" and liste.aktueller:
                 self._parameter_einzelheiten(liste.aktueller)
             elif gedrueckt == "r" and liste.aktueller:
-                if self.einstellungen.ist_geaendert(liste.aktueller):
-                    self.einstellungen.zuruecksetzen(liste.aktueller)
+                if self._geaendert(liste.aktueller):
+                    self._eingabe_zuruecksetzen(liste.aktueller)
                     self._sagen(f"{liste.aktueller} zurueckgesetzt")
                 else:
                     self._sagen("Dieser Parameter wurde nicht veraendert.", t.GRAU)
@@ -772,7 +827,7 @@ class Anwendung:
 
     def _bool_umschalten(self, schluessel: str) -> None:
         neu = not bool(self._stapel(schluessel).wert(schluessel))
-        self.einstellungen.setze(schluessel, neu)
+        self._eingabe_setzen(schluessel, neu)
         self._sagen(f"{schluessel} = {'ja' if neu else 'nein'}")
 
     def _enum_waehlen(self, schluessel: str) -> None:
@@ -809,7 +864,7 @@ class Anwendung:
             gedrueckt = t.taste()
             ergebnis = liste.taste_verarbeiten(gedrueckt, listenhoehe)
             if ergebnis == "waehlen":
-                self.einstellungen.setze(schluessel, liste.aktueller)
+                self._eingabe_setzen(schluessel, liste.aktueller)
                 self._sagen(f"{schluessel} = {liste.aktueller}")
                 return
             if ergebnis == "zurueck":
@@ -836,7 +891,7 @@ class Anwendung:
             return
         eingabe = eingabe.strip()
         if eingabe == "":
-            self.einstellungen.zuruecksetzen(schluessel)
+            self._eingabe_zuruecksetzen(schluessel)
             self._sagen(f"{schluessel} zurueckgesetzt")
             return
 
@@ -854,7 +909,7 @@ class Anwendung:
                 f"abschalten.", t.ROT)
             return
 
-        self.einstellungen.setze(schluessel, wert)
+        self._eingabe_setzen(schluessel, wert)
         if verletzt:
             self._sagen(
                 f"{schluessel} = {eingabe} — ausserhalb der Cura-Grenzen "
@@ -1448,7 +1503,7 @@ class Anwendung:
                     "Kopfzeilen beim Aufruf ueber die Befehlszeile leer; in "
                     "Cura traegt sie die Oberflaeche nachtraeglich ein."))
             b.zeile()
-            geaendert = len(self.einstellungen.benutzeraenderungen())
+            geaendert = len(self._eigene_aenderungen())
             b.zeile("  " + b.f(t.GRAU,
                     f"Verwendet wurden {len(self.definitionen)} Parameterwerte, "
                     f"davon {geaendert} von Ihnen gesetzt."))
@@ -1491,7 +1546,7 @@ class Anwendung:
         self._warte_unten("Weiter mit einer beliebigen Taste")
 
     def _aenderungen_anzeigen(self) -> None:
-        aenderungen = sorted(self.einstellungen.benutzeraenderungen())
+        aenderungen = self._eigene_aenderungen()
         if not aenderungen:
             self._sagen("Es wurde noch kein Wert von Hand gesetzt.", t.GRAU)
             return
@@ -1523,8 +1578,8 @@ class Anwendung:
             if ergebnis == "zurueck":
                 return
             if gedrueckt == "r" and liste.aktueller:
-                self.einstellungen.zuruecksetzen(liste.aktueller)
-                aenderungen = sorted(self.einstellungen.benutzeraenderungen())
+                self._eingabe_zuruecksetzen(liste.aktueller)
+                aenderungen = self._eigene_aenderungen()
                 liste.eintraege_setzen(aenderungen)
                 if not aenderungen:
                     return
@@ -1545,7 +1600,7 @@ class Anwendung:
         except OSError as fehler:
             self._sagen(f"Speichern nicht moeglich: {fehler}", t.ROT)
             return
-        anzahl = len(self.einstellungen.benutzeraenderungen())
+        anzahl = len(self._eigene_aenderungen())
         self._sagen(f"{anzahl} Aenderungen gespeichert: "
                     f"{os.path.basename(geschrieben)}")
 
@@ -1608,7 +1663,7 @@ class Anwendung:
                         self._sagen(str(fehler), t.ROT)
                         return
 
-            self.einstellungen.alles_zuruecksetzen()
+            self._alle_eingaben_zuruecksetzen()
             uebernommen, misslungen = projekt.anwenden(inhalt, self.einstellungen,
                                                        self.maschine)
             self.umfang = auswahl_modul.finde(

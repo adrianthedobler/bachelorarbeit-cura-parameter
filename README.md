@@ -212,10 +212,19 @@ Stützmaterial) holen ihren Wert aus einem bestimmten Extruder.
 ## Nachweis der Übereinstimmung
 
 Cura schreibt vor jedem Schnitt den vollständigen Wertesatz in sein Protokoll
-(`~/Library/Application Support/cura/5.13/cura.log`). Das Skript
-`pruefung/abgleich.py` stellt diese Werte denen des Programms gegenüber. Für
-drei Fälle ergab es **vollständige Übereinstimmung aller übergebenen Werte**
-(zuletzt geprüft am 14.09.2026):
+(`~/Library/Application Support/cura/5.13/cura.log`, unter Windows
+`%APPDATA%\cura\5.13\cura.log`). Das Skript `pruefung/abgleich.py` stellt
+diese Werte denen des Programms gegenüber — an jedem eigenen Cura-Schnitt:
+
+```
+python3 pruefung/abgleich.py Datei.gcode
+```
+
+Es liest die in Cura geänderten Werte aus dem G-Code und setzt sie auf
+demselben Weg wie die Oberfläche des Tools. Einzelheiten in
+`pruefung/README.md`. Für die drei Fälle aus der Arbeit
+(`python3 pruefung/abgleich.py --beispiele`) ergab es **vollständige
+Übereinstimmung aller übergebenen Werte** (zuletzt geprüft am 14.09.2026):
 
 | Fall | global | Extruder |
 |---|---|---|
