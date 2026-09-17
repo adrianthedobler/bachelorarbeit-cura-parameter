@@ -71,6 +71,34 @@ Weitere Aufrufe:
 | `--sprache de_DE` | Curas deutsche Übersetzung statt der Originalbezeichnungen |
 | `--schneiden DATEI -m Modell.stl -o aus.gcode` | schneidet ohne Oberfläche mit einer gespeicherten Einstellung |
 
+### Schneiden ohne Oberfläche
+
+Eine in der Oberfläche mit Strg+S gespeicherte Einstellung liegt als
+`<Name>.curaui.json` im Ordner `einstellungen`. Sie enthält nur Drucker,
+Qualitätsprofil, Material, Düse, Umfang, Modell und die eigenen Änderungen;
+alle übrigen Werte entstehen beim Laden neu aus Curas Definitionen und
+Profilen. Mit ihr lässt sich der G-Code in einem Schritt erzeugen:
+
+```
+python3 cura-ui.py --schneiden "einstellungen/Beton.curaui.json" -m "modelle/Slicer Test.stl" -o "ausgabe/beton.gcode"
+```
+
+| Angabe | Bedeutung |
+|---|---|
+| `--schneiden DATEI` | die gespeicherte Einstellung |
+| `-m DATEI` | das Modell; entfällt, wenn in der Einstellung eines gespeichert ist |
+| `-o DATEI` | Ziel des G-Codes; Vorgabe `ausgabe/ausgabe.gcode` |
+| `--cura ORDNER` | nur nötig, wenn Cura nicht am üblichen Ort liegt |
+
+Dabei werden Drucker, Qualitätsprofil, Material, Düse, die Vorgabewerte des
+gespeicherten Umfangs und die eigenen Änderungen (global und je Extruder)
+genau wie beim Laden in der Oberfläche wiederhergestellt; das Ergebnis
+entspricht also dem G-Code, den die Oberfläche mit derselben Einstellung
+erzeugt. Pfade mit Leerzeichen stehen in Anführungszeichen. Eine
+Grenzwertprüfung findet hier nicht statt — sie gilt nur für Eingaben in der
+Oberfläche. Das Ergebnis ist nur mit derselben Cura-Version reproduzierbar,
+weil sich Definitionen und Formeln zwischen Versionen ändern können.
+
 ## Bedienung
 
 | Taste | Wirkung |
@@ -211,7 +239,9 @@ Stützmaterial) holen ihren Wert aus einem bestimmten Extruder.
 
 ## Nachweis der Übereinstimmung
 
-Cura schreibt vor jedem Schnitt den vollständigen Wertesatz in sein Protokoll
+Zu Beginn jedes Schnitts gibt CuraEngine den vollständigen, von Cura
+übergebenen Wertesatz aus, getrennt nach globalem Stapel und Extruderstapeln,
+und Cura übernimmt diese Ausgabe in sein Protokoll
 (`~/Library/Application Support/cura/5.13/cura.log`, unter Windows
 `%APPDATA%\cura\5.13\cura.log`). Das Skript `pruefung/abgleich.py` stellt
 diese Werte denen des Programms gegenüber — an jedem eigenen Cura-Schnitt:
@@ -224,7 +254,7 @@ Es liest die in Cura geänderten Werte aus dem G-Code und setzt sie auf
 demselben Weg wie die Oberfläche des Tools. Einzelheiten in
 `pruefung/README.md`. Für die drei Fälle aus der Arbeit
 (`python3 pruefung/abgleich.py --beispiele`) ergab es **vollständige
-Übereinstimmung aller übergebenen Werte** (zuletzt geprüft am 14.09.2026):
+Übereinstimmung aller übergebenen Werte** (zuletzt geprüft am 17.09.2026):
 
 | Fall | global | Extruder |
 |---|---|---|
@@ -238,13 +268,44 @@ bleibt eine Abweichung einzelner Koordinaten um Bruchteile eines Millimeters
 — dieselbe Streuung tritt zwischen zwei Läufen **desselben** Programms auf und
 geht auf CuraEngine selbst zurück.
 
-Mit `vergleich.py` lassen sich zwei G-Code-Dateien gegenüberstellen:
+### G-Code-Dateien vergleichen
+
+Mit `vergleich.py` lassen sich zwei G-Code-Dateien gegenüberstellen. Die
+beiden Dateien werden als Pfade angegeben (Pfade mit Leerzeichen in
+Anführungszeichen; unter macOS lassen sie sich auch aus dem Finder ins
+Terminal ziehen):
 
 ```
 python3 vergleich.py meine.gcode cura.gcode --name-a Programm --name-b Cura
 ```
 
-Die Verschiebung des Körpers wird dabei herausgerechnet.
+Die erste Datei erscheint als Spalte A, die zweite als B; `--name-a` und
+`--name-b` sind optional. Verglichen wird nicht Zeile für Zeile, sondern die
+Form:
+
+| Teil der Ausgabe | Inhalt |
+|---|---|
+| Übersicht | Erzeuger, Einstellungsblock, Schichten, Filament netto (einschließlich der Einzüge), Einzüge, Druckweg, Anzahl der Bewegungen, Nullpunkt |
+| Schicht für Schicht | Bahnen, Filament und Druckweg je Schicht; bei gleicher Bahnzahl die größte Abweichung der Bahnpunkte, sonst Ausmaß und Weglänge |
+| Ergebnis | „deckungsgleich“ oder die Zahl der abweichenden Schichten |
+
+Eine Verschiebung des ganzen Körpers wird herausgerechnet; die Bewegungen
+des Start-G-Codes bleiben unverschoben, weil sie an fester Stelle liegen.
+Wechsel zwischen absoluter und relativer Angabe (`G90`/`G91`, `M82`/`M83`)
+werden beachtet.
+
+Beim Lesen der Ausgabe ist zweierlei zu beachten:
+
+* CuraEngine rechnet nicht bei jedem Lauf exakt gleich. Dieselbe Einstellung
+  zweimal geschnitten ergibt Dateien, die sich in vielen Zeilen um wenige
+  Hundertstelmillimeter unterscheiden; Anzahl der Bahnen, Wege und
+  Materialmenge bleiben dabei gleich. Eine Abweichung dieser Größe ist
+  deshalb kein Hinweis auf unterschiedliche Einstellungen, und ein reiner
+  Zeilenvergleich (`diff`) sagt nichts aus.
+* Nur die schichtweise Prüfung entscheidet über das Ergebnis. Abweichungen in
+  der Übersicht werden angezeigt, zählen aber nicht als Fehler, und
+  Temperaturen oder Geschwindigkeiten werden nicht verglichen. Ob alle Werte
+  übereinstimmen, prüft `pruefung/abgleich.py`.
 
 ## Warum das ohne Nachbau auskommt
 
@@ -275,9 +336,26 @@ Beschriftungen wie in Cura selbst.
 
 ## Hinweis zur Druckzeit
 
-CuraEngine lässt beim Aufruf über die Befehlszeile die Kopfzeilen `;TIME:` und
-`;Filament used:` auf ihren Platzhaltern stehen; in Cura trägt sie die
-Oberfläche nachträglich ein. Dieses Programm berechnet Materialbedarf und
-Abmessungen deshalb aus den Bewegungsbefehlen selbst und schätzt die Druckzeit
-aus Wegstrecke und Vorschub. Die Schätzung berücksichtigt keine
-Beschleunigungen und fällt daher etwas zu niedrig aus.
+CuraEngine lässt beim Aufruf über die Befehlszeile die Kopfzeilen der
+G-Code-Datei auf ihren Platzhaltern stehen; in Cura trägt sie die Oberfläche
+nachträglich ein:
+
+| Kopfzeile | Bedeutung | in Cura | in diesem Programm |
+|---|---|---|---|
+| `;TIME:` | geschätzte Druckzeit in Sekunden | tatsächlicher Wert | `6666` |
+| `;Filament used:` | Materialbedarf in Metern | tatsächlicher Wert | `0m` |
+| `;MINX:` … `;MAXZ:` | Abmessungen des Druckteils | tatsächliche Werte | `±2.14748e+06` |
+
+Die Kopfzeilen sind Kommentare; der Drucker führt sie nicht aus, der Druck
+selbst ist davon also nicht betroffen. Programme, die sie anzeigen (etwa
+OctoPrint oder das Display mancher Drucker), zeigen für eine mit diesem
+Programm erzeugte Datei aber falsche Werte an.
+
+In der Oberfläche berechnet dieses Programm Materialbedarf und Abmessungen
+deshalb aus den Bewegungsbefehlen selbst und schätzt die Druckzeit aus
+Wegstrecke und Vorschub. Die Schätzung berücksichtigt keine Beschleunigungen
+und fällt daher etwas zu niedrig aus. In die Datei geschrieben werden diese
+Werte nicht.
+
+Die Dateien enthalten außerdem in den Zeilen `;MESH:` den vollständigen Pfad
+des Modells, unter Umständen also Benutzername und Ordnerstruktur.
