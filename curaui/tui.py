@@ -1651,21 +1651,21 @@ class Anwendung:
                 self._sagen(f"Nicht lesbar: {fehler}", t.ROT)
                 return
 
+            # Die gespeicherten Werte gehoeren zu genau einem Drucker; ohne
+            # ihn liessen sich Profil, Material und Duese nicht zuordnen.
             gespeicherter_drucker = inhalt.get("drucker")
             if (gespeicherter_drucker and self.drucker
                     and gespeicherter_drucker != self.drucker.name):
-                if self._bestaetigen(
-                        f"Die Einstellung gehoert zu {gespeicherter_drucker}. "
-                        f"Diesen Drucker laden?"):
-                    try:
-                        self._drucker_laden(gespeicherter_drucker)
-                    except definitionen.DefinitionsFehler as fehler:
-                        self._sagen(str(fehler), t.ROT)
-                        return
+                try:
+                    self._drucker_laden(gespeicherter_drucker)
+                except definitionen.DefinitionsFehler as fehler:
+                    self._sagen(str(fehler), t.ROT)
+                    return
 
             self._alle_eingaben_zuruecksetzen()
             uebernommen, misslungen = projekt.anwenden(inhalt, self.einstellungen,
                                                        self.maschine)
+            self.profil = self.maschine.profil
             self.umfang = auswahl_modul.finde(
                 self.umfaenge, inhalt.get("umfang", auswahl_modul.WIRKSAM))
             self._vorgaben_anwenden()

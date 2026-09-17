@@ -94,7 +94,7 @@ def schneiden(einstellungsdatei, modell, ausgabe, cura_pfad):
     m = aufbau.Maschine(inst, drucker_name)
     einstellungen = m.einstellungen
 
-    uebernommen, misslungen = projekt.anwenden(inhalt, einstellungen)
+    uebernommen, misslungen = projekt.anwenden(inhalt, einstellungen, m)
     print(f"Drucker: {m.drucker.anzeigename}; {uebernommen} eigene Werte")
     if misslungen:
         print("Nicht uebernommen: " + ", ".join(misslungen))

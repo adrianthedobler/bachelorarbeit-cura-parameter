@@ -93,6 +93,11 @@ def anwenden(inhalt: Dict[str, Any], einstellungen: Einstellungen,
     fehlgeschlagen: List[str] = []
 
     if maschine is not None:
+        profilname = inhalt.get("qualitaetsprofil")
+        for profil in maschine.profile:
+            if profilname and profil.name == profilname:
+                maschine.profil_waehlen(profil)
+                break
         for nummer, kennung in enumerate(inhalt.get("materialien") or []):
             if kennung and nummer < maschine.anzahl_extruder \
                     and kennung in maschine.materialien:
