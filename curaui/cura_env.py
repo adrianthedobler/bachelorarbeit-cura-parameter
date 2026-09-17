@@ -355,7 +355,12 @@ def _wert(schluessel: str, kontext: Any = None) -> Any:
 
 
 def _extruder(position: Any):
-    """Der Stapel eines Extruders; faellt auf den globalen zurueck."""
+    """Der Stapel eines Extruders; faellt auf den globalen zurueck.
+
+    Wie Curas CuraFormulaFunctions.getValueInExtruder: Die Nummer -1 steht
+    fuer den Standard-Extruder (etwa skirt_brim_extruder_nr = -1), und eine
+    nicht vorhandene Nummer fuehrt zu Extruder 0.
+    """
     if _werteliefernd is None:
         return None
     maschine = getattr(_werteliefernd, "maschine", None)
@@ -365,7 +370,10 @@ def _extruder(position: Any):
         nummer = int(float(position))
     except (TypeError, ValueError):
         return _werteliefernd
-    return maschine.extruderstapel(nummer) or _werteliefernd
+    if nummer == -1:
+        nummer = int(maschine.erster_extruder())
+    return (maschine.extruderstapel(nummer) or maschine.extruderstapel(0)
+            or _werteliefernd)
 
 
 def _melde_formelfunktionen_an() -> None:
