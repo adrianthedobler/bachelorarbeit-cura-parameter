@@ -51,6 +51,10 @@ def einlesen(pfad: str) -> Tuple[List[Schicht], Dict[str, Any]]:
     schichten.append(aktuell)
     kopf: Dict[str, Any] = {"einstellungsblock": False, "zeilen": 0}
 
+    # G90/G91 schalten alle Achsen einschliesslich E zwischen absoluter und
+    # relativer Angabe um; M82/M83 danach nur E. Der End-G-Code vieler
+    # Drucker benutzt G91 fuer Einzug und Anheben ("G1 E-2 Z0.2").
+    absolut_xyz = True
     absolut_e = True
     letztes_e = 0.0
     x = y = z = None
@@ -76,6 +80,9 @@ def einlesen(pfad: str) -> Tuple[List[Schicht], Dict[str, Any]]:
                 continue
             teile = code.split()
             befehl = teile[0]
+            if befehl in ("G90", "G91"):
+                absolut_xyz = absolut_e = befehl == "G90"
+                continue
             if befehl == "M82":
                 absolut_e = True
                 continue
@@ -101,11 +108,11 @@ def einlesen(pfad: str) -> Tuple[List[Schicht], Dict[str, Any]]:
                 except ValueError:
                     continue
                 if kennung == "X":
-                    nx = zahl
+                    nx = zahl if absolut_xyz or x is None else x + zahl
                 elif kennung == "Y":
-                    ny = zahl
+                    ny = zahl if absolut_xyz or y is None else y + zahl
                 elif kennung == "Z":
-                    nz = zahl
+                    nz = zahl if absolut_xyz or z is None else z + zahl
                 elif kennung == "E":
                     e_wert = zahl
 
