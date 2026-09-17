@@ -88,14 +88,22 @@ def schneiden(einstellungsdatei, modell, ausgabe, cura_pfad):
     from curaui import definitionen, engine, profile as profil_modul
     from curaui import projekt, werte
 
-    from curaui import aufbau
+    from curaui import aufbau, auswahl
     inhalt = projekt.laden(einstellungsdatei)
     drucker_name = inhalt.get("drucker", "creality_ender3")
     m = aufbau.Maschine(inst, drucker_name)
     einstellungen = m.einstellungen
 
+    # Vorgabewerte des gespeicherten Umfangs wie in der Oberflaeche einlegen,
+    # etwa Build Plate Adhesion Type = None bei der Beton-Auswahl.
+    umfang = auswahl.finde(auswahl.lade_umfaenge(),
+                           inhalt.get("umfang", auswahl.WIRKSAM))
+    m.vorgaben_setzen({k: v for k, v in umfang.vorgaben.items()
+                       if k in m.definitionen})
+
     uebernommen, misslungen = projekt.anwenden(inhalt, einstellungen, m)
-    print(f"Drucker: {m.drucker.anzeigename}; {uebernommen} eigene Werte")
+    print(f"Drucker: {m.drucker.anzeigename}; Umfang: {umfang.name}; "
+          f"{uebernommen} eigene Werte")
     if misslungen:
         print("Nicht uebernommen: " + ", ".join(misslungen))
 
