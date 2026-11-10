@@ -188,6 +188,24 @@ def lade_materialien(inst: CuraInstallation) -> Dict[str, Material]:
     return materialien
 
 
+def lade_aus_datei(pfad: str) -> Material:
+    """Liest ein einzelnes Materialprofil aus einer .xml.fdm_material-Datei.
+
+    Fuer eigene Materialdefinitionen, die nicht im Cura-Ordner liegen -- etwa
+    ein selbst erstelltes Profil fuer den Betondruck. Aufbau wie in
+    lade_materialien; es wird nur eine Datei geladen.
+    """
+    pfad = os.path.abspath(os.path.expanduser(pfad))
+    wurzel = ET.parse(pfad).getroot()
+    namensraum = {"m": wurzel.tag.split("}")[0].strip("{")}
+    kennung = os.path.basename(pfad)
+    for endung in (".xml.fdm_material", ".fdm_material", ".xml"):
+        if kennung.endswith(endung):
+            kennung = kennung[:-len(endung)]
+            break
+    return Material(kennung, pfad, wurzel, namensraum)
+
+
 def _materialordner(inst: CuraInstallation) -> List[str]:
     ordner = [inst.materialien]
     eigene = os.path.expanduser(

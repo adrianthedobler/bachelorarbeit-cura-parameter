@@ -11,7 +11,7 @@ from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
 
 from . import aufbau
 from . import auswahl as auswahl_modul
-from . import cura_env, definitionen, engine, projekt
+from . import cura_env, definitionen, dreidcp, engine, projekt
 from . import profile as profil_modul
 from . import terminal as t
 from . import werte as werte_modul
@@ -21,6 +21,11 @@ from .sprache import Sprache
 PROGRAMMORDNER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AUSGABEORDNER = os.path.join(PROGRAMMORDNER, "ausgabe")
 EINSTELLUNGSORDNER = os.path.join(PROGRAMMORDNER, "einstellungen")
+#: Mitgelieferte Anlagendefinitionen (Custom-FFF-Drucker) fuer den Betonmodus.
+ANLAGENORDNER = os.path.join(PROGRAMMORDNER, "data", "anlagen")
+#: Mitgelieferte 3DCP-Konfiguration (setup.json + printer.def.json des Lehrstuhls),
+#: damit sie ohne Pfadeingabe geladen werden kann.
+SETUP_STANDARD = os.path.join(PROGRAMMORDNER, "data", "3dcp", "setup.json")
 
 
 def klartext(text: str, ) -> str:
@@ -46,8 +51,21 @@ class Anwendung:
     """Haelt den Zustand und steuert die Bildschirme."""
 
     def __init__(self, cura_pfad: Optional[str] = None,
-                 sprachkuerzel: str = "") -> None:
+                 sprachkuerzel: str = "",
+                 setup: Any = None,
+                 drucker_datei: Optional[str] = None,
+                 ohne_material: bool = False) -> None:
         self.inst = cura_env.vorbereiten(cura_pfad)
+        #: Angaben aus der setup.json des 3DCP-Programms (dreidcp.Setup).
+        self.setup = setup
+        #: Druckerdefinition ausserhalb der Cura-Installation.
+        self.drucker_datei = drucker_datei or (
+            setup.druckerdatei_pfad() if setup is not None else None)
+        self.ohne_material = bool(ohne_material) or setup is not None
+        #: Druckmodus. "polymer" = normale FFF-Drucker wie in Cura; "beton" =
+        #: KUKA-/Custom-FFF-Anlage, ein Extruder, kein Polymermaterial. Wird per
+        #: Startbildschirm gewaehlt; eine setup.json/Druckerdatei setzt Beton.
+        self.modus = "beton" if (setup is not None or self.drucker_datei) else "polymer"
         self.sprache = Sprache(self.inst, sprachkuerzel)
         self.farbig = t.farben_moeglich()
 
@@ -133,13 +151,369 @@ class Anwendung:
     def starten(self) -> None:
         t.start()
         try:
-            if not self._drucker_waehlen(erstmalig=True):
+            if self.drucker_datei:
+                # Von der Befehlszeile vorgegebene Anlage/Definition -> Beton.
+                self.modus = "beton"
+                self._umfaenge_fuer_modus()
+                self._drucker_laden(os.path.basename(self.drucker_datei))
+                if self.setup is not None:
+                    self._setup_anwenden()
+                else:
+                    self.maschine.feste_werte_setzen(
+                        {"machine_extruder_count": 1, "extruders_enabled_count": 1})
+            elif not self._modus_waehlen(erstmalig=True):
                 return
             self._hauptschleife()
         except KeyboardInterrupt:
             pass
         finally:
             t.ende()
+
+    # -------------------------------------------------------- Modusauswahl
+
+    def _umfaenge_fuer_modus(self) -> None:
+        """Beschraenkt die angebotenen Parameterumfaenge auf den Modus.
+
+        Polymer: Wirksame und Alle Parameter. Beton: zusaetzlich die eigens
+        herausgearbeitete Beton-Auswahl.
+        """
+        alle = auswahl_modul.lade_umfaenge()
+        if self.modus == "polymer":
+            self.umfaenge = [u for u in alle if u.kennung != auswahl_modul.BETON]
+        else:
+            self.umfaenge = alle
+        self.umfang = self.umfaenge[0]
+
+    def _modus_abfragen(self, erstmalig: bool = False) -> Optional[str]:
+        """Zeigt die Modusauswahl und gibt "polymer"/"beton" zurueck (None=Esc)."""
+        optionen = [
+            ("polymer", "Polymer-3D-Druck",
+             "Normale FFF-Drucker, Materialbibliothek, mehrere Extruder - "
+             "volle Cura-Treue."),
+            ("beton", "Beton-3D-Druck",
+             "KUKA-/Custom-FFF-Anlage, ein Extruder, kein Polymermaterial "
+             "(wie vom Lehrstuhl vorgesehen)."),
+        ]
+
+        def zeichnen(o: Tuple[str, str, str], breite: int, aktuell: bool) -> str:
+            return t.kuerzen(f"{t.fuellen(o[1], 22)}  {o[2]}", breite)
+
+        liste = Auswahlliste(optionen, zeichnen)
+        liste.zeiger = 0 if self.modus == "polymer" else 1
+
+        while True:
+            b = self._neu()
+            breite, hoehe = t.groesse()
+            self._kopf(b, "Was soll gedruckt werden?",
+                       "Erst der Druckmodus, danach Umfang und Anlage/Drucker")
+            b.zeile()
+            liste.zeichnen(b, breite, len(optionen))
+            b.zeile()
+            tasten = [("↑↓", "waehlen"), ("Enter", "uebernehmen")]
+            if not erstmalig:
+                tasten.append(("Esc", "zurueck"))
+            self._fuss(b, tasten)
+            b.zeichnen()
+            self.meldung = ""
+
+            gedrueckt = t.taste()
+            ergebnis = liste.taste_verarbeiten(gedrueckt, len(optionen))
+            if ergebnis == "waehlen":
+                return liste.aktueller[0]
+            if ergebnis == "zurueck":
+                return None
+
+    def _modus_waehlen(self, erstmalig: bool = False) -> bool:
+        """Erster Bildschirm: Beton- oder Polymer-3D-Druck.
+
+        Danach folgen Umfang und (je nach Modus) Drucker- bzw. Anlagenwahl.
+        Rueckgabe False beendet das Programm (Esc auf dem ersten Bildschirm).
+        """
+        wahl = self._modus_abfragen(erstmalig)
+        if wahl is None:
+            return False if erstmalig else True
+        self.modus = wahl
+        self._umfaenge_fuer_modus()
+        self._umfang_initial()
+        if self.modus == "polymer":
+            self.ohne_material = False
+            self.drucker_datei = None     # keine Anlagendatei im Polymermodus
+            self.setup = None
+            return self._drucker_waehlen(erstmalig=erstmalig)
+        self.ohne_material = True
+        return self._anlage_waehlen(erstmalig=erstmalig)
+
+    def _modus_wechseln(self) -> None:
+        """Wechsel zwischen Beton und Polymer im laufenden Betrieb.
+
+        Erst wenn danach wirklich ein Drucker bzw. eine Anlage geladen wurde,
+        gilt der Wechsel; bricht der Nutzer die Drucker-/Anlagenwahl ab, bleibt
+        der alte Zustand vollstaendig erhalten.
+        """
+        wahl = self._modus_abfragen(erstmalig=False)
+        if wahl is None:
+            return
+        if wahl == self.modus:
+            self._sagen("Modus unveraendert.")
+            return
+
+        schluessel = ["modus", "umfaenge", "umfang", "ohne_material",
+                      "drucker_datei", "setup", "maschine", "drucker",
+                      "definitionen", "kategorien", "nur_extruder",
+                      "_maschinen_zwischenspeicher", "einstellungen",
+                      "profile", "profil"]
+        sicherung = {k: getattr(self, k) for k in schluessel}
+        vorher = self.maschine
+
+        self.modus = wahl
+        self._umfaenge_fuer_modus()
+        self._umfang_initial()
+        if self.modus == "polymer":
+            self.ohne_material = False
+            self.drucker_datei = None     # keine Anlagendatei im Polymermodus
+            self.setup = None
+            self._drucker_waehlen(erstmalig=False)
+        else:
+            self.ohne_material = True
+            self._anlage_waehlen(erstmalig=False)
+
+        if self.maschine is vorher:
+            # Keine neue Maschine geladen -> Wechsel verwerfen.
+            for k, v in sicherung.items():
+                setattr(self, k, v)
+            self._sagen("Moduswechsel abgebrochen - bisheriger Modus bleibt.", t.GELB)
+        else:
+            name = "Beton-3D-Druck" if self.modus == "beton" else "Polymer-3D-Druck"
+            self._sagen(f"Modus gewechselt: {name}")
+
+    def _umfang_initial(self) -> None:
+        """Umfangswahl vor dem Laden eines Druckers (noch ohne Parameterzahlen).
+
+        Die genauen Zahlen je Drucker stehen spaeter im Umfang-Bildschirm (u);
+        hier geht es nur um die Vorauswahl. Esc behaelt die Vorgabe (Wirksam).
+        """
+        def zeichnen(u: auswahl_modul.Umfang, breite: int, aktuell: bool) -> str:
+            marke = "●" if u is self.umfang else "○"
+            return t.kuerzen(f"{marke} {u.name}", breite)
+
+        liste = Auswahlliste(self.umfaenge, zeichnen)
+        liste.zeiger = self.umfaenge.index(self.umfang)
+
+        while True:
+            b = self._neu()
+            breite, hoehe = t.groesse()
+            self._kopf(b, "Umfang der angebotenen Parameter",
+                       "Polymer: Wirksam/Alle · Beton: Wirksam/Beton/Alle")
+            liste.zeichnen(b, breite, len(self.umfaenge))
+            b.zeile()
+            aktuell = liste.aktueller
+            if aktuell:
+                for zeile in textwrap.wrap(aktuell.beschreibung, breite - 4):
+                    b.zeile("  " + b.f(t.GRAU, zeile))
+            self._fuss(b, [("Enter", "uebernehmen"), ("Esc", "Vorgabe behalten")])
+            b.zeichnen()
+            self.meldung = ""
+
+            gedrueckt = t.taste()
+            ergebnis = liste.taste_verarbeiten(gedrueckt, len(self.umfaenge))
+            if ergebnis == "waehlen":
+                self.umfang = liste.aktueller
+                return
+            if ergebnis == "zurueck":
+                return
+
+    # ----------------------------------------------------- Beton-Anlagenwahl
+
+    def _anlage_waehlen(self, erstmalig: bool = False) -> bool:
+        """Druckerwahl im Betonmodus: keine Polymer-Drucker, sondern eine
+        Anlagendefinition (Custom-FFF-Drucker). Rueckgabe wie _drucker_waehlen.
+        """
+        quellen = []
+        if os.path.isfile(SETUP_STANDARD):
+            quellen.append(
+                ("setup_standard", "Mitgelieferte setup.json (3DCP)",
+                 "Die beiliegende KUKA-Konfiguration des Lehrstuhls - kein Pfad noetig."))
+        quellen += [
+            ("setup", "Andere setup.json laden …",
+             "Eine setup.json an einem anderen Ort (Pfad eingeben)."),
+            ("tum", "TUM C3DP (Standard)",
+             "Mitgelieferte Anlagendefinition des Lehrstuhls."),
+            ("datei", "Eigene Definition laden …",
+             "Beliebige printer.def.json, die von fdmprinter erbt."),
+            ("custom", "Custom-FFF (leer) …",
+             "Leere FFF-Anlage; Bauraum X/Y/Z selbst eingeben."),
+        ]
+
+        def zeichnen(q: Tuple[str, str, str], breite: int, aktuell: bool) -> str:
+            return t.kuerzen(f"{t.fuellen(q[1], 30)}  {q[2]}", breite)
+
+        liste = Auswahlliste(quellen, zeichnen)
+        while True:
+            b = self._neu()
+            breite, hoehe = t.groesse()
+            self._kopf(b, "Beton-Anlage waehlen",
+                       "Keine Polymer-Drucker - gedruckt wird mit dem KUKA-Arm")
+            b.zeile()
+            liste.zeichnen(b, breite, len(quellen))
+            b.zeile()
+            tasten = [("↑↓", "waehlen"), ("Enter", "waehlen")]
+            if not erstmalig:
+                tasten.append(("Esc", "zurueck"))
+            self._fuss(b, tasten)
+            b.zeichnen()
+            self.meldung = ""
+
+            gedrueckt = t.taste()
+            ergebnis = liste.taste_verarbeiten(gedrueckt, len(quellen))
+            if ergebnis == "waehlen":
+                if self._anlage_laden(liste.aktueller[0]):
+                    return True
+                continue
+            if ergebnis == "zurueck":
+                return False if erstmalig else True
+
+    def _anlage_laden(self, art: str) -> bool:
+        """Laedt die gewaehlte Beton-Anlage. Rueckgabe True bei Erfolg."""
+        setup = None
+        datei = None
+        if art in ("setup", "setup_standard"):
+            if art == "setup_standard":
+                quelle = SETUP_STANDARD
+            else:
+                eingabe = t.eingabezeile(" Pfad zur setup.json: ", "")
+                if not eingabe or not eingabe.strip():
+                    return False
+                quelle = eingabe.strip()
+            try:
+                setup = dreidcp.lade_setup(quelle)
+            except dreidcp.SetupFehler as fehler:
+                self._sagen(str(fehler), t.ROT)
+                return False
+            datei = setup.druckerdatei_pfad()
+            if not datei:
+                self._sagen("In der setup.json ist keine ladbare "
+                            "Druckerdefinition angegeben.", t.ROT)
+                return False
+        elif art == "tum":
+            datei = os.path.join(ANLAGENORDNER, "TUM_C3DP_fdmprinter.def.json")
+            if not os.path.isfile(datei):
+                self._sagen(f"TUM-C3DP-Definition nicht gefunden: {datei}", t.ROT)
+                return False
+        elif art == "datei":
+            pfad = t.eingabezeile(" Pfad zur .def.json: ", "")
+            if not pfad or not pfad.strip():
+                return False
+            datei = os.path.abspath(os.path.expanduser(pfad.strip()))
+            if not os.path.isfile(datei):
+                self._sagen(f"Datei nicht gefunden: {datei}", t.ROT)
+                return False
+        elif art == "custom":
+            datei = self._custom_fff_erzeugen()
+            if not datei:
+                return False
+        else:
+            return False
+
+        self.setup = setup
+        self.drucker_datei = datei
+        self.ohne_material = True
+        self._drucker_laden(os.path.basename(datei))
+        if setup is not None:
+            self._setup_anwenden()
+        else:
+            # Ein Extruder, wie vom Lehrstuhl gewuenscht; fest vorgegeben.
+            self.maschine.feste_werte_setzen(
+                {"machine_extruder_count": 1, "extruders_enabled_count": 1})
+            self._sagen(f"Beton-Anlage geladen: {self.drucker.anzeigename}")
+        return True
+
+    def _custom_fff_erzeugen(self) -> Optional[str]:
+        """Fragt Bauraum X/Y/Z ab und schreibt eine minimale Custom-FFF-
+        Definition (erbt von fdmprinter, ein Extruder, kein Material).
+        """
+        import json
+        import tempfile
+
+        def zahl(frage: str, vorgabe: float) -> Optional[float]:
+            roh = t.eingabezeile(frage, str(vorgabe))
+            if roh is None or not roh.strip():
+                return None
+            try:
+                return float(roh.strip().replace(",", "."))
+            except ValueError:
+                return None
+
+        x = zahl(" Bauraum X [mm]: ", 1000)
+        y = zahl(" Bauraum Y [mm]: ", 1000) if x is not None else None
+        z = zahl(" Bauraum Z [mm]: ", 1000) if y is not None else None
+        if x is None or y is None or z is None:
+            self._sagen("Abgebrochen oder ungueltige Bauraumangabe.", t.GELB)
+            return None
+
+        daten = {
+            "version": 2, "name": "Custom FFF", "inherits": "fdmprinter",
+            "metadata": {"visible": True, "author": "Alternative Cura UI",
+                         "manufacturer": "Custom", "file_formats": "text/x-gcode",
+                         "has_materials": False,
+                         "machine_extruder_trains": {"0": "fdmextruder"}},
+            "overrides": {
+                "machine_name": {"default_value": "Custom FFF"},
+                "machine_width": {"default_value": x},
+                "machine_depth": {"default_value": y},
+                "machine_height": {"default_value": z},
+                "machine_center_is_zero": {"default_value": False},
+                "machine_extruder_count": {"default_value": 1},
+                "machine_shape": {"default_value": "rectangular"}},
+        }
+        ordner = tempfile.mkdtemp(prefix="custom_fff_")
+        pfad = os.path.join(ordner, "custom_fff.def.json")
+        with open(pfad, "w", encoding="utf-8") as datei:
+            json.dump(daten, datei, indent=2, ensure_ascii=False)
+        return pfad
+
+    # ------------------------------------------------------ 3DCP-Anbindung
+
+    def _setup_anwenden(self) -> None:
+        """Legt die Angaben aus der setup.json des 3DCP-Programms ein.
+
+        Die festen Argumente aus preset_arguments.py werden als
+        unveraenderliche Ebene eingelegt, die uebrigen Angaben (Druck- und
+        Verfahrgeschwindigkeit, Mindestzeit je Schicht) als normale Eingabe,
+        damit sie einstellbar bleiben.
+        """
+        if self.setup is None or self.maschine is None:
+            return
+        fest = self.setup.feste_werte()
+        self.maschine.feste_werte_setzen(fest)
+        uebernommen = 0
+        for schluessel, wert in self.setup.vorschlaege().items():
+            if schluessel in self.definitionen and schluessel not in fest:
+                try:
+                    self._eingabe_setzen(schluessel, wert)
+                    uebernommen += 1
+                except (ValueError, KeyError, werte_modul.FesterWert):
+                    continue
+        for schluessel, wert in (self.setup.argumente or {}).items():
+            definition = self.definitionen.get(schluessel)
+            if definition is None or schluessel in fest:
+                continue
+            try:
+                self._eingabe_setzen(schluessel,
+                                     werte_modul.aus_text(definition, str(wert)))
+                uebernommen += 1
+            except (ValueError, KeyError, werte_modul.FesterWert):
+                continue
+        self._sagen(f"3DCP: {len(self.maschine.feste_vorgaben)} feste Argumente, "
+                    f"{uebernommen} Werte aus setup.json uebernommen")
+
+    def _argumente_schreiben(self) -> None:
+        """Schreibt die eigenen Aenderungen als cura_arguments zurueck."""
+        if self.setup is None:
+            self._sagen("Kein setup.json geladen (Aufruf mit --setup).", t.GELB)
+            return
+        werte = dreidcp.geaenderte_werte(self.maschine)
+        ziel = dreidcp.schreibe_cura_arguments(self.setup, werte)
+        self._sagen(f"{len(werte)} Werte geschrieben: {ziel}")
 
     # ---------------------------------------------------- Druckerauswahl
 
@@ -194,7 +568,10 @@ class Anwendung:
         alte_aenderungen = (self._eigene_aenderungswerte()
                             if self.einstellungen else {})
 
-        self.maschine = aufbau.Maschine(self.inst, name, self._materialien)
+        self.maschine = aufbau.Maschine(
+            self.inst, name, self._materialien,
+            drucker_datei=self.drucker_datei,
+            ohne_material=self.ohne_material)
         self._materialien = self.maschine.materialien
         self.drucker = self.maschine.drucker
         self.definitionen = self.maschine.definitionen
@@ -353,7 +730,9 @@ class Anwendung:
         if geaendert:
             parameter += f", {geaendert} geaendert"
 
+        modus = "Beton-3D-Druck" if self.modus == "beton" else "Polymer-3D-Druck"
         return [
+            ("modus", "Modus", modus),
             ("hardware", "Hardware", drucker),
             ("material", "Material", material),
             ("modell", "Modell", modell),
@@ -377,16 +756,21 @@ class Anwendung:
             b = self._neu()
             breite, hoehe = t.groesse()
             grenzen = "beachtet" if self.grenzen_beachten else "AUSGESCHALTET"
-            self._kopf(b, "Alternative Cura-Oberflaeche",
-                       f"Umfang: {self.umfang.name} · Grenzen: {grenzen}")
+            zusatz = (f"Umfang: {self.umfang.name} · Grenzen: {grenzen}")
+            if self.setup is not None:
+                zusatz += f" · 3DCP: {len(self.maschine.feste_vorgaben)} feste Werte"
+            self._kopf(b, "Alternative Cura-Oberflaeche", zusatz)
             b.zeile()
             liste.zeichnen(b, breite, len(liste.alle))
             b.zeile()
-            self._fuss(b, [("Enter", "oeffnen"), ("s", "Slicen"),
-                           ("u", "Umfang"), ("g", "Grenzen"),
-                           ("f", "Parameter suchen"),
-                           ("^s", "speichern"), ("^o", "laden"),
-                           ("?", "Hilfe"), ("Esc", "Ende")],
+            tasten = [("Enter", "oeffnen"), ("s", "Slicen"),
+                      ("u", "Umfang"), ("g", "Grenzen"),
+                      ("f", "Parameter suchen"),
+                      ("^s", "speichern"), ("^o", "laden")]
+            if self.setup is not None:
+                tasten.append(("e", "3DCP-Argumente"))
+            tasten += [("?", "Hilfe"), ("Esc", "Ende")]
+            self._fuss(b, tasten,
                        liste.suchhinweis() or "Enter oeffnet den Eintrag")
             b.zeichnen()
             self.meldung = ""
@@ -410,7 +794,9 @@ class Anwendung:
                 liste.suche_oeffnen()
                 continue
 
-            if gedrueckt == "s":
+            if gedrueckt == "e" and self.setup is not None:
+                self._argumente_schreiben()
+            elif gedrueckt == "s":
                 self._slicen()
             elif gedrueckt == "u":
                 self._umfang_waehlen()
@@ -427,7 +813,9 @@ class Anwendung:
             liste.eintraege_setzen(self._hauptmenue_zeilen())
 
     def _hauptmenue_oeffnen(self, kennung: str) -> None:
-        if kennung == "hardware":
+        if kennung == "modus":
+            self._modus_wechseln()
+        elif kennung == "hardware":
             self._hardware_menue()
         elif kennung == "material":
             self._material_waehlen()
@@ -476,7 +864,10 @@ class Anwendung:
             ergebnis = liste.taste_verarbeiten(gedrueckt, len(liste.alle))
             if ergebnis == "waehlen":
                 if liste.aktueller[0] == "drucker":
-                    self._drucker_waehlen()
+                    if self.modus == "beton":
+                        self._anlage_waehlen()
+                    else:
+                        self._drucker_waehlen()
                 else:
                     self._duese_waehlen()
                 liste.eintraege_setzen(zeilen())
@@ -624,6 +1015,8 @@ class Anwendung:
         dorthin geht die Eingabe.
         """
         stapel = self._stapel(schluessel)
+        if stapel.ist_fest(schluessel) or self.einstellungen.ist_fest(schluessel):
+            raise werte_modul.FesterWert(schluessel)
         if stapel is self.einstellungen:
             self.einstellungen.setze(schluessel, wert)
             return
@@ -698,7 +1091,9 @@ class Anwendung:
         # Kennzeichnung: was bestimmt diesen Wert gerade?
         # Reihenfolge wie bei der Aufloesung selbst: eigener Wert vor
         # Umfangsvorgabe vor Profil (Qualitaet, Material, Duese) vor Formel.
-        if self._geaendert(schluessel):
+        if stapel.ist_fest(schluessel):
+            zeichen, farbe = "!", t.ROT
+        elif self._geaendert(schluessel):
             zeichen, farbe = "*", t.HELLGRUEN
         elif stapel.aus_auswahl(schluessel):
             zeichen, farbe = "a", t.HELLGELB
@@ -759,8 +1154,9 @@ class Anwendung:
 
             zusatz = (liste.suchhinweis()
                       or "* eigener Wert · a aus der Auswahl · p aus "
-                         "Profil/Material/Duese · f berechnet · grau = Bedingung "
-                         "nicht erfuellt · " + liste.blaetteranzeige())
+                         "Profil/Material/Duese · f berechnet · ! fest "
+                         "vorgegeben · grau = Bedingung nicht erfuellt · "
+                         + liste.blaetteranzeige())
             self._fuss(b, [("Enter", "aendern"), ("i", "Einzelheiten"),
                            ("r", "zuruecksetzen"), ("/", "suchen"),
                            ("s", "Slicen"), ("Esc", "zurueck")], zusatz)
@@ -819,6 +1215,12 @@ class Anwendung:
         definition = self.definitionen[schluessel]
         if definition.type == "bool":
             self._bool_umschalten(schluessel)
+            return
+        if self._stapel(schluessel).ist_fest(schluessel):
+            self._sagen(
+                f"{schluessel} ist vom 3DCP-Programm fest vorgegeben "
+                f"(preset_arguments.py) und kann hier nicht geaendert werden.",
+                t.ROT)
             return
         if definition.type == "enum":
             self._enum_waehlen(schluessel)
@@ -1231,14 +1633,24 @@ class Anwendung:
         nummer = self._extruder_waehlen("Material")
         if nummer is None:
             return
-        eintraege = self.maschine.materialliste()
-        if not eintraege:
-            self._sagen("Es wurden keine passenden Materialprofile gefunden.", t.GELB)
-            return
+        # Ohne Materialprofil bleibt Ebene 4 leer; noetig fuer Anlagen ohne
+        # Filament (siehe aufbau.Maschine.ohne_material). Zusaetzlich laesst
+        # sich eine eigene .xml.fdm_material-Datei laden (wie beim Drucker).
+        LADEN = "__laden__"
+        eintraege = [None, LADEN] + self.maschine.materialliste()
         jetzt = self.maschine.materialien_je_extruder[nummer]
+        anzahl_profile = len(eintraege) - 2
 
         def zeichnen(material: Any, breite: int, aktuell: bool) -> str:
+            if material == LADEN:
+                return t.kuerzen(
+                    "＋ eigene Materialdefinition laden "
+                    "(.xml.fdm_material) …", breite)
             marke = "●" if material is jetzt else "○"
+            if material is None:
+                return t.kuerzen(
+                    f"{marke} ohne Materialprofil — Temperaturen, Einzug und "
+                    f"Filamentstaerke nur aus der Definition", breite)
             return t.kuerzen(
                 f"{marke} {t.fuellen(material.marke, 16)} "
                 f"{t.fuellen(material.art, 14)} "
@@ -1246,7 +1658,9 @@ class Anwendung:
 
         liste = Auswahlliste(
             eintraege, zeichnen,
-            suchtext=lambda m: f"{m.marke} {m.art} {m.farbe} {m.kennung}")
+            suchtext=lambda m: ("laden eigene datei" if m == LADEN
+                                else "ohne kein" if m is None
+                                else f"{m.marke} {m.art} {m.farbe} {m.kennung}"))
         if jetzt in eintraege:
             liste.zeiger = eintraege.index(jetzt)
 
@@ -1254,7 +1668,7 @@ class Anwendung:
             b = self._neu()
             breite, hoehe = t.groesse()
             self._kopf(b, "Material",
-                       f"{len(eintraege)} Profile fuer "
+                       f"{anzahl_profile} passende Profile fuer "
                        f"{self.maschine.durchmesser(nummer)} mm Filament")
             listenhoehe = hoehe - 9
             liste.zeichnen(b, breite, listenhoehe)
@@ -1271,15 +1685,45 @@ class Anwendung:
             gedrueckt = t.taste()
             ergebnis = liste.taste_verarbeiten(gedrueckt, listenhoehe)
             if ergebnis == "waehlen":
+                if liste.aktueller == LADEN:
+                    if self._material_laden(nummer):
+                        return
+                    continue
                 self.maschine.material_waehlen(
                     liste.aktueller,
                     None if self.maschine.anzahl_extruder == 1 else nummer)
-                self._sagen(f"Material: {liste.aktueller.anzeigename}")
+                self._sagen("Material: " + ("ohne Profil" if liste.aktueller is None
+                                            else liste.aktueller.anzeigename))
                 return
             if ergebnis == "zurueck":
                 return
             if ergebnis == "unbekannt":
                 liste.suchzeichen(gedrueckt)
+
+    def _material_laden(self, nummer: int) -> bool:
+        """Laedt ein eigenes Materialprofil aus einer Datei und waehlt es.
+
+        Rueckgabe True, wenn ein Material geladen und gesetzt wurde.
+        """
+        from . import material as material_modul
+        pfad = t.eingabezeile(" Pfad zur .xml.fdm_material-Datei: ", "")
+        if not pfad or not pfad.strip():
+            return False
+        ziel = os.path.abspath(os.path.expanduser(pfad.strip()))
+        if not os.path.isfile(ziel):
+            self._sagen(f"Datei nicht gefunden: {ziel}", t.ROT)
+            return False
+        try:
+            material = material_modul.lade_aus_datei(ziel)
+        except Exception as fehler:                       # noqa: BLE001
+            self._sagen(f"Material nicht ladbar: {fehler}", t.ROT)
+            return False
+        self.maschine.materialien[material.kennung] = material
+        self.maschine.material_waehlen(
+            material, None if self.maschine.anzahl_extruder == 1 else nummer)
+        self._sagen(f"Material geladen: {material.anzeigename} "
+                    f"({material.durchmesser} mm)")
+        return True
 
     def _duese_waehlen(self) -> None:
         if not self.maschine.varianten:
@@ -1715,6 +2159,8 @@ class Anwendung:
         absatz("Kennzeichnung der Werte", [
             "*   von Ihnen gesetzt",
             "a   Vorgabewert des gewaehlten Umfangs (etwa der Beton-Auswahl)",
+            "!   fest vorgegeben durch das 3DCP-Programm (--setup); nicht "
+            "aenderbar",
             "f   von Cura aus anderen Parametern berechnet",
             "p   aus Qualitaetsprofil, Materialprofil oder Duese",
             "grau  die enabled-Bedingung ist nicht erfuellt; der Wert wird "
@@ -1752,5 +2198,8 @@ class Anwendung:
         self._warte_unten("Weiter mit einer beliebigen Taste")
 
 
-def starten(cura_pfad: Optional[str] = None, sprachkuerzel: str = "") -> None:
-    Anwendung(cura_pfad, sprachkuerzel).starten()
+def starten(cura_pfad: Optional[str] = None, sprachkuerzel: str = "",
+            setup: Any = None, drucker_datei: Optional[str] = None,
+            ohne_material: bool = False) -> None:
+    Anwendung(cura_pfad, sprachkuerzel, setup, drucker_datei,
+              ohne_material).starten()

@@ -1,0 +1,420 @@
+{
+    "name": "Slicing and Printing Configuration",
+    "version": 2.0,
+    "type": "configuration",
+    "author": "David Scheidt",
+    "settings": {
+        "Directory": {
+            "description": "Defines the input and output directories and filenames for the slicing and printing process.",
+            "input_directory": {
+                "description": "Base directory for input STL files",
+                "value": "C:\\Users\\ge25pat\\OneDrive - TUM\\PHD\\3DCP\\3d_files",
+                "type": "str"
+            },
+            "input_name": {
+                "description": "Name of the input STL file (without data type)",
+                "value": "Test_Mo",
+                "type": "str"
+            },
+            "output_directory": {
+                "description": "Base directory for storing output files (will be created if not already available)",
+                "value": "C:\\Users\\ge25pat\\OneDrive - TUM\\PHD\\3DCP\\src_files",
+                "type": "str"
+            },
+            "output_name": {
+                "description": "Name of the output folder and files as well as .src top line",
+                "value": "Test_Mo",
+                "type": "str"
+            }
+        },
+        "Robot": {
+            "description": "Settings specific to the robot, including dimensions, tool orientation, and motion parameters. If new categories ar defined inside this .json file, with [category_name][value], they can be referenced in [Robot][start_code] or [Robot][end_code] with {category_name}; only names with letters and numbers seperated by '_' are valid",
+            "id": {
+                "description": "name of robot",
+                "value": "KUKA KR340 R3330",
+                "type": "str"
+            },
+            "geometry": {
+                "description": "measurement of robot arm & offset [mm] in accordance to Brandstötter et. al [https://de.mathworks.com/matlabcentral/fileexchange/48468-inverse-kinematics-of-serial-robots-with-wrist?s%5C_tid=prof%5C_contriblnk]",
+                "value": {"a1": 500, "a2": 55, "b": 0, "c1": 1045, "c2": 1300, "c3": 1525, "c4": 290},
+                "type": "dict[str,float]"
+            },
+            "base_radius": {
+                "description": "Radius [mm] around A1 axis of rotation; ensures the robot head never intersects with its own base (around joint axis A1)",
+                "value": 400,
+                "type": "float"
+            },
+            "tool_offset": {
+                "description": "Tool offset from $NULLFRAME (flange of robot hand) in direction of $NULLFRAME in [mm]; This leads to T($NULLFRAME,$TCP) as no rotation is involved",
+                "value": {"X": -10.99, "Y": -0.86, "Z": 917.61},
+                "type": "dict[str,float]"
+            },
+            "tool_orientation": {
+                "description": "Tool orientation relative to $BASE/$FRAME (coordinate system of printbed) in [deg]; This leads to R($BASE/$FRAME,$TCP); A(angle related to Z), B(angle related to Y), C(angle related to Z)",
+                "value": {"A": 0, "B": 0, "C": 180},
+                "type": "dict[str,float]"
+            },
+            "rotation_sign": {
+                "description": "value defining positiv rotation direction of axis; true == along z-axis definition, false == against z-axis definition",
+                "value": {"A1": false, "A2": true, "A3": true, "A4": false, "A5": true, "A6": false},
+                "type": "dict[str,bool]"
+            },
+            "rotation_offset": {
+                "description": "defines rotational in [deg] offset along robot rotation definition to match 'Brandstötter et al.'",
+                "value": {"A1": 0,"A2": -90,"A3": 0,"A4": 0,"A5": 0,"A6": 0},
+                "type": "dict[str,float]"
+            },
+            "rotation_limit": {
+                "description": "Limit angles of robot axis for each joint in [deg]; valid rotation is between those angles",
+                "value": {"A1":[-185, 185], "A2":[-130, 20],"A3": [-100, 144], "A4": [-350, 350],"A5": [-120, 120],"A6": [-350, 350]},
+                "type": "dict[str,list[int]]"
+            },
+            "start_position": {
+                "description": "Start position of the robot (joint angles in [deg]); Outside of printbed; example: '{\"A1\": 75.0, \"A2\": -90.0, \"A3\": 90.0, \"A4\": 0.0, \"A5\": 90.0, \"A6\": 0.0}'",
+                "value": {"A1": 75.0, "A2": -90.0, "A3": 90.0, "A4": 0.0, "A5": 90.0, "A6": 0.0},
+                "type": "dict[str,float]"
+            },
+            "end_position": {
+                "description": "End position of the robot (joint angles in [deg]);Outside of printbed; example: '{\"A1\": 75.0, \"A2\": -90.0, \"A3\": 90.0, \"A4\": 0.0, \"A5\": 90.0, \"A6\": 0.0}'",
+                "value": {"A1": 75.0, "A2": -90.0, "A3": 90.0, "A4": 0.0, "A5": 90.0, "A6": 0.0},
+                "type": "dict[str,float]"
+            },
+            "base_coordinates": {
+                "description": "Coordinate frame ($ROBOTROOT) in the robot's workspace relative to $BASE (coordinate system of printbed) in [mm]; Delta given from $BASE to $ROBOTROOT; This leads to T($BASE,$ROBOTROOT) due to order of rotation being ZYX; example: '{\"X\": 1460.9, \"Y\": -2237.66, \"Z\": 268.5, \"A\": 0.0, \"B\": 0.0, \"C\": 0.0}'",
+                "value": {"X": -1460.9, "Y": 2237.66, "Z": -268.5, "A": 0, "B": 0.0, "C": 0.0},
+                "type": "dict[str,float]"
+            },
+            "bed_size": {
+                "description": "Size of the robot bed in mm along X, Y, and Z axes; Sets bedsize for slicing process",
+                "value": {"X": 1200, "Y": 4500, "Z": 2000},
+                "type": "dict[str,float]"
+            },
+            "print_speed": {
+                "description": "Printing speed of the robot in [m/s]",
+                "value": 0.35,
+                "type": "float"
+            },
+            "travel_speed": {
+                "description": "Travel speed of the robot in [m/s]",
+                "value": 0.5,
+                "type": "float"
+            },
+            "min_layer_time": {
+                "description": "minimum layer time in [ms]; .src file includes timer block for each layer and robot has to wait till timer > min_layer-time; set to 0 to deactivate",
+                "value": 10000,
+                "type": "int"
+            },
+            "start_code": {
+                "description": "Robot start code;keys inside 'Robot' section  referenced with ?category_name? and the corresponding value wil formatted and inserted; only names with letters and numbers seperated by '_' are valid",
+                "value": [
+                    "",
+                    ";Printer: ?id?",
+                    "",
+                    ";Declarations for RSI",
+                    "DECL INT RET",
+                    "DECL INT CONTID",
+                    "",
+                    ";FOLD       INI",
+                    "  ;FOLD     BASISTECH INI",
+                    "    GLOBAL INTERRUPT DECL 3 WHEN $STOPMESS==TRUE DO IR_STOPM ( )",
+                    "    INTERRUPT ON 3",
+                    "    BAS (#INITMOV,0)",
+                    "   ;ENDFOLD BASISTECH INI",
+                    ";ENDFOLD    INI",
+                    "",
+                    ";FOLD    3DCP",
+                    "  RET = RSI_CREATE(\"rsi3dcp\",CONTID,TRUE)",
+                    "  IF (RET <> RSIOK) THEN",
+                    "    HALT",
+                    "  ENDIF",
+                    "",
+                    "  RET = RSI_ON(#ABSOLUTE)",
+                    "  IF (RET <> RSIOK) THEN",
+                    "    HALT",
+                    "  ENDIF",
+                    "",
+                    " ; IF $USER_LEVEL > 19 THEN ;EXPERT Mode required",
+                    " ;   MyHmiOpen(\"dn\",#Half)",
+                    " ; ENDIF",
+                    "",
+                    "  PRINT_PROGRESS = 0",
+                    "  LAYER = 1",
+                    "",
+                    "  $TIMER[1] = 0 ;Reset",
+                    "  $TIMER_STOP[1] = FALSE ;Start",
+                    "",
+                    "  IF $ENERGY_MEASURING.ACTIVE == TRUE THEN",
+                    "    $ENERGY_MEASURING.ACTIVE = FALSE",
+                    "    $ENERGY_MEASURING.ACTIVE = TRUE",
+                    "  ELSE",
+                    "    $ENERGY_MEASURING.ACTIVE = TRUE",
+                    "  ENDIF",
+                    ";ENDFOLD 3DCP",
+                    "",
+                    ";FOLD    BCO",
+                    "  TOOL_DATA[1] = {?tool_offset?, ?tool_orientation?}",
+                    "  BASE_DATA[1] = {?base_coordinates?}",
+                    "  $BWDSTART = FALSE",
+                    "",
+                    "  SWITCH $MODE_OP",
+                    "    CASE #T1",
+                    "      PDAT_ACT = {VEL 100,ACC 100,APO_DIST 10}",
+                    "      BAS (#PTP_PARAMS,100)",
+                    "    CASE #T2",
+                    "      PDAT_ACT = {VEL 20,ACC 100,APO_DIST 10}",
+                    "      BAS (#PTP_PARAMS,20)",
+                    "    CASE #AUT",
+                    "      PDAT_ACT = {VEL 20,ACC 100,APO_DIST 10}",
+                    "      BAS (#PTP_PARAMS,20)",
+                    "    DEFAULT",
+                    "      PDAT_ACT = {VEL 20,ACC 100,APO_DIST 10}",
+                    "      BAS (#PTP_PARAMS,20)",
+                    "   ENDSWITCH",
+                    "",
+                    "   FDAT_ACT = {TOOL_NO 1,BASE_NO 1,IPO_FRAME #BASE}",
+                    "",
+                    "   PTP  {?start_position?}",
+                    ";ENDFOLD BCO",
+                    "",
+                    ";FOLD    MOTION",
+                    "   $VEL.CP   = ?print_speed? ;m/sec",
+                    "   $VEL.ORI1 = 100  ;deg/sec",
+                    "   $VEL.ORI2 = 100  ;deg/sec",
+                    "   $ADVANCE = 3",
+                    ";ENDFOLD MOTION"
+                ],
+                "type": "list[str]"
+            },
+            "end_code": {
+                "description": "Robot end code;If new categories ar defined inside this .json file, with [category_name][value], they can be referenced with {category_name}; only names with letters and numbers seperated by '_' are valid",
+                "value": [
+                    "PATH_TYPE = 0",
+                    "PTP {?end_position?} C_PTP",
+                    "",
+                    "",
+                    ";FOLD    3DCP",
+                    "  RET = RSI_OFF()",
+                    "  IF (RET <> RSIOK) THEN",
+                    "    HALT",
+                    "  ENDIF",
+                    "",
+                    "  $ENERGY_MEASURING.ACTIVE = FALSE",
+                    "",
+                    "  $TIMER_STOP[1] = TRUE",
+                    ";ENDFOLD 3DCP",
+                    "",
+                    "END"
+                ],
+                "type": "list[str]"
+            },
+            "type_number":{
+                "description": "sets int for each type in the Rhino section to be displayed in the src file",
+                "value": {"retract": -1, "protract":-2, "travel": 0,"wall_outer": 1, "wall_inner": 2, "surface": 3, "infill": 4, "bridge": 5, "curb": 6, "support": 7, "unknown": 99},
+                "type": "dict[str,int]"
+            },
+            "3dm_file": {
+                "description": "path to the 3dm file (native Rhino file) of the robot or whole robot cell; The 3dm file will be imported according to the given position in accordance to $BASE; Make sure that the robot is placed on the origin of the file with the global x,y,z axis co-linear to the orientation of joint A1",
+                "value": "C:\\Users\\daves\\OneDrive\\Bauingenieurwesen\\Masterarbeit\\Dateien_Beispiele\\Roboter\\KR340_R3330_KR240_R3330.3dm",
+                "type": "str"
+            },
+            "split_src": {
+                "description": "Defines if the krl file is split into multiple files; file_name_000 contains main file, file_name_00n-nnn contain each layer (up to 999 layers) ",
+                "value": true,
+                "type": "bool"
+            }
+        },
+        "Pump": {
+            "description": "Gives necessary information on Pump capability and technical data",
+            "retract": {
+                "description": "States if pump is capable of retraction; If set to true, this will include retract moves from generated G-Code",
+                "value": true,
+                "type": "bool"
+            },
+            "characteristic_curve": {
+                "description": "Gives the function of RPM to Flow[liter/min] of the Pump in [Flow,RPM,Voltage]",
+                "value": [[10,146,1],[0,0,0],[90,456,10]],
+                "type": "list[list[float,float,float]]"
+            },
+            "pump_control": {
+                "description": "Setup if the signal from the external axis of robot should be RPM (true) or Voltage (false)",
+                "value": true,
+                "type": "bool"
+            },
+            "filament_diameter": {
+                "description": "diameter of filament in [mm]",
+                "value": 22,
+                "type": "float"
+            },
+            "linetype_flow": {
+                "description": "Flow compensation for each linetype in [%]; 100 = flow within spec; 120 = account for under extrusion; 90 = account for over extrusion",
+                "value": {"wall_outer": 100, "wall_inner": 100, "surface": 100, "infill": 100, "bridge": 100, "curb": 100, "support": 100, "unknown": 100},
+                "type": "dict[str,float]"
+            }
+        },
+        "Slicer": {
+            "slicer_name": {
+                "description": "define the slicer used (necessary to decode G-Code); Available options: Cura, Orca, Open Slicer",
+                "value": "Cura",
+                "type": "str"
+            }
+        },
+        "Cura": {
+            "cura_cmd_path": {
+                "description": "Path to CURA's executable file; Example: C:\\...\\CuraEngine.exe",
+                "value": "C:\\Program Files\\UltiMaker Cura 5.8.0\\CuraEngine.exe",
+                "type": "str"
+            },
+            "cura_printer_config_file_path": {
+                "description": "Path to the printer.def.json file containing slicer arguments regarding the printer; given with file type (.json); Store printer.def.json in the same folder as extruder.def.json",
+                "value": "C:\\Users\\ge25pat\\OneDrive - TUM\\PHD\\3DCP\\Programmierung\\Master-Thesis\\user_input\\printer.def.json",
+                "type": "str"
+            },
+            "cura_arguments": {
+                "description": "Additional arguments to quickly change the settings for CURA slicing. These overwrite the values in the printer and extruder config data",
+                "value": {
+                    "layer_height_0": "15"
+                },
+                "type": "dict[str,str]"
+            },
+            "cura_scaling": {
+                "description": "Sets scaling (s) and rotation (r) values for X,Y and Z axis in [%] and [deg] relativ to printbed origin",
+                "value": {"sX": 100, "sY": 100, "sZ": 100, "rX": 0, "rY": 0, "rZ": 0},
+                "type": "dict[str,float]"
+            },
+            "cura_line_types_dict": {
+                "description": "Defines Line Types (ensures a clear assignment of printline-types from different slicers)",
+                "value": {
+                    "surface": [
+                        "SKIN"
+                    ],
+                    "wall_outer": [
+                        "WALL-OUTER"
+                    ],
+                    "wall_inner": [
+                        "WALL-INNER"
+                    ],
+                    "infill": [
+                        "FILL"
+                    ],
+                    "bridge": [],
+                    "curb": [
+                        "SKIRT",
+                        "BRIM",
+                        "RAFT"
+                    ],
+                    "support": [
+                        "SUPPORT",
+                        "SUPPORT-INTERFACE"
+                    ]
+                },
+                "type": "dict[str,list[str]]"
+            }
+        },
+        "Orca": {
+            "orca_cmd_path": {
+                "description": "Path to ORCA's executable file",
+                "value": "",
+                "type": "str"
+            },
+            "orca_printer_config_file_path": {
+                "description": "Path to ORCA's printer configuration file",
+                "value": "",
+                "type": "str"
+            },
+            "orca_arguments": {
+                "description": "Additional arguments to quickly change the settings for ORCA slicing. These overwrite the values in the printer and extruder config data",
+                "value": {"": ""},
+                "type": "dict[str,str]"
+            },
+            "orca_scaling": {
+                "description": "Sets scaling (s) and rotation (r) values for X,Y and Z axis in [%] and [deg] relativ to printbed origin",
+                "value": {"sX": 101, "sY": 400, "sZ": 300, "rX": 0, "rY": 0, "rZ": 0},
+                "type": "dict[str,float]"
+            },
+            "orca_line_types_dict": {
+                "description": "Defines Line Types (ensures a clear assignment of printline-types from different slicers)",
+                "value": {
+                    "surface": [
+                        "Bottom surface",
+                        "Top surface"
+                    ],
+                    "wall_outer": [
+                        "Outer wall",
+                        "Overhang wall"
+                    ],
+                    "wall_inner": [
+                        "Inner wall"
+                    ],
+                    "infill": [
+                        "Internal solid infill",
+                        "Spars infill"
+                    ],
+                    "bridge": [
+                        "Bridge",
+                        "Internal Bridge"
+                    ],
+                    "curb": [
+                        "Skirt",
+                        "Brim",
+                        "Raft"
+                    ],
+                    "support": [
+                        "Support",
+                        "Support interface"
+                    ]
+                },
+                "type": "dict[str,list[str]]"
+            }
+        },
+        "Rhino": {
+            "description": "Settings regarding the Rhino file",
+            "point_print": {
+                "description": "defines if every individual point of the Gcode gets drawn in the Rhino file; false only draws start-, end-, protract- and retract-points ",
+                "value": false,
+                "type": "bool"
+            },
+            "point_color": {
+                "description": "Sets color for each point in the Rhino file",
+                "value": {"start": "#008000", "stop": "#ff0000","protract": "#0000CD", "retract": "#87CEEB", "beginning":"#FED702", "end": "#D99208"},
+                "type": "dict[str,str]"
+            },
+            "line_style_line": {
+                "description": "defines displayed linetype in Rhino for available types of printed line. Available display types: solid, dashed, dotted, dashdot",
+                "value": {
+                    "travel": "dotted",
+                    "surface": "solid",
+                    "wall_outer": "solid",
+                    "wall_inner": "solid",
+                    "infill": "solid",
+                    "bridge": "solid",
+                    "curb": "solid",
+                    "support": "solid",
+                    "unknown": "dash_dot"
+                },
+                "type": "dict[str,str]"
+            },
+            "line_types_color": {
+                "description": "Defines the color in #hex code of the printed line in the Rhino file; ",
+                "value": {
+                    "travel": "#808080",
+                    "surface": "#C680BB",
+                    "wall_outer": "#0065bd",
+                    "wall_inner": "#9FBA36",
+                    "infill": "#EA7237",
+                    "bridge": "#5E94D4",
+                    "curb": "#CBAB01",
+                    "support": "#ABB5BE",
+                    "unknown": "#000000"
+                },
+                "type": "dict[str,str]"
+            },
+            "line_width": {
+                "description": "Sets linewidth [mm] of each linetype for Print Preview (solid, dashed, dotted, dash_dot); gets overwritten by extrusion width if line is a printline",
+                "value": {"solid": 2, "dashed": 2, "dotted": 2, "dash_dot": 2},
+                "type": "dict[str,float]"
+            }
+        }
+    }
+}
+
+

@@ -23,6 +23,10 @@ from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 _NICHTS = object()
 
 
+class FesterWert(RuntimeError):
+    """Ein Parameter ist von aussen fest vorgegeben und nicht aenderbar."""
+
+
 class Einstellungen:
     """Haelt die Werte aller Parameter und loest Formeln auf.
 
@@ -41,6 +45,10 @@ class Einstellungen:
         #: um limit_to_extruder aufzuloesen.
         self.maschine: Any = None
         self._benutzer: Dict[str, Any] = {}
+        #: Werte, die von aussen fest vorgegeben sind und sich in der
+        #: Oberflaeche nicht aendern lassen (3DCP-Anbindung, siehe
+        #: curaui/dreidcp.py). Sie liegen ueber den Benutzeraenderungen.
+        self._fest: Dict[str, Any] = {}
         #: Die Ebenen unterhalb der Benutzeraenderungen, von oben nach unten:
         #: Qualitaetsprofil, Material, Variante. Cura fuehrt dieselben Ebenen
         #: in seinem Behaelterstapel (cura/Settings/CuraContainerStack.py,
@@ -116,6 +124,7 @@ class Einstellungen:
             return getattr(definition, "default_value", None)
 
         if (schluessel not in self._benutzer
+                and schluessel not in self._fest
                 and isinstance(getattr(definition, "resolve", None), SettingFunction)):
             self._im_resolve.add(schluessel)
             try:
@@ -168,6 +177,8 @@ class Einstellungen:
         """Der Wert ohne resolve: Benutzer, dann Profil, dann Formel, dann Vorgabe."""
         from UM.Settings.SettingFunction import SettingFunction
 
+        if schluessel in self._fest:
+            return self._auswerten(self._fest[schluessel], kontext)
         if schluessel in self._benutzer:
             return self._auswerten(self._benutzer[schluessel], kontext)
         for _name, ebene in self._ebenen:
@@ -193,6 +204,8 @@ class Einstellungen:
         gleichermassen; sie werden im Zusammenhang des fragenden Stapels
         ausgewertet.
         """
+        if schluessel in self._fest:
+            return self._fest[schluessel]
         if schluessel in self._benutzer:
             return self._benutzer[schluessel]
         for _name, ebene in self._ebenen:
@@ -228,6 +241,8 @@ class Einstellungen:
         """Setzt einen Wert als Benutzeraenderung."""
         if schluessel not in self._defs:
             raise KeyError(schluessel)
+        if schluessel in self._fest:
+            raise FesterWert(schluessel)
         self._benutzer[schluessel] = wert
         self._verwerfen()
 
@@ -239,6 +254,25 @@ class Einstellungen:
     def alles_zuruecksetzen(self) -> None:
         self._benutzer.clear()
         self._verwerfen()
+
+    def setze_feste(self, werte: Dict[str, Any]) -> None:
+        """Legt fest vorgegebene Werte ein (nicht ueberschreibbar).
+
+        Gedacht fuer Vorgaben eines uebergeordneten Programms, etwa die
+        festen Argumente aus preset_arguments.py des 3DCP-Repos. Sie
+        liegen ueber den Benutzeraenderungen, weil sie dort ebenfalls
+        zuletzt an die Engine uebergeben werden.
+        """
+        self._fest = dict(werte)
+        for schluessel in self._fest:
+            self._benutzer.pop(schluessel, None)
+        self._verwerfen()
+
+    def ist_fest(self, schluessel: str) -> bool:
+        return schluessel in self._fest
+
+    def feste_werte(self) -> Dict[str, Any]:
+        return dict(self._fest)
 
     def setze_ebenen(self, ebenen: List[Tuple[str, Dict[str, Any]]]) -> None:
         """Legt die Ebenen unterhalb der Benutzeraenderungen fest.

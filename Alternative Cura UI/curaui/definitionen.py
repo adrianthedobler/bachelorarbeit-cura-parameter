@@ -134,14 +134,97 @@ class Druckerdefinition:
         return f"<Druckerdefinition {self.name} ({self.anzeigename})>"
 
 
-def lade_drucker(inst: CuraInstallation, name: str) -> Druckerdefinition:
-    """Laedt eine Druckerdefinition samt aller geerbten Ebenen."""
-    daten = _loese_vererbung(inst.definitionen, name)
+def lade_drucker(inst: CuraInstallation, name: str,
+                 zusatzordner: Optional[str] = None) -> Druckerdefinition:
+    """Laedt eine Druckerdefinition samt aller geerbten Ebenen.
+
+    Ueber zusatzordner laesst sich ein weiterer Ort angeben, in dem zuerst
+    gesucht wird. So kann eine Definition ausserhalb der Cura-Installation
+    geladen werden, die ihrerseits auf fdmprinter verweist.
+    """
+    orte = ([zusatzordner, inst.definitionen] if zusatzordner
+            else inst.definitionen)
+    daten = _loese_vererbung(orte, name)
     unbekannt = _wende_overrides_an(daten)
-    extruder = _lade_extruder(inst, daten)
+    extruder = _lade_extruder(inst, daten, zusatzordner)
     return Druckerdefinition(name, daten, unbekannt, extruder,
-                             _vererbungskette(inst.definitionen, name),
-                             _lade_alle_extruder(inst, daten))
+                             _vererbungskette(orte, name),
+                             _lade_alle_extruder(inst, daten, zusatzordner))
+
+
+def lade_drucker_aus_datei(inst: CuraInstallation, pfad: str,
+                           mit_basis: bool = True) -> Druckerdefinition:
+    """Laedt eine Druckerdefinition, die ausserhalb von Cura liegt.
+
+    Gedacht fuer eigene Anlagen, deren Definition nicht in der Installation
+    steht -- etwa user_input/printer.def.json des 3DCP-Repos. Die zugehoerige
+    Extruderdefinition wird im selben Ordner gesucht, danach in Cura.
+
+    Mit mit_basis wird die Datei zusaetzlich ueber die Basisdefinition der
+    Installation gelegt. Das ist noetig, wenn die Datei aus einer aelteren
+    Cura-Fassung stammt: Die Engine bricht sonst ab, sobald sie einen
+    Parameter abfragt, den die Datei noch nicht kennt (etwa
+    cool_min_layer_time_overhang, neu in 5.13). Die Werte der eigenen Datei
+    bleiben dabei massgebend, ergaenzt werden nur fehlende Parameter.
+    """
+    pfad = os.path.abspath(os.path.expanduser(pfad))
+    if not os.path.isfile(pfad):
+        raise DefinitionsFehler(f"Definitionsdatei nicht gefunden: {pfad}")
+    name = os.path.basename(pfad)
+    for endung in (".def.json", ".json"):
+        if name.endswith(endung):
+            name = name[:-len(endung)]
+            break
+    ordner = os.path.dirname(pfad)
+    if not mit_basis:
+        return lade_drucker(inst, name, ordner)
+
+    eigene = _loese_vererbung([ordner, inst.definitionen], name)
+    basis = _loese_vererbung(inst.definitionen, "fdmprinter")
+    daten = _verschmelze(basis, eigene)
+    unbekannt = _wende_overrides_an(daten)
+    extruder = _lade_extruder_mit_basis(inst, daten, ordner)
+    alle = _lade_alle_extruder_mit_basis(inst, daten, ordner)
+    return Druckerdefinition(name, daten, unbekannt, extruder,
+                             _vererbungskette([ordner, inst.definitionen], name),
+                             alle)
+
+
+def _mit_basis(inst: CuraInstallation, ordner: str,
+               name: str) -> Dict[str, Any]:
+    """Eine Extruderdefinition, ueber fdmextruder gelegt."""
+    eigene = _loese_vererbung([ordner, inst.extruder, inst.definitionen], name)
+    try:
+        basis = _loese_vererbung([inst.extruder, inst.definitionen],
+                                 "fdmextruder")
+    except DefinitionsFehler:
+        return eigene
+    return _verschmelze(basis, eigene)
+
+
+def _lade_extruder_mit_basis(inst: CuraInstallation, daten: Dict[str, Any],
+                             ordner: str) -> Optional[Dict[str, Any]]:
+    name = _extruderdateien(daten).get(0) or "fdmextruder"
+    try:
+        extruder = _mit_basis(inst, ordner, name)
+    except DefinitionsFehler:
+        return None
+    _wende_overrides_an(extruder)
+    return extruder
+
+
+def _lade_alle_extruder_mit_basis(inst: CuraInstallation, daten: Dict[str, Any],
+                                  ordner: str) -> List[Dict[str, Any]]:
+    zuordnung = _extruderdateien(daten) or {0: "fdmextruder"}
+    geladen: List[Dict[str, Any]] = []
+    for position in sorted(zuordnung):
+        try:
+            eintrag = _mit_basis(inst, ordner, zuordnung[position])
+        except DefinitionsFehler:
+            continue
+        _wende_overrides_an(eintrag)
+        geladen.append(eintrag)
+    return geladen
 
 
 def _vererbungskette(ordner: Any, name: str) -> List[str]:
@@ -177,8 +260,8 @@ def _extruderdateien(daten: Dict[str, Any]) -> Dict[int, str]:
     return zuordnung
 
 
-def _lade_alle_extruder(inst: CuraInstallation,
-                        daten: Dict[str, Any]) -> List[Dict[str, Any]]:
+def _lade_alle_extruder(inst: CuraInstallation, daten: Dict[str, Any],
+                        zusatzordner: Optional[str] = None) -> List[Dict[str, Any]]:
     """Die Definitionen aller Extruder, nach Position geordnet.
 
     Bei mehreren Extrudern koennen sich deren Angaben unterscheiden -- der
@@ -191,8 +274,10 @@ def _lade_alle_extruder(inst: CuraInstallation,
     geladen: List[Dict[str, Any]] = []
     for position in sorted(zuordnung):
         try:
-            eintrag = _loese_vererbung([inst.extruder, inst.definitionen],
-                                       zuordnung[position])
+            orte = [inst.extruder, inst.definitionen]
+            if zusatzordner:
+                orte.insert(0, zusatzordner)
+            eintrag = _loese_vererbung(orte, zuordnung[position])
         except DefinitionsFehler:
             continue
         _wende_overrides_an(eintrag)
@@ -221,8 +306,8 @@ def vorgabewerte(eintrag: Dict[str, Any]) -> Dict[str, Any]:
     return gefunden
 
 
-def _lade_extruder(inst: CuraInstallation,
-                   daten: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+def _lade_extruder(inst: CuraInstallation, daten: Dict[str, Any],
+                   zusatzordner: Optional[str] = None) -> Optional[Dict[str, Any]]:
     """Laedt die Definition des ersten Extruders.
 
     Cura fuehrt je Maschine zwei Behaelterstapel: einen globalen und einen je
@@ -239,7 +324,10 @@ def _lade_extruder(inst: CuraInstallation,
     if not name:
         name = "fdmextruder"
     try:
-        extruder = _loese_vererbung([inst.extruder, inst.definitionen], name)
+        orte = [inst.extruder, inst.definitionen]
+        if zusatzordner:
+            orte.insert(0, zusatzordner)
+        extruder = _loese_vererbung(orte, name)
     except DefinitionsFehler:
         return None
     _wende_overrides_an(extruder)

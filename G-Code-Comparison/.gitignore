@@ -1,0 +1,13 @@
+# Vom Programm erzeugte Ausgaben
+gcode_output/
+determinismus_test/
+*.gcode
+sweep_run*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# Excel-Sperrdateien, macOS
+~$*
+.DS_Store

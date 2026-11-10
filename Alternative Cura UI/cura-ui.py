@@ -13,6 +13,15 @@ Weitere Moeglichkeiten:
     python3 cura-ui.py --pruefen              nur pruefen, ob alles bereitsteht
     python3 cura-ui.py --schneiden E.curaui.json -m Modell.stl -o aus.gcode
                                               ohne Oberflaeche schneiden
+
+Anbindung an das 3DCP-Programm des Lehrstuhls (Repo dvdschdt/3DCP):
+
+    python3 cura-ui.py --setup 3DCP/user_input/setup.json
+                                              Oberflaeche im 3DCP-Modus
+    python3 cura-ui.py --setup … --argumente-schreiben
+                                              cura_arguments zurueckschreiben
+    python3 cura-ui.py --drucker-datei printer.def.json
+                                              eigene Druckerdefinition laden
 """
 from __future__ import annotations
 
@@ -82,7 +91,52 @@ def pruefen(cura_pfad):
     return 0 if ergebnis == 3 else 1
 
 
-def schneiden(einstellungsdatei, modell, ausgabe, cura_pfad):
+def _maschine_aufbauen(inst, inhalt, setup=None, drucker_datei=None,
+                       ohne_material=False):
+    """Stellt die Maschine her, wahlweise mit Angaben aus einer setup.json."""
+    from curaui import aufbau
+    datei = drucker_datei or (setup.druckerdatei_pfad() if setup else None)
+    name = (inhalt or {}).get("drucker", "creality_ender3")
+    if datei:
+        name = os.path.basename(datei)
+    m = aufbau.Maschine(inst, name, drucker_datei=datei,
+                        ohne_material=bool(ohne_material) or setup is not None)
+    if setup is not None:
+        m.feste_werte_setzen(setup.feste_werte())
+    return m
+
+
+def argumente_schreiben(setup, ziel, einstellungsdatei, cura_pfad,
+                        drucker_datei=None, ohne_material=False,
+                        in_place=False):
+    """Schreibt die Werte einer Einstellung als cura_arguments zurueck."""
+    if setup is None:
+        print("--argumente-schreiben benoetigt --setup.", file=sys.stderr)
+        return 2
+    inst = cura_env.vorbereiten(cura_pfad)
+    from curaui import dreidcp, projekt, werte as werte_modul
+
+    inhalt = projekt.laden(einstellungsdatei) if einstellungsdatei else {}
+    m = _maschine_aufbauen(inst, inhalt, setup, drucker_datei, ohne_material)
+    for schluessel, wert in setup.vorschlaege().items():
+        if schluessel in m.definitionen and not m.einstellungen.ist_fest(schluessel):
+            m.einstellungen.setze(schluessel, wert)
+    if inhalt:
+        projekt.anwenden(inhalt, m.einstellungen, m)
+    werte = dreidcp.geaenderte_werte(m)
+    pfad = dreidcp.schreibe_cura_arguments(setup, werte, ziel, in_place=in_place)
+    for zeile in dreidcp.bericht(m, setup, werte):
+        print("  " + zeile)
+    if in_place:
+        print(f"In setup.json geschrieben (nur cura_arguments): {pfad}")
+        print(f"Sicherung der Vorlage      : {pfad}.orig")
+    else:
+        print(f"Geschrieben: {pfad}")
+    return 0
+
+
+def schneiden(einstellungsdatei, modell, ausgabe, cura_pfad, setup=None,
+              drucker_datei=None, ohne_material=False):
     """Schneidet ohne Oberflaeche mit einer gespeicherten Einstellung."""
     inst = cura_env.vorbereiten(cura_pfad)
     from curaui import definitionen, engine, profile as profil_modul
@@ -90,8 +144,7 @@ def schneiden(einstellungsdatei, modell, ausgabe, cura_pfad):
 
     from curaui import aufbau, auswahl
     inhalt = projekt.laden(einstellungsdatei)
-    drucker_name = inhalt.get("drucker", "creality_ender3")
-    m = aufbau.Maschine(inst, drucker_name)
+    m = _maschine_aufbauen(inst, inhalt, setup, drucker_datei, ohne_material)
     einstellungen = m.einstellungen
 
     # Vorgabewerte des gespeicherten Umfangs wie in der Oberflaeche einlegen,
@@ -101,6 +154,10 @@ def schneiden(einstellungsdatei, modell, ausgabe, cura_pfad):
     m.vorgaben_setzen({k: v for k, v in umfang.vorgaben.items()
                        if k in m.definitionen})
 
+    if setup is not None:
+        for schluessel, wert in setup.vorschlaege().items():
+            if schluessel in m.definitionen and not einstellungen.ist_fest(schluessel):
+                einstellungen.setze(schluessel, wert)
     uebernommen, misslungen = projekt.anwenden(inhalt, einstellungen, m)
     print(f"Drucker: {m.drucker.anzeigename}; Umfang: {umfang.name}; "
           f"{uebernommen} eigene Werte")
@@ -139,6 +196,25 @@ def main():
     zerleger.add_argument("--schneiden", metavar="DATEI",
                           help="gespeicherte Einstellung ohne Oberflaeche "
                                "anwenden")
+    zerleger.add_argument("--setup", nargs="?", const="__standard__",
+                          metavar="DATEI",
+                          help="setup.json des 3DCP-Programms einlesen; ohne "
+                               "Pfadangabe die mitgelieferte data/3dcp/setup.json")
+    zerleger.add_argument("--drucker-datei", metavar="DATEI",
+                          dest="drucker_datei",
+                          help="Druckerdefinition ausserhalb der "
+                               "Cura-Installation laden")
+    zerleger.add_argument("--ohne-material", action="store_true",
+                          dest="ohne_material",
+                          help="kein Materialprofil einlegen")
+    zerleger.add_argument("--argumente-schreiben", nargs="?", const="",
+                          metavar="ZIEL", dest="argumente_schreiben",
+                          help="geaenderte Werte als cura_arguments in eine "
+                               "setup.json schreiben (nur mit --setup)")
+    zerleger.add_argument("--in-place", action="store_true", dest="in_place",
+                          help="cura_arguments direkt in die Original-setup.json "
+                               "zurueckschreiben (nur dieses Feld; Sicherung "
+                               ".orig); nur mit --setup")
     zerleger.add_argument("-m", "--modell", metavar="DATEI")
     zerleger.add_argument("-o", "--ausgabe", metavar="DATEI",
                           default="ausgabe/ausgabe.gcode")
@@ -150,11 +226,27 @@ def main():
     try:
         if angaben.pruefen:
             return pruefen(angaben.cura)
+        setup = None
+        if angaben.setup:
+            from curaui import dreidcp
+            setup_pfad = angaben.setup
+            if setup_pfad == "__standard__":
+                setup_pfad = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                          "data", "3dcp", "setup.json")
+            setup = dreidcp.lade_setup(setup_pfad)
+        if angaben.argumente_schreiben is not None or angaben.in_place:
+            return argumente_schreiben(setup, angaben.argumente_schreiben or None,
+                                       angaben.schneiden, angaben.cura,
+                                       angaben.drucker_datei,
+                                       angaben.ohne_material,
+                                       angaben.in_place)
         if angaben.schneiden:
             return schneiden(angaben.schneiden, angaben.modell,
-                             angaben.ausgabe, angaben.cura)
+                             angaben.ausgabe, angaben.cura, setup,
+                             angaben.drucker_datei, angaben.ohne_material)
         from curaui import tui
-        tui.starten(angaben.cura, sprache)
+        tui.starten(angaben.cura, sprache, setup, angaben.drucker_datei,
+                    angaben.ohne_material)
         return 0
     except cura_env.CuraNichtGefunden as fehler:
         print(str(fehler), file=sys.stderr)

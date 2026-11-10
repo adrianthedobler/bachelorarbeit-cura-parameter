@@ -30,9 +30,21 @@ class Maschine:
     """Ein geladener Drucker mit allen Ebenen."""
 
     def __init__(self, inst: CuraInstallation, name: str,
-                 materialien: Optional[Dict[str, material_modul.Material]] = None) -> None:
+                 materialien: Optional[Dict[str, material_modul.Material]] = None,
+                 drucker_datei: Optional[str] = None,
+                 ohne_material: bool = False) -> None:
         self.inst = inst
-        self.drucker = definitionen.lade_drucker(inst, name)
+        #: Pfad einer Druckerdefinition ausserhalb der Cura-Installation.
+        self.drucker_datei = drucker_datei
+        if drucker_datei:
+            self.drucker = definitionen.lade_drucker_aus_datei(inst, drucker_datei)
+        else:
+            self.drucker = definitionen.lade_drucker(inst, name)
+        #: Ohne Materialprofil bleibt Ebene 4 leer; Temperaturen, Einzug und
+        #: Filamentstaerke stammen dann allein aus der Definition und den
+        #: eigenen Eingaben. Noetig fuer Anlagen, die kein Filament fuehren.
+        self.ohne_material = bool(ohne_material) or (
+            self.drucker.daten.get("metadata", {}).get("has_materials") is False)
         (self.definitionen, self.kategorien,
          self.nur_extruder) = definitionen.baue_definitionen(self.drucker)
 
@@ -72,6 +84,8 @@ class Maschine:
         #: Beton-Auswahl). Sie liegen ueber dem Qualitaetsprofil, aber unter
         #: den eigenen Aenderungen: der Parameter bleibt frei einstellbar.
         self.auswahlvorgaben: Dict[str, Any] = {}
+        #: Fest vorgegebene Werte eines uebergeordneten Programms.
+        self.feste_vorgaben: Dict[str, Any] = {}
 
         self.ebenen_setzen()
 
@@ -119,6 +133,8 @@ class Maschine:
     # ------------------------------------------------------------- Material
 
     def _bevorzugtes_material(self, extruder: int = 0) -> Optional[material_modul.Material]:
+        if getattr(self, "ohne_material", False):
+            return None
         meta = self.drucker.daten.get("metadata", {})
         bevorzugt = str(meta.get("preferred_material", "")).strip()
         return material_modul.waehle(self.materialien, bevorzugt,
@@ -233,6 +249,21 @@ class Maschine:
         self.profil = profil
         self.ebenen_setzen()
 
+    def feste_werte_setzen(self, werte: Dict[str, Any]) -> None:
+        """Legt fest vorgegebene Werte auf alle Stapel (3DCP-Anbindung).
+
+        Die Werte stehen ueber den Benutzeraenderungen und lassen sich in der
+        Oberflaeche nicht aendern. Uebergeben werden nur Schluessel, die es in
+        dieser Druckerdefinition auch gibt.
+        """
+        gueltig = {k: v for k, v in (werte or {}).items() if k in self.definitionen}
+        self.feste_vorgaben = dict(gueltig)
+        self.einstellungen.setze_feste(gueltig)
+        for stapel in self.extruder:
+            stapel.setze_feste({k: v for k, v in gueltig.items()
+                                if k != "extruder_nr"})
+        return None
+
     def material_waehlen(self, material: material_modul.Material,
                          extruder: Optional[int] = None) -> None:
         if extruder is None:
@@ -253,7 +284,10 @@ class Maschine:
 
     @property
     def definitionsdatei(self) -> str:
+        """Die Datei, die der CuraEngine mit -j uebergeben wird."""
         import os
+        if getattr(self, "drucker_datei", None):
+            return os.path.abspath(os.path.expanduser(self.drucker_datei))
         return os.path.join(self.inst.definitionen, self.drucker.name + ".def.json")
 
     def __repr__(self) -> str:

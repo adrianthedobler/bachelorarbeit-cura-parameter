@@ -1,0 +1,247 @@
+﻿Rang;Parameter;Bezeichnung;Kategorie;Default;Testwert;Filament_mm;Abweichung_Prozent
+1;material_shrinkage_percentage;Scaling Factor Shrinkage Compensation;material;100.0;1000.0 +2 kask.;2040261.7074;47045.5771
+2;material_shrinkage_percentage_xy;Horizontal Scaling Factor Shrinkage Compensation;material;100.0;1000.0;374317.3661;8549.58068
+3;mold_width;Minimal Mold Width;blackmagic;5.0;50.0 [mold_enabled=true];41174.1925;851.43729
+4;material_flow;Flow;material;100.0;1000.0 +17 kask.;40746.9622;841.56502
+5;skin_material_flow;Top/Bottom Flow;material;100.0;1000.0 +2 kask.;27549.516;536.60354
+6;material_shrinkage_percentage_z;Vertical Scaling Factor Shrinkage Compensation;material;100.0;1000.0;26468.731;511.62918
+7;wall_material_flow;Wall Flow;material;100.0;1000.0 +6 kask.;12009.2728;177.50562
+8;support_tree_top_rate;Branch Density;support;15.0;150.0 [support_enable=true, support_structure=tree];11992.2922;177.11324
+9;support_interface_priority;Support Interface Priority;support;interface_area_overwrite_support_area;support_area_overwrite_interface_area+ / support_lines_overwrite_interface_area+ / interface_lines_overwrite_support_area- / nothing+ [support_enable=true, support_roof_enable=true, support_structure=tree];10577.6742;144.4248
+10;support_tree_rest_preference;Rest Preference;support;buildplate;graceful+ [support_enable=true, support_structure=tree, support_type=everywhere];9861.4734;127.87511
+11;support_lightning_straightening_angle;Support Lightning Straightening Angle;support;40.0;90.0 [support_enable=true, support_pattern=lightning];9850.7218;127.62666
+12;mold_roof_height;Mold Roof Height;blackmagic;0.5;5.0 [mold_enabled=true];9197.7949;112.53908
+13;support_tree_angle_slow;Preferred Branch Angle;support;50.0;60.0 [support_enable=true, support_structure=tree];8974.968;107.39008
+14;switch_extruder_retraction_amount;Nozzle Switch Retraction Distance;dual;20.0;200.0;8835.2217;104.16088
+15;support_interface_density;Support Interface Density;support;100.0;1000.0 +4 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];8722.0425;101.54558
+16;support_tree_angle;Maximum Branch Angle;support;60.0;89.0 +1 kask. [support_enable=true, support_structure=tree];8715.8479;101.40244
+17;support_structure;Support Structure;support;normal;tree+ +8 kask. [support_enable=true];8693.6144;100.88867
+18;infill_mesh;Infill Mesh;blackmagic;false;true +1 kask.;0.0;100.0
+19;anti_overhang_mesh;Anti Overhang Mesh;blackmagic;false;true;0.0;100.0
+20;support_mesh;Support Mesh;blackmagic;false;true;34.5;99.20279
+21;cutting_mesh;Cutting Mesh;blackmagic;false;true;34.5;99.20279
+22;support_interface_material_flow;Support Interface Flow;material;100.0;1000.0 +2 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];8427.3495;94.73593
+23;support_roof_material_flow;Support Roof Flow;material;100.0;1000.0 [support_enable=true, support_roof_enable=true];8427.3467;94.73586
+24;wall_0_material_flow;Outer Wall Flow;material;100.0;1000.0 +2 kask.;8359.2236;93.1617
+25;retraction_combing_max_distance;Max Comb Distance With No Retract;travel;0.0;1.0 (Ersatz);8331.5782;92.52288
+26;retraction_combing;Combing Mode;travel;all;off+ / no_outer_surfaces+ / noskin+ / infill+;8312.0783;92.07228
+27;material_flow_layer_0;Initial Layer Flow;material;100.0;1000.0 +3 kask.;8047.9553;85.96903
+28;wall_x_material_flow;Inner Wall(s) Flow;material;100.0;1000.0 +2 kask.;7977.626;84.34389
+29;support_infill_multiplier;Support Infill Line Multiplier;support;1;10 [support_enable=true];7863.6914;81.71113
+30;retraction_combing_avoid_distance;Inside Travel Avoid Distance;travel;0.6;6.0;7655.5777;76.90212
+31;infill_material_flow;Infill Flow;material;100.0;1000.0;7563.3079;74.76999
+32;support_material_flow;Support Flow;material;100.0;1000.0 [support_enable=true];7523.1491;73.84201
+33;magic_mesh_surface_mode;Surface Mode;blackmagic;normal;surface+ / both-;1185.1872;72.61315
+34;brim_line_count;Brim Line Count;platform_adhesion;20;200;7295.9341;68.59162
+35;brim_width;Brim Width;platform_adhesion;8.0;80.0 +4 kask.;7295.9339;68.59161
+36;prime_tower_flow;Prime Tower Flow;material;100.0;1000.0;7233.5948;67.15111
+37;prime_tower_size;Prime Tower Size;dual;20.0;117.5 +2 kask. [prime_tower_enable=true];7160.9182;65.47172
+38;layer_height_0;Initial Layer Height;resolution;0.2;2.0 +4 kask.;6974.0623;61.15393
+39;skirt_brim_material_flow;Skirt/Brim Flow;material;100.0;1000.0;6933.8706;60.2252
+40;support_tree_tip_diameter;Tip Diameter;support;0.4;4.0 [support_enable=true, support_structure=tree];6858.3704;58.48057
+41;skirt_brim_line_width;Skirt/Brim Line Width;resolution;0.4;4.0 +6 kask.;6816.5286;57.5137
+42;prime_tower_line_width;Prime Tower Line Width;resolution;0.4;4.0 [prime_tower_enable=true];6787.9362;56.853
+43;support_tree_branch_diameter;Branch Diameter;support;5.0;50.0 [support_enable=true, support_structure=tree];6741.5433;55.78097
+44;prime_tower_min_volume;Prime Tower Minimum Volume;dual;6.0;60.0 [prime_tower_enable=true];6680.3135;54.3661
+45;magic_spiralize;Spiralize Outer Contour;blackmagic;false;true +19 kask.;2040.4643;52.84974
+46;ooze_shield_enabled;Enable Ooze Shield;dual;false;true;6602.5402;52.56894
+47;ooze_shield_dist;Ooze Shield Distance;dual;2.0;20.0 [ooze_shield_enabled=true];6578.3692;52.01041
+48;prime_tower_base_size;Prime Tower Base Size;dual;1.2;12.0 +2 kask. [prime_tower_brim_enable=true, prime_tower_enable=true];6536.4657;51.04212
+49;prime_tower_brim_enable;Prime Tower Base;dual;false;true +2 kask. [prime_tower_enable=true];6535.742;51.02539
+50;prime_tower_position_x;Prime Tower X Position;dual;200.0;235.0 [prime_tower_enable=true];6533.2982;50.96892
+51;prime_tower_base_height;Prime Tower Base Height;dual;0.0;1.0 (Ersatz) [prime_tower_brim_enable=true, prime_tower_enable=true];6529.0401;50.87053
+52;prime_tower_position_y;Prime Tower Y Position;dual;200.0;215.0 [prime_tower_enable=true];6527.0329;50.82415
+53;prime_tower_enable;Enable Prime Tower;dual;false;true;6519.7998;50.65701
+54;prime_tower_max_bridging_distance;Prime Tower Maximum Bridging Distance;dual;5.0;50.0 [prime_tower_enable=true];6516.9104;50.59024
+55;mold_enabled;Mold;blackmagic;false;true;6462.1193;49.32415
+56;support_pattern;Support Pattern;support;zigzag;lines+ / grid+ / triangles+ / concentric+ / cross+ / gyroid+ / lightning+ / honeycomb+ / octagon+ +4 kask. [support_enable=true];6444.5079;48.91719
+57;prime_tower_mode;Prime Tower Type;dual;normal;interleaved+ [prime_tower_enable=true];6440.4979;48.82453
+58;switch_extruder_extra_prime_amount;Nozzle Switch Extra Prime Amount;dual;0.0;1.0 (Ersatz);6321.4588;46.07382
+59;support_infill_rate;Support Density;support;15.0;150.0 +3 kask. [support_enable=true];6284.7768;45.22619
+60;draft_shield_dist;Draft Shield X/Y Distance;experimental;10.0;100.0 +2 kask. [draft_shield_enabled=true];6078.906;40.46901
+61;roofing_material_flow;Top Surface Skin Flow;material;100.0;1000.0 [roofing_layer_count=1];6007.413;38.81697
+62;mold_angle;Mold Angle;blackmagic;40.0;90.0 [mold_enabled=true];5994.4814;38.51815
+63;support_wall_count;Support Wall Line Count;support;1;10 [support_enable=true];5785.8434;33.69703
+64;infill_sparse_density;Infill Density;infill;20.0;200.0 +4 kask.;5749.3432;32.8536
+65;support_bottom_line_width;Support Floor Line Width;resolution;0.4;4.0 +1 kask. [support_bottom_enable=true, support_enable=true];5685.7739;31.38466
+66;retraction_amount;Retraction Distance;travel;6.5;65.0 +2 kask.;5673.0786;31.0913
+67;support_roof_line_width;Support Roof Line Width;resolution;0.4;4.0 +1 kask. [support_enable=true, support_roof_enable=true];5635.3078;30.21851
+68;support_interface_line_width;Support Interface Line Width;resolution;0.4;4.0 +4 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];5635.3056;30.21846
+69;wall_line_width;Wall Line Width;resolution;0.4;4.0 +18 kask.;5569.5082;28.69804
+70;support_roof_pattern;Support Roof Pattern;support;concentric;lines+ / grid+ / triangles+ / zigzag+ +1 kask. [support_enable=true, support_roof_enable=true];5568.8843;28.68362
+71;support_interface_height;Support Interface Thickness;support;1.0;10.0 +2 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];5529.8237;27.78102
+72;support_roof_height;Support Roof Thickness;support;1.0;10.0 [support_enable=true, support_roof_enable=true];5529.812;27.78075
+73;skin_material_flow_layer_0;Initial Layer Bottom Flow;material;100.0;1000.0;5444.9536;25.81988
+74;support_interface_enable;Enable Support Interface;support;false;true +6 kask. [support_enable=true];5432.5194;25.53255
+75;support_roof_enable;Enable Support Roof;support;false;true +2 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true];5432.5159;25.53247
+76;support_line_width;Support Line Width;resolution;0.4;4.0 +7 kask. [support_enable=true];5432.1898;25.52494
+77;support_infill_density_multiplier_initial_layer;Support Infill Density Multiplier Initial Layer;support;1;10 [support_enable=true];5415.4025;25.13702
+78;support_roof_offset;Support Roof Horizontal Expansion;support;0.0;1.0 (Ersatz) [support_enable=true, support_roof_enable=true];5398.9177;24.7561
+79;support_interface_offset;Support Interface Horizontal Expansion;support;0.0;1.0 (Ersatz) +2 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];5398.9135;24.756
+80;wall_line_width_0;Outer Wall Line Width;resolution;0.4;4.0 +15 kask.;5356.4915;23.77573
+81;bridge_skin_support_threshold;Bridge Skin Support Threshold;experimental;50.0;100.0 [bridge_settings_enabled=true];3343.4681;22.74043
+82;support_connect_zigzags;Connect Support ZigZags;support;true;false [support_enable=true, support_pattern=zigzag];5303.1212;22.54247
+83;support_skip_some_zags;Break Up Support In Chunks;experimental;false;true [support_enable=true, support_pattern=zigzag];5300.3007;22.47729
+84;support_type;Support Placement;support;everywhere;buildplate+ +1 kask. [support_enable=true];5297.9409;22.42277
+85;support_conical_min_width;Conical Support Minimum Width;experimental;5.0;50.0 [support_conical_enabled=true, support_enable=true];5297.9228;22.42235
+86;support_zag_skip_count;Support Chunk Line Count;experimental;5;50 [support_enable=true, support_pattern=zigzag, support_skip_some_zags=true];5297.9223;22.42234
+87;gradual_support_infill_step_height;Gradual Support Infill Step Height;support;1.0;10.0 [gradual_support_infill_steps=1, support_enable=true];5297.9223;22.42234
+88;support_skip_zag_per_mm;Support Chunk Size;experimental;20.0;200.0 +1 kask. [support_enable=true, support_pattern=zigzag, support_skip_some_zags=true];5297.9222;22.42233
+89;support_xy_overrides_z;Support Distance Priority;support;z_overrides_xy;xy_overrides_z+ [support_enable=true];5297.9041;22.42192
+90;support_brim_enable;Enable Support Brim;support;true;false [support_enable=true];5268.132;21.73395
+91;support_roof_density;Support Roof Density;support;100.0;50.0 +1 kask. [support_enable=true, support_roof_enable=true];5267.8058;21.72641
+92;draft_shield_enabled;Enable Draft Shield;experimental;false;true +2 kask.;5259.6701;21.53842
+93;line_width;Line Width;resolution;0.4;4.0 +59 kask.;5246.5007;21.2341
+94;support_conical_enabled;Enable Conical Support;experimental;false;true [support_enable=true];5244.5468;21.18896
+95;bridge_skin_material_flow;Bridge Skin Flow;experimental;60.0;600.0 +1 kask. [bridge_settings_enabled=true];5240.9036;21.10477
+96;skin_support_material_flow;Skin Support Flow;infill;60.0;600.0;5240.9036;21.10477
+97;bridge_skin_density;Bridge Skin Density;experimental;100.0;1000.0 +1 kask. [bridge_settings_enabled=true];5240.7829;21.10198
+98;skin_support_density;Skin Support Density;infill;100.0;1000.0;5240.7819;21.10196
+99;support_xy_distance_overhang;Minimum Support X/Y Distance;support;0.2;2.0 [support_enable=true, support_xy_overrides_z=z_overrides_xy];5226.0124;20.76067
+100;support_infill_angles;Support Infill Line Directions;support;[];[45] [support_enable=true];5198.8173;20.13226
+101;support_initial_layer_line_distance;Initial Layer Support Line Distance;support;2.66;26.6 [support_enable=true];5170.4316;19.47633
+102;support_brim_line_count;Support Brim Line Count;support;3;30 [support_enable=true];5169.039;19.44415
+103;support_brim_width;Support Brim Width;support;1.2;12.0 +1 kask. [support_enable=true];5169.0382;19.44413
+104;support_roof_line_distance;Support Roof Line Distance;support;0.4;4.0 [support_enable=true, support_roof_enable=true];5166.2407;19.37949
+105;magic_fuzzy_skin_thickness;Fuzzy Skin Thickness;experimental;0.3;3.0 [magic_fuzzy_skin_enabled=true];5150.2021;19.00888
+106;support_infill_sparse_thickness;Support Infill Layer Thickness;support;0.1;1.0 [support_enable=true];5112.1847;18.13038
+107;zig_zaggify_support;Connect Support Lines;support;false;true [support_enable=true, support_pattern=octagon];5095.6494;17.74829
+108;support_lightning_prune_angle;Support Lightning Prune Angle;support;40.0;90.0 [support_enable=true, support_pattern=lightning];5091.7271;17.65766
+109;xy_offset;Horizontal Expansion;shell;0.0;1.0 (Ersatz) +1 kask.;5086.429;17.53523
+110;gradual_support_infill_steps;Gradual Support Infill Steps;support;0;1 (Ersatz) [support_enable=true];5079.0274;17.3642
+111;support_enable;Generate Support;support;false;true +5 kask.;5061.982;16.97032
+112;support_top_distance;Support Top Distance;support;0.1;1.0 [support_enable=true];5028.5492;16.19777
+113;support_z_distance;Support Z Distance;support;0.1;1.0 +2 kask. [support_enable=true];5028.5481;16.19774
+114;support_xy_distance;Support X/Y Distance;support;0.7;7.0 +1 kask. [support_enable=true];5024.8504;16.1123
+115;meshfix_union_all_remove_holes;Remove All Holes;meshfix;false;true;5017.7825;15.94897
+116;support_line_distance;Support Line Distance;support;2.66;26.6 +2 kask. [support_enable=true];4979.4154;15.0624
+117;support_offset;Support Horizontal Expansion;support;0.8;8.0 +2 kask. [support_enable=true, support_structure=normal];4977.601;15.02048
+118;support_join_distance;Support Join Distance;support;2.0;20.0 [support_enable=true, support_structure=normal];4977.601;15.02047
+119;wall_line_width_x;Inner Wall(s) Line Width;resolution;0.4;4.0 +11 kask.;4942.0162;14.1982
+120;bottom_layers;Bottom Layers;top_bottom;6;60 +1 kask.;4941.7658;14.19241
+121;top_thickness;Top Thickness;top_bottom;0.8;8.0 +2 kask.;4941.7652;14.1924
+122;bottom_thickness;Bottom Thickness;top_bottom;0.6;6.0 +2 kask.;4941.7648;14.19239
+123;top_bottom_thickness;Top/Bottom Thickness;top_bottom;0.8;8.0 +6 kask.;4941.7647;14.19238
+124;top_layers;Top Layers;top_bottom;8;80 +1 kask.;4941.7647;14.19238
+125;initial_bottom_layers;Initial Bottom Layers;top_bottom;6;60;4941.7644;14.19238
+126;wall_thickness;Wall Thickness;shell;0.8;8.0 +10 kask.;4925.3894;13.81399
+127;wall_line_count;Wall Line Count;shell;2;20 +9 kask.;4925.3894;13.81399
+128;layer_height;Layer Height;resolution;0.2;2.0 +12 kask.;3752.5655;13.28717
+129;flooring_material_flow;Bottom Surface Skin Flow;material;100.0;1000.0 [flooring_layer_count=1];4887.9836;12.94963
+130;infill_support_angle;Infill Overhang Angle;infill;40.0;90.0 [infill_support_enabled=true];3866.5724;10.65274
+131;adaptive_layer_height_enabled;Use Adaptive Layers;experimental;false;true;4773.5854;10.30616
+132;infill_multiplier;Infill Line Multiplier;infill;1;10;4746.4606;9.67937
+133;conical_overhang_enabled;Make Overhang Printable;experimental;false;true;4730.4178;9.30866
+134;support_lightning_angle;Support Lightning Angle;support;40.0;90.0 +3 kask. [support_enable=true, support_pattern=lightning];4722.02;9.11461
+135;support_lightning_overhang_angle;Support Lightning Overhang Angle;support;40.0;90.0 [support_enable=true, support_pattern=lightning];4722.019;9.11459
+136;adaptive_layer_height_variation_step;Adaptive Layers Variation Step Size;experimental;0.01;0.1 [adaptive_layer_height_enabled=true];4703.6811;8.69084
+137;lightning_infill_prune_angle;Lightning Infill Prune Angle;infill;40.0;90.0 [infill_pattern=lightning];3968.053;8.30777
+138;lightning_infill_support_angle;Lightning Infill Support Angle;infill;40.0;90.0 +3 kask. [infill_pattern=lightning];3968.0531;8.30777
+139;lightning_infill_overhang_angle;Lightning Infill Overhang Angle;infill;40.0;90.0 [infill_pattern=lightning];3968.0532;8.30776
+140;wipe_retraction_amount;Wipe Retraction Distance;experimental;1.0;10.0 [clean_between_layers=true];4661.0784;7.70639
+141;adaptive_layer_height_variation;Adaptive Layers Maximum Variation;experimental;0.1;1.0 [adaptive_layer_height_enabled=true];4657.7263;7.62893
+142;infill_line_distance;Infill Line Distance;infill;2.0;20.0 +1 kask.;4007.266;7.40165
+143;magic_fuzzy_skin_point_density;Fuzzy Skin Density;experimental;1.25;6.666667 +1 kask. [magic_fuzzy_skin_enabled=true];4564.8854;5.4836
+144;travel_retract_before_outer_wall;Retract Before Outer Wall;travel;automatic;force_retracted+ / force_not_retracted+ / force_not_retracted_from_infill-;4561.5772;5.40716
+145;ironing_flow;Ironing Flow;top_bottom;10.0;100.0 +1 kask. [ironing_enabled=true];4555.973;5.27766
+146;retract_at_layer_change;Retract at Layer Change;travel;false;true;4542.0783;4.95659
+147;infill_line_width;Infill Line Width;resolution;0.4;4.0 +3 kask.;4116.389;4.88008
+148;adhesion_type;Build Plate Adhesion Type;platform_adhesion;brim;skirt+ / raft+ / none+ +5 kask.;4127.1867;4.63057
+149;brim_location;Brim Location;platform_adhesion;outside;inside+ / everywhere+;4130.6385;4.55081
+150;wall_0_material_flow_roofing;Top Surface Outer Wall Flow;material;100.0;1000.0 [roofing_layer_count=1];4512.5062;4.27325
+151;skin_preshrink;Skin Removal Width;top_bottom;1.0;10.0 +5 kask.;4144.2967;4.2352
+152;infill_pattern;Infill Pattern;infill;grid;lines+ / trihexagon+ / cubicsubdiv+ / tetrahedral+ / quarter_cubic+ / concentric+ / zigzag+ / cross+ / cross_3d+ / gyroid+ / lightning+ / honeycomb+ / octagon+ / cubic+ / triangles+ +4 kask.;4147.7989;4.15427
+153;hole_xy_offset;Hole Horizontal Expansion;shell;0.0;1.0 (Ersatz);4151.6377;4.06556
+154;wall_0_material_flow_layer_0;Initial Layer Outer Wall Flow;material;100.0;1000.0;4498.6095;3.95213
+155;lightning_infill_straightening_angle;Lightning Infill Straightening Angle;infill;40.0;90.0 [infill_pattern=lightning];4157.2313;3.93631
+156;wall_x_material_flow_roofing;Top Surface Inner Wall(s) Flow;material;100.0;1000.0 [roofing_layer_count=1];4492.6684;3.81484
+157;wipe_retraction_extra_prime_amount;Wipe Retraction Extra Prime Amount;experimental;0.0;1.0 (Ersatz) [clean_between_layers=true];4484.8653;3.63453
+158;wall_x_material_flow_layer_0;Initial Layer Inner Wall Flow;material;100.0;1000.0;4479.5333;3.51132
+159;retraction_enable;Enable Retraction;travel;true;false +1 kask.;4178.0786;3.45458
+160;clean_between_layers;Wipe Nozzle Between Layers;experimental;false;true;4470.5785;3.3044
+161;max_extrusion_before_wipe;Material Volume Between Wipes;experimental;10.0;100.0 [clean_between_layers=true];4467.5784;3.23507
+162;z_seam_type;Z Seam Alignment;shell;sharpest_corner;back+ / shortest+ / random+ +2 kask.;4191.0777;3.1542
+163;z_seam_x;Z Seam X;shell;100.0;1000.0 +1 kask. [z_seam_type=back];4197.5776;3.004
+164;z_seam_corner;Seam Corner Preference;shell;z_seam_corner_inner;z_seam_corner_outer+ / z_seam_corner_any+ / z_seam_corner_weighted-;4457.5782;3.00399
+165;z_seam_relative;Z Seam Relative;shell;false;true +4 kask. [z_seam_type=back];4197.5783;3.00399
+166;z_seam_y;Z Seam Y;shell;100.0;1000.0 +1 kask. [z_seam_type=back];4197.5785;3.00398
+167;z_seam_position;Z Seam Position;shell;back;backleft+ / backright+ / right+ / frontright+ / front+ / frontleft+ / left+ / middle+ +4 kask. [z_seam_type=back];4197.5787;3.00398
+168;wall_0_inset;Outer Wall Inset;shell;0.0;1.0 (Ersatz);4456.128;2.97048
+169;meshfix_maximum_deviation;Maximum Deviation;meshfix;0.025;0.25;4199.6226;2.95675
+170;slicing_tolerance;Slicing Tolerance;experimental;middle;exclusive+ / inclusive+;4203.2723;2.87241
+171;inset_direction;Wall Ordering;shell;inside_out;outside_in+ +1 kask.;4204.0774;2.85381
+172;wipe_retraction_enable;Wipe Retraction Enable;experimental;true;false [clean_between_layers=true];4451.0786;2.8538
+173;skin_overlap_mm;Skin Overlap;top_bottom;0.02;0.2;4450.067;2.83042
+174;skin_overlap;Skin Overlap Percentage;top_bottom;5.0;50.0 +1 kask.;4450.0664;2.83041
+175;bottom_skin_preshrink;Bottom Skin Removal Width;top_bottom;1.0;10.0;4232.3664;2.20012
+176;ironing_line_spacing;Ironing Line Spacing;top_bottom;0.1;1.0 +1 kask. [ironing_enabled=true];4411.6709;1.94318
+177;top_skin_preshrink;Top Skin Removal Width;top_bottom;1.0;10.0;4245.7676;1.89045
+178;magic_fuzzy_skin_outside_only;Fuzzy Skin Outside Only;experimental;false;true [magic_fuzzy_skin_enabled=true];4251.286;1.76293
+179;infill_wall_line_count;Extra Infill Wall Count;infill;0;1 (Ersatz);4402.8783;1.74001
+180;infill_move_inwards_length;Infill Start/End Move Inwards Length;infill;0.0;1.0 (Ersatz) +2 kask.;4395.4628;1.56865
+181;material_alternate_walls;Alternate Wall Directions;experimental;false;true;4262.578;1.502
+182;infill_overlap;Infill Overlap Percentage;infill;10.0;100.0 +1 kask.;4377.4778;1.15306
+183;infill_overlap_mm;Infill Overlap;infill;0.04;0.4;4377.4777;1.15306
+184;infill_start_end_preference;Infill Start/End Preference;infill;start_closest;start_random- / end_close_to_seam+;4282.0779;1.0514
+185;group_outer_walls;Group Outer Walls;experimental;true;false;4288.5787;0.90118
+186;alternate_extra_perimeter;Alternate Extra Wall;shell;false;true;4365.0994;0.86703
+187;coasting_volume;Coasting Volume;experimental;0.064;0.64 [coasting_enable=true];4290.3001;0.86141
+188;infill_end_move_inwards_length;Infill End Move Inwards Length;infill;0.0;1.0 (Ersatz);4361.5204;0.78432
+189;infill_start_move_inwards_length;Infill Start Move Inwards Length;infill;0.0;1.0 (Ersatz);4361.52;0.78432
+190;magic_fuzzy_skin_enabled;Fuzzy Skin;experimental;false;true;4294.4454;0.76562
+191;wipe_hop_enable;Wipe Z Hop;experimental;true;false [clean_between_layers=true];4360.5771;0.76253
+192;skin_support;Infill Skin Support;infill;true;false;4297.532;0.69429
+193;xy_offset_layer_0;Initial Layer Horizontal Expansion;shell;0.0;1.0 (Ersatz);4356.7649;0.67443
+194;ironing_pattern;Ironing Pattern;top_bottom;zigzag;concentric+ +1 kask. [ironing_enabled=true];4356.2544;0.66264
+195;ironing_enabled;Enable Ironing;top_bottom;false;true;4354.9964;0.63357
+196;zig_zaggify_infill;Connect Infill Lines;infill;false;true;4353.256;0.59335
+197;flow_rate_max_extrusion_offset;Flow Rate Compensation Max Extrusion Offset;experimental;0.0;1.0 (Ersatz);4350.6964;0.53421
+198;magic_fuzzy_skin_point_dist;Fuzzy Skin Point Distance;experimental;0.8;8.0 [magic_fuzzy_skin_enabled=true];4307.8418;0.45606
+199;max_skin_angle_for_expansion;Maximum Skin Angle for Expansion;top_bottom;90.0;45.0 +1 kask.;4312.135;0.35685
+200;min_skin_width_for_expansion;Minimum Skin Width for Expansion;top_bottom;0.0;1.0 (Ersatz);4312.1362;0.35683
+201;retraction_extra_prime_amount;Retraction Extra Prime Amount;travel;0.0;1.0 (Ersatz) +1 kask.;4341.6412;0.32496
+202;skin_line_width;Top/Bottom Line Width;resolution;0.4;4.0 +5 kask.;4341.5476;0.3228
+203;z_seam_on_vertex;Z Seam On Vertex;shell;false;true [z_seam_type=shortest];4314.5783;0.3004
+204;top_bottom_pattern;Top/Bottom Pattern;top_bottom;lines;concentric+ / zigzag+ +3 kask.;4315.8983;0.26989
+205;brim_gap;Brim Distance;platform_adhesion;0.0;1.0 (Ersatz);4316.7919;0.24925
+206;initial_layer_inset_direction;Initial Layer Wall Ordering;shell;inside_out;outside_in+;4321.0778;0.15021
+207;ironing_only_highest_layer;Iron Only Highest Layer;top_bottom;false;true [ironing_enabled=true];4333.7675;0.14302
+208;ironing_inset;Ironing Inset;top_bottom;0.35;3.5 [ironing_enabled=true];4333.7563;0.14276
+209;initial_layer_line_width_factor;Initial Layer Line Width;resolution;100.0;1000.0 +5 kask.;4333.1953;0.1298
+210;connect_skin_polygons;Connect Top/Bottom Polygons;top_bottom;false;true [roofing_layer_count=1, roofing_pattern=concentric, top_bottom_pattern=concentric, top_bottom_pattern_0=concentric];4331.7994;0.09754
+211;coasting_enable;Enable Coasting;experimental;false;true;4323.8268;0.08669
+212;roofing_line_width;Top Surface Skin Line Width;top_bottom;0.4;4.0 [roofing_layer_count=1];4330.7589;0.0735
+213;coasting_min_volume;Minimum Volume Before Coasting;experimental;0.8;8.0 [coasting_enable=true];4324.8907;0.0621
+214;infill_offset_y;Infill Y Offset;infill;0.0;1.0 (Ersatz);4329.9434;0.05466
+215;infill_offset_x;Infill X Offset;infill;0.0;1.0 (Ersatz);4329.6167;0.04711
+216;infill_sparse_thickness;Infill Layer Thickness;infill;0.1;1.0;4329.2019;0.03752
+217;skin_outline_count;Extra Skin Wall Count;top_bottom;1;10;4328.9594;0.03192
+218;scarf_joint_seam_length;Scarf Seam Length;experimental;0.0;1.0 (Ersatz);4328.8335;0.02901
+219;wall_transition_length;Wall Transition Length;shell;0.4;1.884956;4328.625;0.02419
+220;small_skin_width;Small Top/Bottom Width;top_bottom;1.0;10.0;4326.856;0.01669
+221;wall_transition_angle;Wall Transitioning Threshold Angle;shell;10.0;59.0;4328.1363;0.0129
+222;min_even_wall_line_width;Minimum Even Wall Line Width;shell;0.3;3.0;4327.1682;0.00947
+223;min_wall_line_width;Minimum Wall Line Width;shell;0.34;3.4 +3 kask.;4327.1682;0.00947
+224;roofing_pattern;Top Surface Skin Pattern;top_bottom;lines;concentric+ / zigzag+ [roofing_layer_count=1];4327.9083;0.00763
+225;flooring_line_width;Bottom Surface Skin Line Width;top_bottom;0.4;4.0 [flooring_layer_count=1];4327.752;0.00402
+226;roofing_layer_count;Top Surface Skin Layers;top_bottom;0;1 (Ersatz) +1 kask.;4327.7497;0.00396
+227;flooring_layer_count;Bottom Surface Skin Layers;top_bottom;0;1 (Ersatz);4327.7479;0.00392
+228;roofing_expansion;Top Surface Expansion;top_bottom;0.0;1.0 (Ersatz) [roofing_layer_count=1];4327.732;0.00356
+229;top_bottom_pattern_0;Bottom Pattern Initial Layer;top_bottom;lines;concentric+ / zigzag+ +1 kask.;4327.7251;0.00339
+230;meshfix_maximum_resolution;Maximum Resolution;meshfix;0.5;5.0 +1 kask.;4327.4377;0.00325
+231;flooring_angles;Bottom Surface Skin Line Directions;top_bottom;[];[45] [flooring_layer_count=1];4327.6958;0.00272
+232;flooring_pattern;Bottom Surface Skin Pattern;top_bottom;lines;concentric+ / zigzag+ [flooring_layer_count=1];4327.67;0.00212
+233;fill_outline_gaps;Print Thin Walls;shell;true;false;4327.6152;0.00086
+234;min_feature_size;Minimum Feature Size;shell;0.1;0.4;4327.56;0.00042
+235;skin_angles;Top/Bottom Line Directions;top_bottom;[];[45];4327.5648;0.00031
+236;small_skin_on_surface;Small Top/Bottom On Surface;top_bottom;false;true;4327.5742;9e-05
+237;wall_0_end_speed_ratio;Outer Wall End Speed Ratio;experimental;100.0;50.0;4327.5775;1e-05
+238;wall_0_start_speed_ratio;Outer Wall Start Speed Ratio;experimental;100.0;50.0;4327.5788;1e-05
+239;gradual_flow_enabled;Gradual flow enabled;material;false;true;4327.5787;1e-05
+240;prime_during_travel_ratio;Prime During Travel Move;experimental;0.0;1.0 (Ersatz);4327.5777;1e-05
+241;support_conical_angle;Conical Support Angle;experimental;30.0;90.0 [support_conical_enabled=true, support_enable=true];4327.5786;1e-05
+242;support_angle;Support Overhang Angle;support;50.0;90.0 +3 kask. [support_enable=true];4327.5786;1e-05
+243;conical_overhang_angle;Maximum Model Angle;experimental;50.0;89.0 [conical_overhang_enabled=true];4327.5785;1e-05
+244;hole_xy_offset_max_diameter;Hole Horizontal Expansion Max Diameter;shell;0.0;1.0 (Ersatz) [hole_xy_offset=1];4327.5784;1e-05
+245;max_flow_acceleration;Gradual flow max acceleration;material;1.0;10.0 +1 kask. [gradual_flow_enabled=true];4327.5782;0.0
+246;gradual_flow_discretisation_step_size;Gradual flow discretisation step size;material;0.2;2.0 [gradual_flow_enabled=true];4327.5781;0.0

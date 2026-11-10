@@ -1,0 +1,16 @@
+# Vom Programm selbst angelegte Ordner
+ausgabe/
+einstellungen/
+vergleich/
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Das Repo des Lehrstuhls, falls es hier abgelegt wird.
+# Der fuehrende Schraegstrich begrenzt das Muster auf den Hauptordner,
+# damit die mitgelieferte Konfiguration unter data/3dcp/ verfolgt wird.
+/3DCP/

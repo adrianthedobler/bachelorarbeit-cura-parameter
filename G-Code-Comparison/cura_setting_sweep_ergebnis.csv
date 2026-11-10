@@ -1,0 +1,624 @@
+﻿Kategorie;Setting;Bezeichnung;Typ;Default;Testwert (3x / Ersatz);Status;Geaenderte Metriken;G-Code-Datei;Slice-Zeit (s)
+resolution;layer_height;Layer Height;float;0.2;2.0 +12 kask.;Veraenderung;Layer-Anzahl, Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/layer_height.gcode;0.05
+resolution;layer_height_0;Initial Layer Height;float;0.2;2.0 +4 kask.;Veraenderung;Layer-Anzahl, Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/layer_height_0.gcode;0.09
+resolution;line_width;Line Width;float;0.4;4.0 +59 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-X, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/line_width.gcode;0.12
+resolution;wall_line_width;Wall Line Width;float;0.4;4.0 +18 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/wall_line_width.gcode;0.09
+resolution;wall_line_width_0;Outer Wall Line Width;float;0.4;4.0 +15 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/wall_line_width_0.gcode;0.15
+resolution;wall_line_width_x;Inner Wall(s) Line Width;float;0.4;4.0 +11 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/wall_line_width_x.gcode;0.07
+resolution;skin_line_width;Top/Bottom Line Width;float;0.4;4.0 +5 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/skin_line_width.gcode;0.11
+resolution;infill_line_width;Infill Line Width;float;0.4;4.0 +3 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/infill_line_width.gcode;0.11
+resolution;skirt_brim_line_width;Skirt/Brim Line Width;float;0.4;4.0 +6 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/skirt_brim_line_width.gcode;0.19
+resolution;support_line_width;Support Line Width;float;0.4;4.0 +7 kask. [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_line_width.gcode;0.2
+resolution;support_interface_line_width;Support Interface Line Width;float;0.4;4.0 +4 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_interface_line_width.gcode;0.25
+resolution;support_roof_line_width;Support Roof Line Width;float;0.4;4.0 +1 kask. [support_enable=true, support_roof_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_roof_line_width.gcode;0.19
+resolution;support_bottom_line_width;Support Floor Line Width;float;0.4;4.0 +1 kask. [support_bottom_enable=true, support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_bottom_line_width.gcode;0.21
+resolution;prime_tower_line_width;Prime Tower Line Width;float;0.4;4.0 [prime_tower_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/prime_tower_line_width.gcode;0.19
+resolution;initial_layer_line_width_factor;Initial Layer Line Width;float;100.0;1000.0 +5 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Wand-Bewegungen;gcode_output/initial_layer_line_width_factor.gcode;0.14
+shell;wall_thickness;Wall Thickness;float;0.8;8.0 +10 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/wall_thickness.gcode;0.22
+shell;wall_line_count;Wall Line Count;int;2;20 +9 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/wall_line_count.gcode;0.16
+shell;wall_transition_length;Wall Transition Length;float;0.4;1.884956;Veraenderung;Filament, Extr.-Bewegungen, Wand-Bewegungen;gcode_output/wall_transition_length.gcode;0.12
+shell;wall_distribution_count;Wall Distribution Count;int;1;10;keine Veraenderung;;gcode_output/wall_distribution_count.gcode;0.13
+shell;wall_transition_angle;Wall Transitioning Threshold Angle;float;10.0;59.0;Veraenderung;Filament, Extr.-Bewegungen, Skin-Bewegungen, Wand-Bewegungen;gcode_output/wall_transition_angle.gcode;0.14
+shell;wall_transition_filter_distance;Wall Transitioning Filter Distance;float;100.000000;;Permanent deaktiviert;;;
+shell;wall_transition_filter_deviation;Wall Transitioning Filter Margin;float;0.1;1.0;keine Veraenderung;;gcode_output/wall_transition_filter_deviation.gcode;0.12
+shell;wall_0_wipe_dist;Outer Wall Wipe Distance;float;0.2;2.0;keine Veraenderung;;gcode_output/wall_0_wipe_dist.gcode;0.13
+shell;wall_0_inset;Outer Wall Inset;float;0.0;1.0 (Ersatz);Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-X, Seam-Y, Wand-Bewegungen;gcode_output/wall_0_inset.gcode;0.12
+shell;optimize_wall_printing_order;Optimize Wall Printing Order;bool;true;false;keine Veraenderung;;gcode_output/optimize_wall_printing_order.gcode;0.14
+shell;inset_direction;Wall Ordering;enum;inside_out;outside_in+ +1 kask.;Veraenderung;Filament, Seam-X, Seam-Y;gcode_output/inset_direction_outside_in.gcode;0.13
+shell;initial_layer_inset_direction;Initial Layer Wall Ordering;enum;inside_out;outside_in+;Veraenderung;Filament;gcode_output/initial_layer_inset_direction_outside_in.gcode;0.15
+shell;alternate_extra_perimeter;Alternate Extra Wall;bool;false;true;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/alternate_extra_perimeter.gcode;0.13
+shell;min_wall_line_width;Minimum Wall Line Width;float;0.34;3.4 +3 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/min_wall_line_width.gcode;0.14
+shell;min_even_wall_line_width;Minimum Even Wall Line Width;float;0.3;3.0;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/min_even_wall_line_width.gcode;0.13
+shell;min_odd_wall_line_width;Minimum Odd Wall Line Width;float;0.3;3.0;keine Veraenderung;;gcode_output/min_odd_wall_line_width.gcode;0.14
+shell;fill_outline_gaps;Print Thin Walls;bool;true;false;Veraenderung;Skin-Bewegungen, Wand-Bewegungen;gcode_output/fill_outline_gaps.gcode;0.13
+shell;min_feature_size;Minimum Feature Size;float;0.1;0.4;Veraenderung;Wand-Bewegungen;gcode_output/min_feature_size.gcode;0.14
+shell;min_bead_width;Minimum Thin Wall Line Width;float;0.2;2.0;keine Veraenderung;;gcode_output/min_bead_width.gcode;0.13
+shell;xy_offset;Horizontal Expansion;float;0.0;1.0 (Ersatz) +1 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/xy_offset.gcode;0.16
+shell;xy_offset_layer_0;Initial Layer Horizontal Expansion;float;0.0;1.0 (Ersatz);Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Wand-Bewegungen;gcode_output/xy_offset_layer_0.gcode;0.18
+shell;hole_xy_offset;Hole Horizontal Expansion;float;0.0;1.0 (Ersatz);Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/hole_xy_offset.gcode;0.15
+shell;hole_xy_offset_max_diameter;Hole Horizontal Expansion Max Diameter;float;0.0;1.0 (Ersatz) [hole_xy_offset=1];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/hole_xy_offset_max_diameter.gcode;0.16
+shell;z_seam_type;Z Seam Alignment;enum;sharpest_corner;back+ / shortest+ / random+ +2 kask.;Veraenderung;Filament, Extr.-Bewegungen, Seam-X, Seam-Y, Skin-Bewegungen, Wand-Bewegungen;gcode_output/z_seam_type_back.gcode;0.13
+shell;z_seam_on_vertex;Z Seam On Vertex;bool;false;true [z_seam_type=shortest];Veraenderung;Extr.-Bewegungen, Skin-Bewegungen;gcode_output/z_seam_on_vertex.gcode;0.14
+shell;z_seam_position;Z Seam Position;enum;back;backleft+ / backright+ / right+ / frontright+ / front+ / frontleft+ / left+ / middle+ +4 kask. [z_seam_type=back];Veraenderung;Filament, Extr.-Bewegungen, Seam-Y, Skin-Bewegungen, Wand-Bewegungen, Seam-X;gcode_output/z_seam_position_backleft.gcode;0.15
+shell;z_seam_x;Z Seam X;float;100.0;1000.0 +1 kask. [z_seam_type=back];Veraenderung;Filament, Extr.-Bewegungen, Seam-X, Skin-Bewegungen, Wand-Bewegungen;gcode_output/z_seam_x.gcode;0.14
+shell;z_seam_y;Z Seam Y;float;100.0;1000.0 +1 kask. [z_seam_type=back];Veraenderung;Filament, Extr.-Bewegungen, Seam-X, Seam-Y, Skin-Bewegungen, Wand-Bewegungen;gcode_output/z_seam_y.gcode;0.13
+shell;z_seam_corner;Seam Corner Preference;enum;z_seam_corner_inner;z_seam_corner_outer+ / z_seam_corner_any+ / z_seam_corner_weighted-;Veraenderung;Filament, Seam-Y, Seam-X;gcode_output/z_seam_corner_z_seam_corner_outer.gcode;0.13
+shell;z_seam_relative;Z Seam Relative;bool;false;true +4 kask. [z_seam_type=back];Veraenderung;Filament, Extr.-Bewegungen, Seam-X, Seam-Y, Wand-Bewegungen;gcode_output/z_seam_relative.gcode;0.13
+top_bottom;roofing_layer_count;Top Surface Skin Layers;int;0;1 (Ersatz) +1 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/roofing_layer_count.gcode;0.13
+top_bottom;roofing_line_width;Top Surface Skin Line Width;float;0.4;4.0 [roofing_layer_count=1];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/roofing_line_width.gcode;0.17
+top_bottom;roofing_pattern;Top Surface Skin Pattern;enum;lines;concentric+ / zigzag+ [roofing_layer_count=1];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/roofing_pattern_concentric.gcode;0.13
+top_bottom;roofing_monotonic;Monotonic Top Surface Order;bool;true;false [roofing_layer_count=1];keine Veraenderung;;gcode_output/roofing_monotonic.gcode;0.15
+top_bottom;roofing_angles;Top Surface Skin Line Directions;[int];[];[45] [roofing_layer_count=1];keine Veraenderung;;gcode_output/roofing_angles.gcode;0.14
+top_bottom;roofing_expansion;Top Surface Expansion;float;0.0;1.0 (Ersatz) [roofing_layer_count=1];Veraenderung;Skin-Bewegungen;gcode_output/roofing_expansion.gcode;0.14
+top_bottom;flooring_layer_count;Bottom Surface Skin Layers;int;0;1 (Ersatz);Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/flooring_layer_count.gcode;0.16
+top_bottom;flooring_line_width;Bottom Surface Skin Line Width;float;0.4;4.0 [flooring_layer_count=1];Veraenderung;Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/flooring_line_width.gcode;0.14
+top_bottom;flooring_pattern;Bottom Surface Skin Pattern;enum;lines;concentric+ / zigzag+ [flooring_layer_count=1];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/flooring_pattern_concentric.gcode;0.13
+top_bottom;flooring_monotonic;Monotonic Bottom Surface Order;bool;true;false [flooring_layer_count=1];keine Veraenderung;;gcode_output/flooring_monotonic.gcode;0.13
+top_bottom;flooring_angles;Bottom Surface Skin Line Directions;[int];[];[45] [flooring_layer_count=1];Veraenderung;Filament;gcode_output/flooring_angles.gcode;0.14
+top_bottom;top_bottom_thickness;Top/Bottom Thickness;float;0.8;8.0 +6 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen;gcode_output/top_bottom_thickness.gcode;0.14
+top_bottom;top_thickness;Top Thickness;float;0.8;8.0 +2 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen;gcode_output/top_thickness.gcode;0.14
+top_bottom;top_layers;Top Layers;int;8;80 +1 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen;gcode_output/top_layers.gcode;0.15
+top_bottom;bottom_thickness;Bottom Thickness;float;0.6;6.0 +2 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen;gcode_output/bottom_thickness.gcode;0.16
+top_bottom;bottom_layers;Bottom Layers;int;6;60 +1 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen;gcode_output/bottom_layers.gcode;0.14
+top_bottom;initial_bottom_layers;Initial Bottom Layers;int;6;60;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen;gcode_output/initial_bottom_layers.gcode;0.14
+top_bottom;top_bottom_pattern;Top/Bottom Pattern;enum;lines;concentric+ / zigzag+ +3 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/top_bottom_pattern_concentric.gcode;0.12
+top_bottom;top_bottom_pattern_0;Bottom Pattern Initial Layer;enum;lines;concentric+ / zigzag+ +1 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/top_bottom_pattern_0_concentric.gcode;0.13
+top_bottom;connect_skin_polygons;Connect Top/Bottom Polygons;bool;false;true [roofing_layer_count=1, roofing_pattern=concentric, top_bottom_pattern=concentric, top_bottom_pattern_0=concentric];Veraenderung;Filament, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/connect_skin_polygons.gcode;1.09
+top_bottom;skin_monotonic;Monotonic Top/Bottom Order;bool;false;true +1 kask.;keine Veraenderung;;gcode_output/skin_monotonic.gcode;0.13
+top_bottom;skin_angles;Top/Bottom Line Directions;[int];[];[45];Veraenderung;Skin-Bewegungen;gcode_output/skin_angles.gcode;0.15
+top_bottom;small_skin_width;Small Top/Bottom Width;float;1.0;10.0;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/small_skin_width.gcode;0.17
+top_bottom;small_skin_on_surface;Small Top/Bottom On Surface;bool;false;true;Veraenderung;Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/small_skin_on_surface.gcode;0.14
+top_bottom;skin_no_small_gaps_heuristic;No Skin in Z Gaps;bool;false;true;keine Veraenderung;;gcode_output/skin_no_small_gaps_heuristic.gcode;0.13
+top_bottom;skin_outline_count;Extra Skin Wall Count;int;1;10;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/skin_outline_count.gcode;0.16
+top_bottom;ironing_enabled;Enable Ironing;bool;false;true;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/ironing_enabled.gcode;0.13
+top_bottom;ironing_only_highest_layer;Iron Only Highest Layer;bool;false;true [ironing_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/ironing_only_highest_layer.gcode;0.13
+top_bottom;ironing_pattern;Ironing Pattern;enum;zigzag;concentric+ +1 kask. [ironing_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/ironing_pattern_concentric.gcode;0.31
+top_bottom;ironing_monotonic;Monotonic Ironing Order;bool;false;true [ironing_enabled=true];keine Veraenderung;;gcode_output/ironing_monotonic.gcode;0.14
+top_bottom;ironing_line_spacing;Ironing Line Spacing;float;0.1;1.0 +1 kask. [ironing_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/ironing_line_spacing.gcode;0.13
+top_bottom;ironing_flow;Ironing Flow;float;10.0;100.0 +1 kask. [ironing_enabled=true];Veraenderung;Filament, Extr.-Distanz, Skin-Bewegungen;gcode_output/ironing_flow.gcode;0.13
+top_bottom;ironing_inset;Ironing Inset;float;0.35;3.5 [ironing_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/ironing_inset.gcode;0.13
+top_bottom;speed_ironing;Ironing Speed;float;20.0;200.0 [ironing_enabled=true];keine Veraenderung;;gcode_output/speed_ironing.gcode;0.13
+top_bottom;acceleration_ironing;Ironing Acceleration;float;3000.0;30000.0 [acceleration_enabled=true, ironing_enabled=true];keine Veraenderung;;gcode_output/acceleration_ironing.gcode;0.13
+top_bottom;jerk_ironing;Ironing Jerk;float;20.0;200.0 [ironing_enabled=true, jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_ironing.gcode;0.13
+top_bottom;skin_overlap;Skin Overlap Percentage;float;5.0;50.0 +1 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/skin_overlap.gcode;0.13
+top_bottom;skin_overlap_mm;Skin Overlap;float;0.02;0.2;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/skin_overlap_mm.gcode;0.14
+top_bottom;skin_preshrink;Skin Removal Width;float;1.0;10.0 +5 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen;gcode_output/skin_preshrink.gcode;0.13
+top_bottom;top_skin_preshrink;Top Skin Removal Width;float;1.0;10.0;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen;gcode_output/top_skin_preshrink.gcode;0.13
+top_bottom;bottom_skin_preshrink;Bottom Skin Removal Width;float;1.0;10.0;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/bottom_skin_preshrink.gcode;0.13
+top_bottom;expand_skins_expand_distance;Skin Expand Distance;float;1.0;10.0 +2 kask.;keine Veraenderung;;gcode_output/expand_skins_expand_distance.gcode;0.13
+top_bottom;top_skin_expand_distance;Top Skin Expand Distance;float;1.0;10.0;keine Veraenderung;;gcode_output/top_skin_expand_distance.gcode;0.15
+top_bottom;bottom_skin_expand_distance;Bottom Skin Expand Distance;float;1.0;10.0;keine Veraenderung;;gcode_output/bottom_skin_expand_distance.gcode;0.15
+top_bottom;max_skin_angle_for_expansion;Maximum Skin Angle for Expansion;float;90.0;45.0 +1 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/max_skin_angle_for_expansion.gcode;0.13
+top_bottom;min_skin_width_for_expansion;Minimum Skin Width for Expansion;float;0.0;1.0 (Ersatz);Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/min_skin_width_for_expansion.gcode;0.13
+infill;infill_sparse_density;Infill Density;float;20.0;200.0 +4 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/infill_sparse_density.gcode;0.15
+infill;infill_line_distance;Infill Line Distance;float;2.0;20.0 +1 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/infill_line_distance.gcode;0.13
+infill;infill_pattern;Infill Pattern;enum;grid;lines+ / trihexagon+ / cubicsubdiv+ / tetrahedral+ / quarter_cubic+ / concentric+ / zigzag+ / cross+ / cross_3d+ / gyroid+ / lightning+ / honeycomb+ / octagon+ / cubic+ / triangles+ +4 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/infill_pattern_lines.gcode;0.12
+infill;zig_zaggify_infill;Connect Infill Lines;bool;false;true;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/zig_zaggify_infill.gcode;0.12
+infill;connect_infill_polygons;Connect Infill Polygons;bool;true;false [infill_pattern=concentric];keine Veraenderung;;gcode_output/connect_infill_polygons.gcode;0.13
+infill;infill_angles;Infill Line Directions;[int];[];[45];keine Veraenderung;;gcode_output/infill_angles.gcode;0.13
+infill;infill_offset_x;Infill X Offset;float;0.0;1.0 (Ersatz);Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/infill_offset_x.gcode;0.12
+infill;infill_offset_y;Infill Y Offset;float;0.0;1.0 (Ersatz);Veraenderung;Filament, Extr.-Distanz, Infill-Bewegungen;gcode_output/infill_offset_y.gcode;0.13
+infill;infill_multiplier;Infill Line Multiplier;int;1;10;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/infill_multiplier.gcode;1.84
+infill;infill_wall_line_count;Extra Infill Wall Count;int;0;1 (Ersatz);Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/infill_wall_line_count.gcode;0.16
+infill;sub_div_rad_add;Cubic Subdivision Shell;float;0.4;4.0 [infill_pattern=cubicsubdiv];keine Veraenderung;;gcode_output/sub_div_rad_add.gcode;0.13
+infill;infill_overlap;Infill Overlap Percentage;float;10.0;100.0 +1 kask.;Veraenderung;Filament, Extr.-Distanz, Infill-Bewegungen;gcode_output/infill_overlap.gcode;0.12
+infill;infill_overlap_mm;Infill Overlap;float;0.04;0.4;Veraenderung;Filament, Extr.-Distanz, Infill-Bewegungen;gcode_output/infill_overlap_mm.gcode;0.14
+infill;infill_wipe_dist;Infill Wipe Distance;float;0.04;0.4;keine Veraenderung;;gcode_output/infill_wipe_dist.gcode;0.12
+infill;infill_sparse_thickness;Infill Layer Thickness;float;0.1;1.0;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/infill_sparse_thickness.gcode;0.13
+infill;gradual_infill_steps;Gradual Infill Steps;int;0;1 (Ersatz);keine Veraenderung;;gcode_output/gradual_infill_steps.gcode;0.13
+infill;gradual_infill_step_height;Gradual Infill Step Height;float;1.5;15.0 [gradual_infill_steps=1];keine Veraenderung;;gcode_output/gradual_infill_step_height.gcode;0.13
+infill;infill_before_walls;Infill Before Walls;bool;true;false;keine Veraenderung;;gcode_output/infill_before_walls.gcode;0.14
+infill;min_infill_area;Minimum Infill Area;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/min_infill_area.gcode;0.14
+infill;infill_support_enabled;Infill Support;bool;false;true;keine Veraenderung;;gcode_output/infill_support_enabled.gcode;0.13
+infill;infill_support_angle;Infill Overhang Angle;float;40.0;90.0 [infill_support_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/infill_support_angle.gcode;0.13
+infill;skin_support;Infill Skin Support;bool;true;false;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/skin_support.gcode;0.12
+infill;skin_support_speed;Skin Support Speed;float;15.0;150.0;keine Veraenderung;;gcode_output/skin_support_speed.gcode;0.12
+infill;skin_support_material_flow;Skin Support Flow;float;60.0;600.0;Veraenderung;Filament;gcode_output/skin_support_material_flow.gcode;0.12
+infill;skin_support_density;Skin Support Density;float;100.0;1000.0;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/skin_support_density.gcode;0.27
+infill;skin_support_fan_speed;Skin Support Fan Speed;float;100.0;50.0;keine Veraenderung;;gcode_output/skin_support_fan_speed.gcode;0.12
+infill;skin_support_interlace_lines;Interlace Skin Support Lines;bool;false;true;keine Veraenderung;;gcode_output/skin_support_interlace_lines.gcode;0.12
+infill;lightning_infill_support_angle;Lightning Infill Support Angle;float;40.0;90.0 +3 kask. [infill_pattern=lightning];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/lightning_infill_support_angle.gcode;0.13
+infill;lightning_infill_overhang_angle;Lightning Infill Overhang Angle;float;40.0;90.0 [infill_pattern=lightning];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/lightning_infill_overhang_angle.gcode;0.13
+infill;lightning_infill_prune_angle;Lightning Infill Prune Angle;float;40.0;90.0 [infill_pattern=lightning];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/lightning_infill_prune_angle.gcode;0.17
+infill;lightning_infill_straightening_angle;Lightning Infill Straightening Angle;float;40.0;90.0 [infill_pattern=lightning];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/lightning_infill_straightening_angle.gcode;0.2
+infill;infill_move_inwards_length;Infill Start/End Move Inwards Length;float;0.0;1.0 (Ersatz) +2 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/infill_move_inwards_length.gcode;0.13
+infill;infill_start_move_inwards_length;Infill Start Move Inwards Length;float;0.0;1.0 (Ersatz);Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/infill_start_move_inwards_length.gcode;0.13
+infill;infill_end_move_inwards_length;Infill End Move Inwards Length;float;0.0;1.0 (Ersatz);Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/infill_end_move_inwards_length.gcode;0.13
+infill;infill_start_end_preference;Infill Start/End Preference;enum;start_closest;start_random- / end_close_to_seam+;Veraenderung;Filament, Seam-X, Seam-Y;gcode_output/infill_start_end_preference_end_close_to_seam.gcode;0.12
+material;default_material_print_temperature;Default Printing Temperature;float;210.000000;;Permanent deaktiviert;;;
+material;build_volume_temperature;Build Volume Temperature;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/build_volume_temperature.gcode;0.12
+material;material_print_temperature;Printing Temperature;float;210.0;365.0 +5 kask.;keine Veraenderung;;gcode_output/material_print_temperature.gcode;0.12
+material;material_print_temperature_layer_0;Printing Temperature Initial Layer;float;215.0;365.0;keine Veraenderung;;gcode_output/material_print_temperature_layer_0.gcode;0.13
+material;material_initial_print_temperature;Initial Printing Temperature;float;200.0;365.0;keine Veraenderung;;gcode_output/material_initial_print_temperature.gcode;0.13
+material;material_final_print_temperature;Final Printing Temperature;float;195.0;365.0;keine Veraenderung;;gcode_output/material_final_print_temperature.gcode;0.12
+material;material_extrusion_cool_down_speed;Extrusion Cool Down Speed Modifier;float;0.7;2.0;keine Veraenderung;;gcode_output/material_extrusion_cool_down_speed.gcode;0.19
+material;default_material_bed_temperature;Default Build Plate Temperature;float;60.000000;;Permanent deaktiviert;;;
+material;material_bed_temperature;Build Plate Temperature;float;60.0;200.0 +1 kask.;keine Veraenderung;;gcode_output/material_bed_temperature.gcode;0.12
+material;material_bed_temperature_layer_0;Build Plate Temperature Initial Layer;float;60.0;200.0;keine Veraenderung;;gcode_output/material_bed_temperature_layer_0.gcode;0.13
+material;material_adhesion_tendency;Adhesion Tendency;int;10.000000;;Permanent deaktiviert;;;
+material;material_surface_energy;Surface Energy;int;100.000000;;Permanent deaktiviert;;;
+material;material_shrinkage_percentage;Scaling Factor Shrinkage Compensation;float;100.0;1000.0 +2 kask.;Veraenderung;Layer-Anzahl, Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-X, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/material_shrinkage_percentage.gcode;5.27
+material;material_shrinkage_percentage_xy;Horizontal Scaling Factor Shrinkage Compensation;float;100.0;1000.0;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-X, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/material_shrinkage_percentage_xy.gcode;1.52
+material;material_shrinkage_percentage_z;Vertical Scaling Factor Shrinkage Compensation;float;100.0;1000.0;Veraenderung;Layer-Anzahl, Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/material_shrinkage_percentage_z.gcode;0.7
+material;material_crystallinity;Crystalline Material;bool;false;;Permanent deaktiviert;;;
+material;material_anti_ooze_retracted_position;Anti-ooze Retracted Position;float;-4.000000;;Permanent deaktiviert;;;
+material;material_anti_ooze_retraction_speed;Anti-ooze Retraction Speed;float;5.000000;;Permanent deaktiviert;;;
+material;material_break_preparation_retracted_position;Break Preparation Retracted Position;float;-16.000000;;Permanent deaktiviert;;;
+material;material_break_preparation_speed;Break Preparation Retraction Speed;float;2.000000;;Permanent deaktiviert;;;
+material;material_break_preparation_temperature;Break Preparation Temperature;float;50.000000;;Permanent deaktiviert;;;
+material;material_break_retracted_position;Break Retracted Position;float;-50.000000;;Permanent deaktiviert;;;
+material;material_break_speed;Break Retraction Speed;float;25.000000;;Permanent deaktiviert;;;
+material;material_break_temperature;Break Temperature;float;50.000000;;Permanent deaktiviert;;;
+material;material_flush_purge_speed;Flush Purge Speed;float;0.500000;;Permanent deaktiviert;;;
+material;material_flush_purge_length;Flush Purge Length;float;60.000000;;Permanent deaktiviert;;;
+material;material_end_of_filament_purge_speed;End of Filament Purge Speed;float;0.500000;;Permanent deaktiviert;;;
+material;material_end_of_filament_purge_length;End of Filament Purge Length;float;20.000000;;Permanent deaktiviert;;;
+material;material_maximum_park_duration;Maximum Park Duration;float;300.000000;;Permanent deaktiviert;;;
+material;material_no_load_move_factor;No Load Move Factor;float;0.940860;;Permanent deaktiviert;;;
+material;material_flow;Flow;float;100.0;1000.0 +17 kask.;Veraenderung;Filament;gcode_output/material_flow.gcode;0.14
+material;wall_material_flow;Wall Flow;float;100.0;1000.0 +6 kask.;Veraenderung;Filament;gcode_output/wall_material_flow.gcode;0.13
+material;wall_0_material_flow;Outer Wall Flow;float;100.0;1000.0 +2 kask.;Veraenderung;Filament;gcode_output/wall_0_material_flow.gcode;0.13
+material;wall_x_material_flow;Inner Wall(s) Flow;float;100.0;1000.0 +2 kask.;Veraenderung;Filament;gcode_output/wall_x_material_flow.gcode;0.14
+material;wall_0_material_flow_roofing;Top Surface Outer Wall Flow;float;100.0;1000.0 [roofing_layer_count=1];Veraenderung;Filament;gcode_output/wall_0_material_flow_roofing.gcode;0.13
+material;wall_x_material_flow_roofing;Top Surface Inner Wall(s) Flow;float;100.0;1000.0 [roofing_layer_count=1];Veraenderung;Filament;gcode_output/wall_x_material_flow_roofing.gcode;0.13
+material;wall_0_material_flow_flooring;Bottom Surface Outer Wall Flow;float;100.0;1000.0 [flooring_layer_count=1];keine Veraenderung;;gcode_output/wall_0_material_flow_flooring.gcode;0.14
+material;wall_x_material_flow_flooring;Bottom Surface Inner Wall(s) Flow;float;100.0;1000.0 [flooring_layer_count=1];keine Veraenderung;;gcode_output/wall_x_material_flow_flooring.gcode;0.13
+material;skin_material_flow;Top/Bottom Flow;float;100.0;1000.0 +2 kask.;Veraenderung;Filament;gcode_output/skin_material_flow.gcode;0.13
+material;roofing_material_flow;Top Surface Skin Flow;float;100.0;1000.0 [roofing_layer_count=1];Veraenderung;Filament;gcode_output/roofing_material_flow.gcode;0.13
+material;flooring_material_flow;Bottom Surface Skin Flow;float;100.0;1000.0 [flooring_layer_count=1];Veraenderung;Filament;gcode_output/flooring_material_flow.gcode;0.13
+material;infill_material_flow;Infill Flow;float;100.0;1000.0;Veraenderung;Filament;gcode_output/infill_material_flow.gcode;0.13
+material;skirt_brim_material_flow;Skirt/Brim Flow;float;100.0;1000.0;Veraenderung;Filament;gcode_output/skirt_brim_material_flow.gcode;0.21
+material;support_material_flow;Support Flow;float;100.0;1000.0 [support_enable=true];Veraenderung;Filament;gcode_output/support_material_flow.gcode;0.21
+material;support_interface_material_flow;Support Interface Flow;float;100.0;1000.0 +2 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];Veraenderung;Filament;gcode_output/support_interface_material_flow.gcode;0.27
+material;support_roof_material_flow;Support Roof Flow;float;100.0;1000.0 [support_enable=true, support_roof_enable=true];Veraenderung;Filament;gcode_output/support_roof_material_flow.gcode;0.27
+material;support_bottom_material_flow;Support Floor Flow;float;100.0;1000.0 [support_bottom_enable=true, support_enable=true];keine Veraenderung;;gcode_output/support_bottom_material_flow.gcode;0.21
+material;prime_tower_flow;Prime Tower Flow;float;100.0;1000.0;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/prime_tower_flow.gcode;0.19
+material;material_flow_layer_0;Initial Layer Flow;float;100.0;1000.0 +3 kask.;Veraenderung;Filament;gcode_output/material_flow_layer_0.gcode;0.13
+material;wall_x_material_flow_layer_0;Initial Layer Inner Wall Flow;float;100.0;1000.0;Veraenderung;Filament;gcode_output/wall_x_material_flow_layer_0.gcode;0.12
+material;wall_0_material_flow_layer_0;Initial Layer Outer Wall Flow;float;100.0;1000.0;Veraenderung;Filament;gcode_output/wall_0_material_flow_layer_0.gcode;0.13
+material;skin_material_flow_layer_0;Initial Layer Bottom Flow;float;100.0;1000.0;Veraenderung;Filament;gcode_output/skin_material_flow_layer_0.gcode;0.13
+material;material_standby_temperature;Standby Temperature;float;150.0;365.0;keine Veraenderung;;gcode_output/material_standby_temperature.gcode;0.19
+material;material_is_support_material;Is support material;bool;false;;Permanent deaktiviert;;;
+material;gradual_flow_enabled;Gradual flow enabled;bool;false;true;Veraenderung;Extr.-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/gradual_flow_enabled.gcode;0.14
+material;max_flow_acceleration;Gradual flow max acceleration;float;1.0;10.0 +1 kask. [gradual_flow_enabled=true];Veraenderung;Extr.-Bewegungen, Wand-Bewegungen;gcode_output/max_flow_acceleration.gcode;0.13
+material;layer_0_max_flow_acceleration;Initial layer max flow acceleration;float;1.0;10.0 [gradual_flow_enabled=true];keine Veraenderung;;gcode_output/layer_0_max_flow_acceleration.gcode;0.13
+material;gradual_flow_discretisation_step_size;Gradual flow discretisation step size;float;0.2;2.0 [gradual_flow_enabled=true];Veraenderung;Extr.-Bewegungen, Wand-Bewegungen;gcode_output/gradual_flow_discretisation_step_size.gcode;0.13
+material;material_pressure_advance_factor;Pressure advance factor;float;0.050000;;Permanent deaktiviert;;;
+material;material_max_flowrate;Material Maximum Flow Rate;float;16.000000;;Permanent deaktiviert;;;
+speed;speed_print;Print Speed;float;60.0;600.0 +33 kask.;keine Veraenderung;;gcode_output/speed_print.gcode;0.13
+speed;speed_infill;Infill Speed;float;60.0;600.0;keine Veraenderung;;gcode_output/speed_infill.gcode;0.13
+speed;speed_wall;Wall Speed;float;30.0;300.0 +7 kask.;keine Veraenderung;;gcode_output/speed_wall.gcode;0.13
+speed;speed_wall_0;Outer Wall Speed;float;30.0;300.0 +3 kask.;keine Veraenderung;;gcode_output/speed_wall_0.gcode;0.13
+speed;speed_wall_x;Inner Wall Speed;float;60.0;600.0 +2 kask.;keine Veraenderung;;gcode_output/speed_wall_x.gcode;0.13
+speed;speed_wall_0_roofing;Top Surface Outer Wall Speed;float;30.0;300.0 [roofing_layer_count=1];keine Veraenderung;;gcode_output/speed_wall_0_roofing.gcode;0.13
+speed;speed_wall_x_roofing;Top Surface Inner Wall Speed;float;60.0;600.0 [roofing_layer_count=1];keine Veraenderung;;gcode_output/speed_wall_x_roofing.gcode;0.13
+speed;speed_wall_0_flooring;Bottom Surface Outer Wall Speed;float;30.0;300.0 [flooring_layer_count=1];keine Veraenderung;;gcode_output/speed_wall_0_flooring.gcode;0.13
+speed;speed_wall_x_flooring;Bottom Surface Inner Wall Speed;float;60.0;600.0 [flooring_layer_count=1];keine Veraenderung;;gcode_output/speed_wall_x_flooring.gcode;0.13
+speed;speed_roofing;Top Surface Skin Speed;float;25.0;250.0 [roofing_layer_count=1];keine Veraenderung;;gcode_output/speed_roofing.gcode;0.13
+speed;speed_flooring;Bottom Surface Skin Speed;float;25.0;250.0 [flooring_layer_count=1];keine Veraenderung;;gcode_output/speed_flooring.gcode;0.12
+speed;speed_topbottom;Top/Bottom Speed;float;30.0;300.0 +7 kask.;keine Veraenderung;;gcode_output/speed_topbottom.gcode;0.13
+speed;speed_support;Support Speed;float;60.0;600.0 +4 kask. [support_enable=true];keine Veraenderung;;gcode_output/speed_support.gcode;0.21
+speed;speed_support_infill;Support Infill Speed;float;60.0;600.0 [support_enable=true];keine Veraenderung;;gcode_output/speed_support_infill.gcode;0.23
+speed;speed_support_interface;Support Interface Speed;float;40.0;400.0 +2 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/speed_support_interface.gcode;0.27
+speed;speed_support_roof;Support Roof Speed;float;40.0;400.0 [support_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/speed_support_roof.gcode;0.27
+speed;speed_support_bottom;Support Floor Speed;float;40.0;400.0 [support_bottom_enable=true, support_enable=true];keine Veraenderung;;gcode_output/speed_support_bottom.gcode;0.25
+speed;speed_prime_tower;Prime Tower Speed;float;60.0;600.0 [prime_tower_enable=true];keine Veraenderung;;gcode_output/speed_prime_tower.gcode;0.2
+speed;speed_travel;Travel Speed;float;120.0;1200.0 +2 kask.;keine Veraenderung;;gcode_output/speed_travel.gcode;0.15
+speed;speed_layer_0;Initial Layer Speed;float;30.0;300.0 +3 kask.;keine Veraenderung;;gcode_output/speed_layer_0.gcode;0.14
+speed;speed_print_layer_0;Initial Layer Print Speed;float;30.0;300.0;keine Veraenderung;;gcode_output/speed_print_layer_0.gcode;0.12
+speed;speed_travel_layer_0;Initial Layer Travel Speed;float;60.0;600.0;keine Veraenderung;;gcode_output/speed_travel_layer_0.gcode;0.13
+speed;skirt_brim_speed;Skirt/Brim Speed;float;30.0;300.0;keine Veraenderung;;gcode_output/skirt_brim_speed.gcode;0.19
+speed;speed_z_hop;Z Hop Speed;float;10.0;100.0 +1 kask.;keine Veraenderung;;gcode_output/speed_z_hop.gcode;0.12
+speed;speed_slowdown_layers;Number of Slower Layers;int;2;20;keine Veraenderung;;gcode_output/speed_slowdown_layers.gcode;0.13
+speed;speed_equalize_flow_width_factor;Flow Equalization Ratio;float;100.0;1000.0;keine Veraenderung;;gcode_output/speed_equalize_flow_width_factor.gcode;0.13
+speed;acceleration_enabled;Enable Acceleration Control;bool;false;true;keine Veraenderung;;gcode_output/acceleration_enabled.gcode;0.14
+speed;acceleration_travel_enabled;Enable Travel Acceleration;bool;true;false [acceleration_enabled=true];keine Veraenderung;;gcode_output/acceleration_travel_enabled.gcode;0.13
+speed;acceleration_print;Print Acceleration;float;3000.0;30000.0 +27 kask. [acceleration_enabled=true];keine Veraenderung;;gcode_output/acceleration_print.gcode;0.14
+speed;acceleration_infill;Infill Acceleration;float;3000.0;30000.0 [acceleration_enabled=true];keine Veraenderung;;gcode_output/acceleration_infill.gcode;0.13
+speed;acceleration_wall;Wall Acceleration;float;3000.0;30000.0 +6 kask. [acceleration_enabled=true];keine Veraenderung;;gcode_output/acceleration_wall.gcode;0.13
+speed;acceleration_wall_0;Outer Wall Acceleration;float;3000.0;30000.0 +2 kask. [acceleration_enabled=true];keine Veraenderung;;gcode_output/acceleration_wall_0.gcode;0.14
+speed;acceleration_wall_x;Inner Wall Acceleration;float;3000.0;30000.0 +2 kask. [acceleration_enabled=true];keine Veraenderung;;gcode_output/acceleration_wall_x.gcode;0.13
+speed;acceleration_wall_0_roofing;Top Surface Outer Wall Acceleration;float;3000.0;30000.0 [acceleration_enabled=true, roofing_layer_count=1];keine Veraenderung;;gcode_output/acceleration_wall_0_roofing.gcode;0.14
+speed;acceleration_wall_x_roofing;Top Surface Inner Wall Acceleration;float;3000.0;30000.0 [acceleration_enabled=true, roofing_layer_count=1];keine Veraenderung;;gcode_output/acceleration_wall_x_roofing.gcode;0.15
+speed;acceleration_wall_0_flooring;Bottom Surface Outer Wall Acceleration;float;3000.0;30000.0 [acceleration_enabled=true, flooring_layer_count=1];keine Veraenderung;;gcode_output/acceleration_wall_0_flooring.gcode;0.14
+speed;acceleration_wall_x_flooring;Bottom Surface Inner Wall Acceleration;float;3000.0;30000.0 [acceleration_enabled=true, flooring_layer_count=1];keine Veraenderung;;gcode_output/acceleration_wall_x_flooring.gcode;0.13
+speed;acceleration_roofing;Top Surface Skin Acceleration;float;3000.0;30000.0 [acceleration_enabled=true, roofing_layer_count=1];keine Veraenderung;;gcode_output/acceleration_roofing.gcode;0.14
+speed;acceleration_flooring;Bottom Surface Skin Acceleration;float;3000.0;30000.0 [acceleration_enabled=true, flooring_layer_count=1];keine Veraenderung;;gcode_output/acceleration_flooring.gcode;0.13
+speed;acceleration_topbottom;Top/Bottom Acceleration;float;3000.0;30000.0 +3 kask. [acceleration_enabled=true];keine Veraenderung;;gcode_output/acceleration_topbottom.gcode;0.13
+speed;acceleration_support;Support Acceleration;float;3000.0;30000.0 +4 kask. [acceleration_enabled=true, support_enable=true];keine Veraenderung;;gcode_output/acceleration_support.gcode;0.25
+speed;acceleration_support_infill;Support Infill Acceleration;float;3000.0;30000.0 [acceleration_enabled=true, support_enable=true];keine Veraenderung;;gcode_output/acceleration_support_infill.gcode;0.33
+speed;acceleration_support_interface;Support Interface Acceleration;float;3000.0;30000.0 +2 kask. [acceleration_enabled=true, support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/acceleration_support_interface.gcode;0.3
+speed;acceleration_support_roof;Support Roof Acceleration;float;3000.0;30000.0 [acceleration_enabled=true, support_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/acceleration_support_roof.gcode;0.3
+speed;acceleration_support_bottom;Support Floor Acceleration;float;3000.0;30000.0 [acceleration_enabled=true, support_bottom_enable=true, support_enable=true];keine Veraenderung;;gcode_output/acceleration_support_bottom.gcode;0.23
+speed;acceleration_prime_tower;Prime Tower Acceleration;float;3000.0;30000.0 [acceleration_enabled=true, prime_tower_enable=true];keine Veraenderung;;gcode_output/acceleration_prime_tower.gcode;0.2
+speed;acceleration_travel;Travel Acceleration;float;5000.0;50000.0 +1 kask. [acceleration_enabled=true];keine Veraenderung;;gcode_output/acceleration_travel.gcode;0.15
+speed;acceleration_layer_0;Initial Layer Acceleration;float;3000.0;30000.0 +3 kask. [acceleration_enabled=true];keine Veraenderung;;gcode_output/acceleration_layer_0.gcode;0.13
+speed;acceleration_print_layer_0;Initial Layer Print Acceleration;float;3000.0;30000.0 [acceleration_enabled=true];keine Veraenderung;;gcode_output/acceleration_print_layer_0.gcode;0.13
+speed;acceleration_travel_layer_0;Initial Layer Travel Acceleration;float;3000.0;30000.0 [acceleration_enabled=true];keine Veraenderung;;gcode_output/acceleration_travel_layer_0.gcode;0.13
+speed;acceleration_skirt_brim;Skirt/Brim Acceleration;float;3000.0;30000.0 [acceleration_enabled=true, draft_shield_enabled=true, ooze_shield_enabled=true];keine Veraenderung;;gcode_output/acceleration_skirt_brim.gcode;0.22
+speed;jerk_enabled;Enable Jerk Control;bool;false;true;keine Veraenderung;;gcode_output/jerk_enabled.gcode;0.14
+speed;jerk_travel_enabled;Enable Travel Jerk;bool;true;false [jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_travel_enabled.gcode;0.14
+speed;jerk_print;Print Jerk;float;20.0;200.0 +27 kask. [jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_print.gcode;0.13
+speed;jerk_infill;Infill Jerk;float;20.0;200.0 [jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_infill.gcode;0.13
+speed;jerk_wall;Wall Jerk;float;20.0;200.0 +6 kask. [jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_wall.gcode;0.14
+speed;jerk_wall_0;Outer Wall Jerk;float;20.0;200.0 +2 kask. [jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_wall_0.gcode;0.14
+speed;jerk_wall_x;Inner Wall Jerk;float;20.0;200.0 +2 kask. [jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_wall_x.gcode;0.18
+speed;jerk_wall_0_roofing;Top Surface Outer Wall Jerk;float;20.0;200.0 [jerk_enabled=true, roofing_layer_count=1];keine Veraenderung;;gcode_output/jerk_wall_0_roofing.gcode;0.15
+speed;jerk_wall_x_roofing;Top Surface Inner Wall Jerk;float;20.0;200.0 [jerk_enabled=true, roofing_layer_count=1];keine Veraenderung;;gcode_output/jerk_wall_x_roofing.gcode;0.14
+speed;jerk_wall_0_flooring;Bottom Surface Outer Wall Jerk;float;20.0;200.0 [flooring_layer_count=1, jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_wall_0_flooring.gcode;0.16
+speed;jerk_wall_x_flooring;Bottom Surface Inner Wall Jerk;float;20.0;200.0 [flooring_layer_count=1, jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_wall_x_flooring.gcode;0.16
+speed;jerk_roofing;Top Surface Skin Jerk;float;20.0;200.0 [jerk_enabled=true, roofing_layer_count=1];keine Veraenderung;;gcode_output/jerk_roofing.gcode;0.14
+speed;jerk_flooring;Bottom Surface Skin Jerk;float;20.0;200.0 [flooring_layer_count=1, jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_flooring.gcode;0.13
+speed;jerk_topbottom;Top/Bottom Jerk;float;20.0;200.0 +3 kask. [jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_topbottom.gcode;0.14
+speed;jerk_support;Support Jerk;float;20.0;200.0 +4 kask. [jerk_enabled=true, support_enable=true];keine Veraenderung;;gcode_output/jerk_support.gcode;0.22
+speed;jerk_support_infill;Support Infill Jerk;float;20.0;200.0 [jerk_enabled=true, support_enable=true];keine Veraenderung;;gcode_output/jerk_support_infill.gcode;0.21
+speed;jerk_support_interface;Support Interface Jerk;float;20.0;200.0 +2 kask. [jerk_enabled=true, support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/jerk_support_interface.gcode;0.27
+speed;jerk_support_roof;Support Roof Jerk;float;20.0;200.0 [jerk_enabled=true, support_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/jerk_support_roof.gcode;0.27
+speed;jerk_support_bottom;Support Floor Jerk;float;20.0;200.0 [jerk_enabled=true, support_bottom_enable=true, support_enable=true];keine Veraenderung;;gcode_output/jerk_support_bottom.gcode;0.22
+speed;jerk_prime_tower;Prime Tower Jerk;float;20.0;200.0 [jerk_enabled=true, prime_tower_enable=true];keine Veraenderung;;gcode_output/jerk_prime_tower.gcode;0.21
+speed;jerk_travel;Travel Jerk;float;30.0;300.0 +1 kask. [jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_travel.gcode;0.15
+speed;jerk_layer_0;Initial Layer Jerk;float;20.0;200.0 +3 kask. [jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_layer_0.gcode;0.14
+speed;jerk_print_layer_0;Initial Layer Print Jerk;float;20.0;200.0 [jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_print_layer_0.gcode;0.13
+speed;jerk_travel_layer_0;Initial Layer Travel Jerk;float;20.0;200.0 [jerk_enabled=true];keine Veraenderung;;gcode_output/jerk_travel_layer_0.gcode;0.13
+speed;jerk_skirt_brim;Skirt/Brim Jerk;float;20.0;200.0 [draft_shield_enabled=true, jerk_enabled=true, ooze_shield_enabled=true];keine Veraenderung;;gcode_output/jerk_skirt_brim.gcode;0.21
+travel;retraction_enable;Enable Retraction;bool;true;false +1 kask.;Veraenderung;Filament;gcode_output/retraction_enable.gcode;0.13
+travel;retract_at_layer_change;Retract at Layer Change;bool;false;true;Veraenderung;Filament;gcode_output/retract_at_layer_change.gcode;0.13
+travel;retraction_amount;Retraction Distance;float;6.5;65.0 +2 kask.;Veraenderung;Filament;gcode_output/retraction_amount.gcode;0.13
+travel;retraction_speed;Retraction Speed;float;25.0;250.0 +5 kask.;keine Veraenderung;;gcode_output/retraction_speed.gcode;0.13
+travel;retraction_retract_speed;Retraction Retract Speed;float;25.0;250.0;keine Veraenderung;;gcode_output/retraction_retract_speed.gcode;0.13
+travel;retraction_prime_speed;Retraction Prime Speed;float;25.0;250.0;keine Veraenderung;;gcode_output/retraction_prime_speed.gcode;0.13
+travel;retraction_extra_prime_amount;Retraction Extra Prime Amount;float;0.0;1.0 (Ersatz) +1 kask.;Veraenderung;Filament;gcode_output/retraction_extra_prime_amount.gcode;0.13
+travel;retraction_min_travel;Retraction Minimum Travel;float;1.5;15.0;keine Veraenderung;;gcode_output/retraction_min_travel.gcode;0.13
+travel;retraction_count_max;Maximum Retraction Count;int;90;900;keine Veraenderung;;gcode_output/retraction_count_max.gcode;0.13
+travel;retraction_extrusion_window;Minimum Extrusion Distance Window;float;4.5;45.0;keine Veraenderung;;gcode_output/retraction_extrusion_window.gcode;0.15
+travel;retraction_combing;Combing Mode;enum;all;off+ / no_outer_surfaces+ / noskin+ / infill+;Veraenderung;Filament;gcode_output/retraction_combing_off.gcode;0.13
+travel;retraction_combing_max_distance;Max Comb Distance With No Retract;float;0.0;1.0 (Ersatz);Veraenderung;Filament;gcode_output/retraction_combing_max_distance.gcode;0.13
+travel;retraction_combing_avoid_distance;Inside Travel Avoid Distance;float;0.6;6.0;Veraenderung;Filament;gcode_output/retraction_combing_avoid_distance.gcode;0.13
+travel;travel_retract_before_outer_wall;Retract Before Outer Wall;enum;automatic;force_retracted+ / force_not_retracted+ / force_not_retracted_from_infill-;Veraenderung;Filament;gcode_output/travel_retract_before_outer_wall_force_retracted.gcode;0.13
+travel;travel_avoid_other_parts;Avoid Printed Parts When Traveling;bool;true;false;keine Veraenderung;;gcode_output/travel_avoid_other_parts.gcode;0.14
+travel;travel_avoid_supports;Avoid Supports When Traveling;bool;false;true;keine Veraenderung;;gcode_output/travel_avoid_supports.gcode;0.13
+travel;travel_avoid_distance;Travel Avoid Distance;float;0.625;6.25 +2 kask.;keine Veraenderung;;gcode_output/travel_avoid_distance.gcode;0.13
+travel;layer_start_at_z_seam;Layer Start at Z Seam;bool;false;true +2 kask. [z_seam_type=back];keine Veraenderung;;gcode_output/layer_start_at_z_seam.gcode;0.13
+travel;layer_start_x;Layer Start X;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/layer_start_x.gcode;0.13
+travel;layer_start_y;Layer Start Y;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/layer_start_y.gcode;0.13
+travel;retraction_hop_enabled;Z Hop When Retracted;bool;false;true +1 kask.;keine Veraenderung;;gcode_output/retraction_hop_enabled.gcode;0.12
+travel;retraction_hop_only_when_collides;Z Hop Only Over Printed Parts;bool;false;true [retraction_hop_enabled=true, wipe_hop_enable=true];keine Veraenderung;;gcode_output/retraction_hop_only_when_collides.gcode;0.13
+travel;retraction_hop;Z Hop Height;float;1.0;10.0 +2 kask. [retraction_hop_enabled=true, wipe_hop_enable=true];keine Veraenderung;;gcode_output/retraction_hop.gcode;0.14
+travel;retraction_hop_after_extruder_switch;Z Hop After Extruder Switch;bool;true;false [retraction_hop_enabled=true, wipe_hop_enable=true];keine Veraenderung;;gcode_output/retraction_hop_after_extruder_switch.gcode;0.19
+travel;retraction_hop_after_extruder_switch_height;Z Hop After Extruder Switch Height;float;1.0;10.0;keine Veraenderung;;gcode_output/retraction_hop_after_extruder_switch_height.gcode;0.19
+cooling;cool_fan_enabled;Enable Print Cooling;bool;true;false +3 kask.;keine Veraenderung;;gcode_output/cool_fan_enabled.gcode;0.13
+cooling;build_fan_full_at_height;Build Volume Fan Speed at Height;float;0.0;1.0 (Ersatz) +1 kask.;keine Veraenderung;;gcode_output/build_fan_full_at_height.gcode;0.12
+cooling;build_fan_full_layer;Build Volume Fan Speed at Layer;int;0;1 (Ersatz);keine Veraenderung;;gcode_output/build_fan_full_layer.gcode;0.13
+cooling;build_volume_fan_speed_0;Initial Layers Build Volume Fan Speed;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/build_volume_fan_speed_0.gcode;0.13
+cooling;build_volume_fan_speed;Build Volume Fan Speed;float;100.0;50.0;keine Veraenderung;;gcode_output/build_volume_fan_speed.gcode;0.13
+cooling;cool_fan_speed;Fan Speed;float;100.0;50.0 +2 kask.;keine Veraenderung;;gcode_output/cool_fan_speed.gcode;0.13
+cooling;cool_fan_speed_min;Regular Fan Speed;float;100.0;50.0;keine Veraenderung;;gcode_output/cool_fan_speed_min.gcode;0.13
+cooling;cool_fan_speed_max;Maximum Fan Speed;float;100.0;50.0;keine Veraenderung;;gcode_output/cool_fan_speed_max.gcode;0.13
+cooling;cool_min_layer_time_fan_speed_max;Regular/Maximum Fan Speed Threshold;float;10.0;100.0;keine Veraenderung;;gcode_output/cool_min_layer_time_fan_speed_max.gcode;0.13
+cooling;cool_fan_speed_0;Initial Fan Speed;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/cool_fan_speed_0.gcode;0.13
+cooling;cool_fan_full_at_height;Regular Fan Speed at Height;float;0.5;5.0 +1 kask.;keine Veraenderung;;gcode_output/cool_fan_full_at_height.gcode;0.13
+cooling;cool_fan_full_layer;Regular Fan Speed at Layer;int;2;20;keine Veraenderung;;gcode_output/cool_fan_full_layer.gcode;0.13
+cooling;cool_min_layer_time;Minimum Layer Time;float;5.0;50.0 +1 kask.;keine Veraenderung;;gcode_output/cool_min_layer_time.gcode;0.13
+cooling;cool_min_speed;Minimum Speed;float;10.0;100.0 +5 kask.;keine Veraenderung;;gcode_output/cool_min_speed.gcode;0.13
+cooling;cool_lift_head;Lift Head;bool;false;true;keine Veraenderung;;gcode_output/cool_lift_head.gcode;0.13
+cooling;cool_min_temperature;Small Layer Printing Temperature;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/cool_min_temperature.gcode;0.13
+cooling;cool_during_extruder_switch;Cooling during extruder switch;enum;unchanged;only_last_extruder- / all_fans-;keine Veraenderung;;;0.13
+support;support_enable;Generate Support;bool;false;true +5 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_enable.gcode;0.17
+support;support_structure;Support Structure;enum;normal;tree+ +8 kask. [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_structure_tree.gcode;0.37
+support;support_tree_angle;Maximum Branch Angle;float;60.0;89.0 +1 kask. [support_enable=true, support_structure=tree];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_tree_angle.gcode;0.68
+support;support_tree_branch_diameter;Branch Diameter;float;5.0;50.0 [support_enable=true, support_structure=tree];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_tree_branch_diameter.gcode;0.68
+support;support_tree_max_diameter;Trunk Diameter;float;25.0;250.0 [support_enable=true, support_structure=tree];keine Veraenderung;;gcode_output/support_tree_max_diameter.gcode;0.59
+support;support_tree_branch_diameter_angle;Branch Diameter Angle;float;7.0;70.0 [support_enable=true, support_structure=tree];keine Veraenderung;;gcode_output/support_tree_branch_diameter_angle.gcode;0.58
+support;support_z_seam_away_from_model;Support Z Seam Away from Model;bool;false;true [support_enable=true];keine Veraenderung;;gcode_output/support_z_seam_away_from_model.gcode;0.21
+support;support_z_seam_min_distance;Min Z Seam Distance from Model;float;0.8;8.0 [support_enable=true, support_z_seam_away_from_model=true];keine Veraenderung;;gcode_output/support_z_seam_min_distance.gcode;0.2
+support;support_type;Support Placement;enum;everywhere;buildplate+ +1 kask. [support_enable=true];Veraenderung;Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_type_buildplate.gcode;0.21
+support;support_tree_angle_slow;Preferred Branch Angle;float;50.0;60.0 [support_enable=true, support_structure=tree];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_tree_angle_slow.gcode;0.55
+support;support_tree_max_diameter_increase_by_merges_when_support_to_model;Diameter Increase To Model;float;1.0;10.0 [support_enable=true, support_structure=tree];keine Veraenderung;;gcode_output/support_tree_max_diameter_increase_by_merges_when_support_to_model.gcode;0.59
+support;support_tree_min_height_to_model;Minimum Height To Model;float;3.0;30.0 [support_enable=true, support_structure=tree];keine Veraenderung;;gcode_output/support_tree_min_height_to_model.gcode;0.58
+support;support_tree_bp_diameter;Initial Layer Diameter;float;7.5;75.0 [support_enable=true, support_structure=tree];keine Veraenderung;;gcode_output/support_tree_bp_diameter.gcode;0.59
+support;support_tree_top_rate;Branch Density;float;15.0;150.0 [support_enable=true, support_structure=tree];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_tree_top_rate.gcode;1.1
+support;support_tree_tip_diameter;Tip Diameter;float;0.4;4.0 [support_enable=true, support_structure=tree];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_tree_tip_diameter.gcode;0.33
+support;support_tree_limit_branch_reach;Limit Branch Reach;bool;true;false [support_enable=true, support_structure=tree];keine Veraenderung;;gcode_output/support_tree_limit_branch_reach.gcode;0.56
+support;support_tree_branch_reach_limit;Optimal Branch Range;float;30.0;300.0 [support_enable=true, support_structure=tree];keine Veraenderung;;gcode_output/support_tree_branch_reach_limit.gcode;0.57
+support;support_tree_rest_preference;Rest Preference;enum;buildplate;graceful+ [support_enable=true, support_structure=tree, support_type=everywhere];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_tree_rest_preference_graceful.gcode;0.56
+support;support_angle;Support Overhang Angle;float;50.0;90.0 +3 kask. [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_angle.gcode;0.14
+support;support_pattern;Support Pattern;enum;zigzag;lines+ / grid+ / triangles+ / concentric+ / cross+ / gyroid+ / lightning+ / honeycomb+ / octagon+ +4 kask. [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_pattern_lines.gcode;0.17
+support;support_wall_count;Support Wall Line Count;int;1;10 [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_wall_count.gcode;0.25
+support;support_infill_multiplier;Support Infill Line Multiplier;int;1;10 [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_infill_multiplier.gcode;0.22
+support;support_interface_wall_count;Support Interface Wall Line Count;int;0;1 (Ersatz) +2 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/support_interface_wall_count.gcode;0.26
+support;support_roof_wall_count;Support Roof Wall Line Count;int;0;1 (Ersatz) [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/support_roof_wall_count.gcode;0.27
+support;support_bottom_wall_count;Support Bottom Wall Line Count;int;0;1 (Ersatz) [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/support_bottom_wall_count.gcode;0.25
+support;support_lightning_angle;Support Lightning Angle;float;40.0;90.0 +3 kask. [support_enable=true, support_pattern=lightning];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_lightning_angle.gcode;0.23
+support;support_lightning_overhang_angle;Support Lightning Overhang Angle;float;40.0;90.0 [support_enable=true, support_pattern=lightning];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_lightning_overhang_angle.gcode;0.23
+support;support_lightning_prune_angle;Support Lightning Prune Angle;float;40.0;90.0 [support_enable=true, support_pattern=lightning];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_lightning_prune_angle.gcode;0.23
+support;support_lightning_straightening_angle;Support Lightning Straightening Angle;float;40.0;90.0 [support_enable=true, support_pattern=lightning];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_lightning_straightening_angle.gcode;0.23
+support;zig_zaggify_support;Connect Support Lines;bool;false;true [support_enable=true, support_pattern=octagon];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/zig_zaggify_support.gcode;0.2
+support;support_connect_zigzags;Connect Support ZigZags;bool;true;false [support_enable=true, support_pattern=zigzag];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_connect_zigzags.gcode;0.22
+support;support_infill_rate;Support Density;float;15.0;150.0 +3 kask. [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_infill_rate.gcode;0.21
+support;support_line_distance;Support Line Distance;float;2.66;26.6 +2 kask. [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_line_distance.gcode;0.21
+support;support_initial_layer_line_distance;Initial Layer Support Line Distance;float;2.66;26.6 [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_initial_layer_line_distance.gcode;0.21
+support;support_infill_density_multiplier_initial_layer;Support Infill Density Multiplier Initial Layer;int;1;10 [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_infill_density_multiplier_initial_layer.gcode;0.21
+support;support_infill_angles;Support Infill Line Directions;[int];[];[45] [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_infill_angles.gcode;0.21
+support;support_brim_enable;Enable Support Brim;bool;true;false [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/support_brim_enable.gcode;0.21
+support;support_brim_width;Support Brim Width;float;1.2;12.0 +1 kask. [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_brim_width.gcode;0.22
+support;support_brim_line_count;Support Brim Line Count;int;3;30 [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_brim_line_count.gcode;0.2
+support;support_brim_minimum_hole_area;Minimum hole area in brim support;float;16.0;160.0;keine Veraenderung;;gcode_output/support_brim_minimum_hole_area.gcode;0.13
+support;support_z_distance;Support Z Distance;float;0.1;1.0 +2 kask. [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_z_distance.gcode;0.19
+support;support_top_distance;Support Top Distance;float;0.1;1.0 [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_top_distance.gcode;0.19
+support;support_bottom_distance;Support Bottom Distance;float;0.1;1.0 [support_enable=true];keine Veraenderung;;gcode_output/support_bottom_distance.gcode;0.21
+support;support_xy_distance;Support X/Y Distance;float;0.7;7.0 +1 kask. [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_xy_distance.gcode;0.22
+support;support_xy_overrides_z;Support Distance Priority;enum;z_overrides_xy;xy_overrides_z+ [support_enable=true];Veraenderung;Stuetzstruktur-Bewegungen;gcode_output/support_xy_overrides_z_xy_overrides_z.gcode;0.23
+support;support_xy_distance_overhang;Minimum Support X/Y Distance;float;0.2;2.0 [support_enable=true, support_xy_overrides_z=z_overrides_xy];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_xy_distance_overhang.gcode;0.22
+support;support_bottom_stair_step_height;Support Stair Step Height;float;0.3;3.0 [support_enable=true, support_structure=normal];keine Veraenderung;;gcode_output/support_bottom_stair_step_height.gcode;0.21
+support;support_bottom_stair_step_width;Support Stair Step Maximum Width;float;5.0;50.0 [support_enable=true, support_structure=normal];keine Veraenderung;;gcode_output/support_bottom_stair_step_width.gcode;0.22
+support;support_bottom_stair_step_min_slope;Support Stair Step Minimum Slope Angle;float;10.0;89.99 [support_enable=true, support_structure=normal];keine Veraenderung;;gcode_output/support_bottom_stair_step_min_slope.gcode;0.22
+support;support_join_distance;Support Join Distance;float;2.0;20.0 [support_enable=true, support_structure=normal];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_join_distance.gcode;0.18
+support;support_offset;Support Horizontal Expansion;float;0.8;8.0 +2 kask. [support_enable=true, support_structure=normal];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_offset.gcode;0.23
+support;support_infill_sparse_thickness;Support Infill Layer Thickness;float;0.1;1.0 [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_infill_sparse_thickness.gcode;0.21
+support;gradual_support_infill_steps;Gradual Support Infill Steps;int;0;1 (Ersatz) [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/gradual_support_infill_steps.gcode;0.22
+support;gradual_support_infill_step_height;Gradual Support Infill Step Height;float;1.0;10.0 [gradual_support_infill_steps=1, support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/gradual_support_infill_step_height.gcode;0.21
+support;minimum_support_area;Minimum Support Area;float;0.0;1.0 (Ersatz) [support_enable=true];keine Veraenderung;;gcode_output/minimum_support_area.gcode;0.22
+support;support_interface_enable;Enable Support Interface;bool;false;true +6 kask. [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_interface_enable.gcode;0.28
+support;support_roof_enable;Enable Support Roof;bool;false;true +2 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_roof_enable.gcode;0.27
+support;support_bottom_enable;Enable Support Floor;bool;false;true +2 kask. [support_enable=true, support_interface_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/support_bottom_enable.gcode;0.3
+support;support_interface_height;Support Interface Thickness;float;1.0;10.0 +2 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_interface_height.gcode;0.38
+support;support_roof_height;Support Roof Thickness;float;1.0;10.0 [support_enable=true, support_roof_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_roof_height.gcode;0.36
+support;support_bottom_height;Support Floor Thickness;float;1.0;10.0 [support_bottom_enable=true, support_enable=true];keine Veraenderung;;gcode_output/support_bottom_height.gcode;0.21
+support;support_interface_density;Support Interface Density;float;100.0;1000.0 +4 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_interface_density.gcode;0.87
+support;support_roof_density;Support Roof Density;float;100.0;50.0 +1 kask. [support_enable=true, support_roof_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_roof_density.gcode;0.27
+support;support_roof_line_distance;Support Roof Line Distance;float;0.4;4.0 [support_enable=true, support_roof_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_roof_line_distance.gcode;0.21
+support;support_bottom_density;Support Floor Density;float;100.0;50.0 +1 kask. [support_bottom_enable=true, support_enable=true];keine Veraenderung;;gcode_output/support_bottom_density.gcode;0.21
+support;support_bottom_line_distance;Support Floor Line Distance;float;0.4;4.0 [support_bottom_enable=true, support_enable=true];keine Veraenderung;;gcode_output/support_bottom_line_distance.gcode;0.22
+support;support_interface_pattern;Support Interface Pattern;enum;concentric;lines- / grid- / triangles- / zigzag- +5 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];keine Veraenderung;;;0.27
+support;support_roof_pattern;Support Roof Pattern;enum;concentric;lines+ / grid+ / triangles+ / zigzag+ +1 kask. [support_enable=true, support_roof_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_roof_pattern_lines.gcode;0.2
+support;support_bottom_pattern;Support Floor Pattern;enum;concentric;lines- / grid- / triangles- / zigzag- +1 kask. [support_bottom_enable=true, support_enable=true];keine Veraenderung;;;0.22
+support;minimum_interface_area;Minimum Support Interface Area;float;1.0;10.0 +2 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/minimum_interface_area.gcode;0.28
+support;minimum_roof_area;Minimum Support Roof Area;float;1.0;10.0 [support_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/minimum_roof_area.gcode;0.27
+support;minimum_bottom_area;Minimum Support Floor Area;float;1.0;10.0 [support_bottom_enable=true, support_enable=true, support_structure=normal];keine Veraenderung;;gcode_output/minimum_bottom_area.gcode;0.21
+support;support_interface_offset;Support Interface Horizontal Expansion;float;0.0;1.0 (Ersatz) +2 kask. [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_interface_offset.gcode;0.27
+support;support_roof_offset;Support Roof Horizontal Expansion;float;0.0;1.0 (Ersatz) [support_enable=true, support_roof_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen, Support-Interface-Bewegungen;gcode_output/support_roof_offset.gcode;0.28
+support;support_bottom_offset;Support Floor Horizontal Expansion;float;0.0;1.0 (Ersatz) [support_bottom_enable=true, support_enable=true];keine Veraenderung;;gcode_output/support_bottom_offset.gcode;0.24
+support;support_interface_priority;Support Interface Priority;enum;interface_area_overwrite_support_area;support_area_overwrite_interface_area+ / support_lines_overwrite_interface_area+ / interface_lines_overwrite_support_area- / nothing+ [support_enable=true, support_roof_enable=true, support_structure=tree];Veraenderung;Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen, Support-Interface-Bewegungen, Filament;gcode_output/support_interface_priority_support_area_overwrite_interface_area.gcode;0.9
+support;support_interface_angles;Support Interface Line Directions;[int];[];[45] [support_bottom_enable=true, support_enable=true, support_interface_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/support_interface_angles.gcode;0.28
+support;support_roof_angles;Support Roof Line Directions;[int];[];[45] [support_enable=true, support_roof_enable=true];keine Veraenderung;;gcode_output/support_roof_angles.gcode;0.28
+support;support_bottom_angles;Support Floor Line Directions;[int];[];[45] [support_bottom_enable=true, support_enable=true];keine Veraenderung;;gcode_output/support_bottom_angles.gcode;0.23
+support;support_fan_enable;Fan Speed Override;bool;false;true [support_enable=true];keine Veraenderung;;gcode_output/support_fan_enable.gcode;0.22
+support;support_supported_skin_fan_speed;Supported Skin Fan Speed;float;100.0;50.0 [support_enable=true, support_fan_enable=true];keine Veraenderung;;gcode_output/support_supported_skin_fan_speed.gcode;0.21
+support;support_use_towers;Use Towers;bool;true;false [support_enable=true, support_structure=normal];keine Veraenderung;;gcode_output/support_use_towers.gcode;0.21
+support;support_tower_diameter;Tower Diameter;float;3.0;30.0 [support_enable=true, support_structure=normal];keine Veraenderung;;gcode_output/support_tower_diameter.gcode;0.21
+support;support_tower_maximum_supported_diameter;Maximum Tower-Supported Diameter;float;3.0;1.5 [support_enable=true, support_structure=normal];keine Veraenderung;;gcode_output/support_tower_maximum_supported_diameter.gcode;0.21
+support;support_tower_roof_angle;Tower Roof Angle;int;65;90 [support_enable=true, support_structure=normal];keine Veraenderung;;gcode_output/support_tower_roof_angle.gcode;0.22
+support;support_mesh_drop_down;Drop Down Support Mesh;bool;true;false [support_mesh=true];keine Veraenderung;;gcode_output/support_mesh_drop_down.gcode;0.17
+support;support_meshes_present;Scene Has Support Meshes;bool;false;;Permanent deaktiviert;;;
+platform_adhesion;prime_blob_enable;Enable Prime Blob;bool;false;;Permanent deaktiviert;;;
+platform_adhesion;extruder_prime_pos_x;Extruder Prime X Position;float;0.000000;;Permanent deaktiviert;;;
+platform_adhesion;extruder_prime_pos_y;Extruder Prime Y Position;float;0.000000;;Permanent deaktiviert;;;
+platform_adhesion;adhesion_type;Build Plate Adhesion Type;enum;brim;skirt+ / raft+ / none+ +5 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Layer-Anzahl, Stuetzstruktur-Bewegungen, Support-Interface-Bewegungen;gcode_output/adhesion_type_skirt.gcode;0.11
+platform_adhesion;skirt_line_count;Skirt Line Count;int;1;10 +2 kask.;keine Veraenderung;;gcode_output/skirt_line_count.gcode;0.14
+platform_adhesion;skirt_height;Skirt Height;int;3;30;keine Veraenderung;;gcode_output/skirt_height.gcode;0.13
+platform_adhesion;skirt_gap;Skirt Distance;float;3.0;30.0 +3 kask.;keine Veraenderung;;gcode_output/skirt_gap.gcode;0.13
+platform_adhesion;skirt_brim_minimal_length;Skirt/Brim Minimum Length;float;250.0;2500.0;keine Veraenderung;;gcode_output/skirt_brim_minimal_length.gcode;0.13
+platform_adhesion;brim_width;Brim Width;float;8.0;80.0 +4 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/brim_width.gcode;0.32
+platform_adhesion;brim_line_count;Brim Line Count;int;20;200;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/brim_line_count.gcode;0.33
+platform_adhesion;brim_gap;Brim Distance;float;0.0;1.0 (Ersatz);Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/brim_gap.gcode;0.14
+platform_adhesion;brim_replaces_support;Brim Replaces Support;bool;true;false [support_enable=true];keine Veraenderung;;gcode_output/brim_replaces_support.gcode;0.25
+platform_adhesion;brim_location;Brim Location;enum;outside;inside+ / everywhere+;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/brim_location_inside.gcode;0.15
+platform_adhesion;brim_inside_margin;Brim Avoid Margin;float;1.6;16.0;keine Veraenderung;;gcode_output/brim_inside_margin.gcode;0.13
+platform_adhesion;brim_smart_ordering;Smart Brim;bool;true;false;keine Veraenderung;;gcode_output/brim_smart_ordering.gcode;0.14
+platform_adhesion;raft_margin;Raft Extra Margin;float;15.0;150.0 +6 kask.;keine Veraenderung;;gcode_output/raft_margin.gcode;0.13
+platform_adhesion;raft_base_margin;Raft Base Extra Margin;float;15.0;150.0;keine Veraenderung;;gcode_output/raft_base_margin.gcode;0.13
+platform_adhesion;raft_interface_margin;Raft Middle Extra Margin;float;15.0;150.0;keine Veraenderung;;gcode_output/raft_interface_margin.gcode;0.13
+platform_adhesion;raft_surface_margin;Raft Top Extra Margin;float;15.0;150.0;keine Veraenderung;;gcode_output/raft_surface_margin.gcode;0.13
+platform_adhesion;raft_remove_inside_corners;Remove Raft Inside Corners;bool;false;true +3 kask.;keine Veraenderung;;gcode_output/raft_remove_inside_corners.gcode;0.13
+platform_adhesion;raft_base_remove_inside_corners;Remove Raft Base Inside Corners;bool;false;true;keine Veraenderung;;gcode_output/raft_base_remove_inside_corners.gcode;0.13
+platform_adhesion;raft_interface_remove_inside_corners;Remove Raft Middle Inside Corners;bool;false;true;keine Veraenderung;;gcode_output/raft_interface_remove_inside_corners.gcode;0.14
+platform_adhesion;raft_surface_remove_inside_corners;Remove Raft Top Inside Corners;bool;false;true;keine Veraenderung;;gcode_output/raft_surface_remove_inside_corners.gcode;0.14
+platform_adhesion;raft_smoothing;Raft Smoothing;float;5.0;50.0 +3 kask.;keine Veraenderung;;gcode_output/raft_smoothing.gcode;0.14
+platform_adhesion;raft_base_smoothing;Raft Base Smoothing;float;5.0;50.0;keine Veraenderung;;gcode_output/raft_base_smoothing.gcode;0.14
+platform_adhesion;raft_interface_smoothing;Raft Middle Smoothing;float;5.0;50.0;keine Veraenderung;;gcode_output/raft_interface_smoothing.gcode;0.13
+platform_adhesion;raft_surface_smoothing;Raft Top Smoothing;float;5.0;50.0;keine Veraenderung;;gcode_output/raft_surface_smoothing.gcode;0.13
+platform_adhesion;raft_airgap;Raft Air Gap;float;0.3;3.0 +1 kask.;keine Veraenderung;;gcode_output/raft_airgap.gcode;0.13
+platform_adhesion;layer_0_z_overlap;Initial Layer Z Overlap;float;0.22;2.2;keine Veraenderung;;gcode_output/layer_0_z_overlap.gcode;0.13
+platform_adhesion;raft_base_thickness;Raft Base Thickness;float;0.3;3.0;keine Veraenderung;;gcode_output/raft_base_thickness.gcode;0.14
+platform_adhesion;raft_base_line_width;Raft Base Line Width;float;0.8;8.0 +3 kask.;keine Veraenderung;;gcode_output/raft_base_line_width.gcode;0.14
+platform_adhesion;raft_base_line_spacing;Raft Base Line Spacing;float;1.6;16.0 +1 kask.;keine Veraenderung;;gcode_output/raft_base_line_spacing.gcode;0.13
+platform_adhesion;raft_base_infill_overlap;Raft Base Infill Overlap Percentage;float;0.0;1.0 (Ersatz) +1 kask.;keine Veraenderung;;gcode_output/raft_base_infill_overlap.gcode;0.14
+platform_adhesion;raft_base_infill_overlap_mm;Raft Base Infill Overlap;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/raft_base_infill_overlap_mm.gcode;0.13
+platform_adhesion;raft_interface_layers;Raft Middle Layers;int;1;10;keine Veraenderung;;gcode_output/raft_interface_layers.gcode;0.13
+platform_adhesion;raft_interface_thickness;Raft Middle Thickness;float;0.15;1.5;keine Veraenderung;;gcode_output/raft_interface_thickness.gcode;0.13
+platform_adhesion;raft_interface_line_width;Raft Middle Line Width;float;0.7;7.0 +2 kask.;keine Veraenderung;;gcode_output/raft_interface_line_width.gcode;0.13
+platform_adhesion;raft_interface_line_spacing;Raft Middle Spacing;float;0.9;9.0;keine Veraenderung;;gcode_output/raft_interface_line_spacing.gcode;0.16
+platform_adhesion;raft_interface_z_offset;Raft Interface Z Offset;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/raft_interface_z_offset.gcode;0.14
+platform_adhesion;raft_interface_infill_overlap;Raft Interface Infill Overlap Percentage;float;0.0;1.0 (Ersatz) +1 kask.;keine Veraenderung;;gcode_output/raft_interface_infill_overlap.gcode;0.13
+platform_adhesion;raft_interface_infill_overlap_mm;Raft Interface Infill Overlap;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/raft_interface_infill_overlap_mm.gcode;0.13
+platform_adhesion;raft_surface_layers;Raft Top Layers;int;2;20;keine Veraenderung;;gcode_output/raft_surface_layers.gcode;0.13
+platform_adhesion;raft_surface_thickness;Raft Top Layer Thickness;float;0.1;1.0;keine Veraenderung;;gcode_output/raft_surface_thickness.gcode;0.13
+platform_adhesion;raft_surface_line_width;Raft Top Line Width;float;0.4;4.0 +2 kask.;keine Veraenderung;;gcode_output/raft_surface_line_width.gcode;0.13
+platform_adhesion;raft_surface_line_spacing;Raft Top Spacing;float;0.4;4.0;keine Veraenderung;;gcode_output/raft_surface_line_spacing.gcode;0.13
+platform_adhesion;raft_surface_z_offset;Raft Surface Z Offset;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/raft_surface_z_offset.gcode;0.14
+platform_adhesion;raft_surface_monotonic;Monotonic Raft Top Surface Order;bool;false;true;keine Veraenderung;;gcode_output/raft_surface_monotonic.gcode;0.13
+platform_adhesion;raft_surface_infill_overlap;Raft Surface Infill Overlap Percentage;float;0.0;1.0 (Ersatz) +1 kask.;keine Veraenderung;;gcode_output/raft_surface_infill_overlap.gcode;0.14
+platform_adhesion;raft_surface_infill_overlap_mm;Raft Surface Infill Overlap;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/raft_surface_infill_overlap_mm.gcode;0.13
+platform_adhesion;raft_wall_count;Raft Wall Count;int;1;10 +1 kask.;keine Veraenderung;;gcode_output/raft_wall_count.gcode;0.13
+platform_adhesion;raft_base_wall_count;Raft Base Wall Count;int;1;10;keine Veraenderung;;gcode_output/raft_base_wall_count.gcode;0.14
+platform_adhesion;raft_interface_wall_count;Raft Middle Wall Count;int;0;1 (Ersatz);keine Veraenderung;;gcode_output/raft_interface_wall_count.gcode;0.13
+platform_adhesion;raft_surface_wall_count;Raft Top Wall Count;int;0;1 (Ersatz);keine Veraenderung;;gcode_output/raft_surface_wall_count.gcode;0.13
+platform_adhesion;raft_speed;Raft Print Speed;float;20.0;200.0 +3 kask.;keine Veraenderung;;gcode_output/raft_speed.gcode;0.13
+platform_adhesion;raft_base_speed;Raft Base Print Speed;float;15.0;150.0;keine Veraenderung;;gcode_output/raft_base_speed.gcode;0.13
+platform_adhesion;raft_interface_speed;Raft Middle Print Speed;float;15.0;150.0;keine Veraenderung;;gcode_output/raft_interface_speed.gcode;0.13
+platform_adhesion;raft_surface_speed;Raft Top Print Speed;float;20.0;200.0;keine Veraenderung;;gcode_output/raft_surface_speed.gcode;0.13
+platform_adhesion;raft_acceleration;Raft Print Acceleration;float;3000.0;30000.0 +3 kask. [acceleration_enabled=true];keine Veraenderung;;gcode_output/raft_acceleration.gcode;0.13
+platform_adhesion;raft_base_acceleration;Raft Base Print Acceleration;float;3000.0;30000.0 [acceleration_enabled=true];keine Veraenderung;;gcode_output/raft_base_acceleration.gcode;0.13
+platform_adhesion;raft_interface_acceleration;Raft Middle Print Acceleration;float;3000.0;30000.0 [acceleration_enabled=true];keine Veraenderung;;gcode_output/raft_interface_acceleration.gcode;0.14
+platform_adhesion;raft_surface_acceleration;Raft Top Print Acceleration;float;3000.0;30000.0 [acceleration_enabled=true];keine Veraenderung;;gcode_output/raft_surface_acceleration.gcode;0.13
+platform_adhesion;raft_jerk;Raft Print Jerk;float;20.0;200.0 +3 kask. [jerk_enabled=true];keine Veraenderung;;gcode_output/raft_jerk.gcode;0.14
+platform_adhesion;raft_base_jerk;Raft Base Print Jerk;float;20.0;200.0 [jerk_enabled=true];keine Veraenderung;;gcode_output/raft_base_jerk.gcode;0.13
+platform_adhesion;raft_interface_jerk;Raft Middle Print Jerk;float;20.0;200.0 [jerk_enabled=true];keine Veraenderung;;gcode_output/raft_interface_jerk.gcode;0.13
+platform_adhesion;raft_surface_jerk;Raft Top Print Jerk;float;20.0;200.0 [jerk_enabled=true];keine Veraenderung;;gcode_output/raft_surface_jerk.gcode;0.14
+platform_adhesion;raft_fan_speed;Raft Fan Speed;float;0.0;1.0 (Ersatz) +3 kask.;keine Veraenderung;;gcode_output/raft_fan_speed.gcode;0.13
+platform_adhesion;raft_base_fan_speed;Raft Base Fan Speed;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/raft_base_fan_speed.gcode;0.13
+platform_adhesion;raft_interface_fan_speed;Raft Middle Fan Speed;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/raft_interface_fan_speed.gcode;0.14
+platform_adhesion;raft_surface_fan_speed;Raft Top Fan Speed;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/raft_surface_fan_speed.gcode;0.14
+platform_adhesion;raft_flow;Raft Flow;float;100.0;1000.0 +3 kask.;keine Veraenderung;;gcode_output/raft_flow.gcode;0.13
+platform_adhesion;raft_base_flow;Raft Base Flow;float;100.0;1000.0;keine Veraenderung;;gcode_output/raft_base_flow.gcode;0.13
+platform_adhesion;raft_interface_flow;Raft Interface Flow;float;100.0;1000.0;keine Veraenderung;;gcode_output/raft_interface_flow.gcode;0.13
+platform_adhesion;raft_surface_flow;Raft Surface Flow;float;100.0;1000.0;keine Veraenderung;;gcode_output/raft_surface_flow.gcode;0.13
+platform_adhesion;machine_scan_first_layer;Scan the first layer;bool;false;;Permanent deaktiviert;;;
+dual;prime_tower_enable;Enable Prime Tower;bool;false;true;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-Y;gcode_output/prime_tower_enable.gcode;0.2
+dual;prime_tower_mode;Prime Tower Type;enum;normal;interleaved+ [prime_tower_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/prime_tower_mode_interleaved.gcode;0.2
+dual;prime_tower_size;Prime Tower Size;float;20.0;117.5 +2 kask. [prime_tower_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/prime_tower_size.gcode;0.15
+dual;prime_tower_min_volume;Prime Tower Minimum Volume;float;6.0;60.0 [prime_tower_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/prime_tower_min_volume.gcode;0.2
+dual;prime_tower_max_bridging_distance;Prime Tower Maximum Bridging Distance;float;5.0;50.0 [prime_tower_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/prime_tower_max_bridging_distance.gcode;0.2
+dual;prime_tower_min_shell_thickness;Prime Tower Minimum Shell Thickness;float;0.4;4.0 [prime_tower_enable=true];keine Veraenderung;;gcode_output/prime_tower_min_shell_thickness.gcode;0.2
+dual;prime_tower_position_x;Prime Tower X Position;float;200.0;235.0 [prime_tower_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/prime_tower_position_x.gcode;0.2
+dual;prime_tower_position_y;Prime Tower Y Position;float;200.0;215.0 [prime_tower_enable=true];Veraenderung;Filament, Extr.-Distanz, Stuetzstruktur-Bewegungen;gcode_output/prime_tower_position_y.gcode;0.2
+dual;prime_tower_wipe_enabled;Wipe Inactive Nozzle on Prime Tower;bool;true;false [prime_tower_enable=true];keine Veraenderung;;gcode_output/prime_tower_wipe_enabled.gcode;0.2
+dual;prime_tower_brim_enable;Prime Tower Base;bool;false;true +2 kask. [prime_tower_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/prime_tower_brim_enable.gcode;0.2
+dual;prime_tower_base_size;Prime Tower Base Size;float;1.2;12.0 +2 kask. [prime_tower_brim_enable=true, prime_tower_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/prime_tower_base_size.gcode;0.2
+dual;prime_tower_base_height;Prime Tower Base Height;float;0.0;1.0 (Ersatz) [prime_tower_brim_enable=true, prime_tower_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/prime_tower_base_height.gcode;0.19
+dual;prime_tower_base_curve_magnitude;Prime Tower Base Slope;float;4.0;10.0 [prime_tower_brim_enable=true, prime_tower_enable=true];keine Veraenderung;;gcode_output/prime_tower_base_curve_magnitude.gcode;0.2
+dual;prime_tower_raft_base_line_spacing;Prime Tower Raft Line Spacing;float;1.6;16.0 [prime_tower_enable=true];keine Veraenderung;;gcode_output/prime_tower_raft_base_line_spacing.gcode;0.2
+dual;ooze_shield_enabled;Enable Ooze Shield;bool;false;true;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/ooze_shield_enabled.gcode;0.2
+dual;ooze_shield_angle;Ooze Shield Angle;float;60.0;90.0 [ooze_shield_enabled=true];keine Veraenderung;;gcode_output/ooze_shield_angle.gcode;0.21
+dual;ooze_shield_dist;Ooze Shield Distance;float;2.0;20.0 [ooze_shield_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/ooze_shield_dist.gcode;0.27
+dual;switch_extruder_retraction_amount;Nozzle Switch Retraction Distance;float;20.0;200.0;Veraenderung;Filament;gcode_output/switch_extruder_retraction_amount.gcode;0.2
+dual;switch_extruder_retraction_speeds;Nozzle Switch Retraction Speed;float;20.0;200.0 +2 kask.;keine Veraenderung;;gcode_output/switch_extruder_retraction_speeds.gcode;0.2
+dual;switch_extruder_retraction_speed;Nozzle Switch Retract Speed;float;20.0;200.0;keine Veraenderung;;gcode_output/switch_extruder_retraction_speed.gcode;0.19
+dual;switch_extruder_prime_speed;Nozzle Switch Prime Speed;float;20.0;200.0;keine Veraenderung;;gcode_output/switch_extruder_prime_speed.gcode;0.19
+dual;switch_extruder_extra_prime_amount;Nozzle Switch Extra Prime Amount;float;0.0;1.0 (Ersatz);Veraenderung;Filament;gcode_output/switch_extruder_extra_prime_amount.gcode;0.2
+dual;interlocking_enable;Generate Interlocking Structure;bool;false;true;keine Veraenderung;;gcode_output/interlocking_enable.gcode;0.19
+dual;interlocking_beam_width;Interlocking Beam Width;float;0.8;8.0 [interlocking_enable=true];keine Veraenderung;;gcode_output/interlocking_beam_width.gcode;0.19
+dual;interlocking_orientation;Interlocking Structure Orientation;float;22.5;225.0 [interlocking_enable=true];keine Veraenderung;;gcode_output/interlocking_orientation.gcode;0.19
+dual;interlocking_beam_layer_count;Interlocking Beam Layer Count;int;2;20 [interlocking_enable=true];keine Veraenderung;;gcode_output/interlocking_beam_layer_count.gcode;0.19
+dual;interlocking_depth;Interlocking Depth;int;2;10 [interlocking_enable=true];keine Veraenderung;;gcode_output/interlocking_depth.gcode;0.19
+dual;interlocking_boundary_avoidance;Interlocking Boundary Avoidance;int;2;10 [interlocking_enable=true];keine Veraenderung;;gcode_output/interlocking_boundary_avoidance.gcode;0.22
+dual;multi_material_paint_resolution;Multi-material Precision;float;0.2;2.0;keine Veraenderung;;gcode_output/multi_material_paint_resolution.gcode;0.2
+dual;multi_material_paint_depth;Multi-material Depth;float;4.0;40.0;keine Veraenderung;;gcode_output/multi_material_paint_depth.gcode;0.2
+meshfix;meshfix_union_all;Union Overlapping Volumes;bool;true;false;keine Veraenderung;;gcode_output/meshfix_union_all.gcode;0.12
+meshfix;meshfix_union_all_remove_holes;Remove All Holes;bool;false;true;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/meshfix_union_all_remove_holes.gcode;0.09
+meshfix;meshfix_extensive_stitching;Extensive Stitching;bool;false;true;keine Veraenderung;;gcode_output/meshfix_extensive_stitching.gcode;0.13
+meshfix;meshfix_keep_open_polygons;Keep Disconnected Faces;bool;false;true;keine Veraenderung;;gcode_output/meshfix_keep_open_polygons.gcode;0.13
+meshfix;multiple_mesh_overlap;Merged Meshes Overlap;float;0.15;1.5;keine Veraenderung;;gcode_output/multiple_mesh_overlap.gcode;0.13
+meshfix;carve_multiple_volumes;Remove Mesh Intersection;bool;true;false;keine Veraenderung;;gcode_output/carve_multiple_volumes.gcode;0.13
+meshfix;alternate_carve_order;Alternate Mesh Removal;bool;true;false;keine Veraenderung;;gcode_output/alternate_carve_order.gcode;0.13
+meshfix;remove_empty_first_layers;Remove Empty First Layers;bool;true;false;keine Veraenderung;;gcode_output/remove_empty_first_layers.gcode;0.13
+meshfix;meshfix_maximum_resolution;Maximum Resolution;float;0.5;5.0 +1 kask.;Veraenderung;Filament, Extr.-Bewegungen;gcode_output/meshfix_maximum_resolution.gcode;0.13
+meshfix;meshfix_maximum_travel_resolution;Maximum Travel Resolution;float;1.0;10.0;keine Veraenderung;;gcode_output/meshfix_maximum_travel_resolution.gcode;0.13
+meshfix;meshfix_maximum_deviation;Maximum Deviation;float;0.025;0.25;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-Y, Skin-Bewegungen, Wand-Bewegungen;gcode_output/meshfix_maximum_deviation.gcode;0.13
+meshfix;meshfix_maximum_extrusion_area_deviation;Maximum Extrusion Area Deviation;float;50000.0;500000.0;keine Veraenderung;;gcode_output/meshfix_maximum_extrusion_area_deviation.gcode;0.13
+meshfix;meshfix_fluid_motion_enabled;Enable Fluid Motion;bool;true;false;keine Veraenderung;;gcode_output/meshfix_fluid_motion_enabled.gcode;0.13
+meshfix;meshfix_fluid_motion_shift_distance;Fluid Motion Shift Distance;float;0.1;1.0;keine Veraenderung;;gcode_output/meshfix_fluid_motion_shift_distance.gcode;0.13
+meshfix;meshfix_fluid_motion_small_distance;Fluid Motion Small Distance;float;0.01;0.1;keine Veraenderung;;gcode_output/meshfix_fluid_motion_small_distance.gcode;0.13
+meshfix;meshfix_fluid_motion_angle;Fluid Motion Angle;float;15.0;90.0;keine Veraenderung;;gcode_output/meshfix_fluid_motion_angle.gcode;0.13
+blackmagic;print_sequence;Print Sequence;enum;all_at_once;one_at_a_time-;keine Veraenderung;;;0.2
+blackmagic;user_defined_print_order_enabled;Set Print Sequence Manually;bool;false;true [print_sequence=one_at_a_time];keine Veraenderung;;gcode_output/user_defined_print_order_enabled.gcode;0.14
+blackmagic;infill_mesh;Infill Mesh;bool;false;true +1 kask.;Veraenderung;Layer-Anzahl, Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-X, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/infill_mesh.gcode;0.02
+blackmagic;infill_mesh_order;Mesh Processing Rank;int;0;1 (Ersatz);keine Veraenderung;;gcode_output/infill_mesh_order.gcode;0.13
+blackmagic;cutting_mesh;Cutting Mesh;bool;false;true;Veraenderung;Layer-Anzahl, Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-X, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/cutting_mesh.gcode;0.02
+blackmagic;mold_enabled;Mold;bool;false;true;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/mold_enabled.gcode;0.36
+blackmagic;mold_width;Minimal Mold Width;float;5.0;50.0 [mold_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/mold_width.gcode;0.45
+blackmagic;mold_roof_height;Mold Roof Height;float;0.5;5.0 [mold_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/mold_roof_height.gcode;0.32
+blackmagic;mold_angle;Mold Angle;float;40.0;90.0 [mold_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/mold_angle.gcode;0.32
+blackmagic;support_mesh;Support Mesh;bool;false;true;Veraenderung;Layer-Anzahl, Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-X, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/support_mesh.gcode;0.17
+blackmagic;anti_overhang_mesh;Anti Overhang Mesh;bool;false;true;Veraenderung;Layer-Anzahl, Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-X, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/anti_overhang_mesh.gcode;0.01
+blackmagic;magic_mesh_surface_mode;Surface Mode;enum;normal;surface+ / both-;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-X, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/magic_mesh_surface_mode_surface.gcode;0.13
+blackmagic;magic_spiralize;Spiralize Outer Contour;bool;false;true +19 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-X, Seam-Y, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/magic_spiralize.gcode;0.05
+blackmagic;smooth_spiralized_contours;Smooth Spiralized Contours;bool;true;false [magic_spiralize=true, meshfix_union_all_remove_holes=true];keine Veraenderung;;gcode_output/smooth_spiralized_contours.gcode;0.05
+blackmagic;relative_extrusion;Relative Extrusion;bool;false;true;keine Veraenderung;;gcode_output/relative_extrusion.gcode;0.13
+experimental;slicing_tolerance;Slicing Tolerance;enum;middle;exclusive+ / inclusive+;Veraenderung;Layer-Anzahl, Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/slicing_tolerance_exclusive.gcode;0.12
+experimental;infill_enable_travel_optimization;Infill Travel Optimization;bool;false;true;keine Veraenderung;;gcode_output/infill_enable_travel_optimization.gcode;0.17
+experimental;minimum_polygon_circumference;Minimum Polygon Circumference;float;1.0;10.0;keine Veraenderung;;gcode_output/minimum_polygon_circumference.gcode;0.13
+experimental;support_skip_some_zags;Break Up Support In Chunks;bool;false;true [support_enable=true, support_pattern=zigzag];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_skip_some_zags.gcode;0.21
+experimental;support_skip_zag_per_mm;Support Chunk Size;float;20.0;200.0 +1 kask. [support_enable=true, support_pattern=zigzag, support_skip_some_zags=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_skip_zag_per_mm.gcode;0.21
+experimental;support_zag_skip_count;Support Chunk Line Count;int;5;50 [support_enable=true, support_pattern=zigzag, support_skip_some_zags=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_zag_skip_count.gcode;0.21
+experimental;draft_shield_enabled;Enable Draft Shield;bool;false;true +2 kask.;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/draft_shield_enabled.gcode;0.14
+experimental;draft_shield_dist;Draft Shield X/Y Distance;float;10.0;100.0 +2 kask. [draft_shield_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen;gcode_output/draft_shield_dist.gcode;0.14
+experimental;draft_shield_height_limitation;Draft Shield Limitation;enum;full;limited- [draft_shield_enabled=true];keine Veraenderung;;;0.14
+experimental;draft_shield_height;Draft Shield Height;float;10.0;100.0 [draft_shield_enabled=true, draft_shield_height_limitation=limited];keine Veraenderung;;gcode_output/draft_shield_height.gcode;0.14
+experimental;conical_overhang_enabled;Make Overhang Printable;bool;false;true;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/conical_overhang_enabled.gcode;0.14
+experimental;conical_overhang_angle;Maximum Model Angle;float;50.0;89.0 [conical_overhang_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/conical_overhang_angle.gcode;0.14
+experimental;conical_overhang_hole_size;Maximum Overhang Hole Area;float;0.0;1.0 (Ersatz) [conical_overhang_enabled=true];keine Veraenderung;;gcode_output/conical_overhang_hole_size.gcode;0.14
+experimental;coasting_enable;Enable Coasting;bool;false;true;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Wand-Bewegungen;gcode_output/coasting_enable.gcode;0.14
+experimental;coasting_volume;Coasting Volume;float;0.064;0.64 [coasting_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Wand-Bewegungen;gcode_output/coasting_volume.gcode;0.13
+experimental;coasting_min_volume;Minimum Volume Before Coasting;float;0.8;8.0 [coasting_enable=true];Veraenderung;Filament, Extr.-Distanz;gcode_output/coasting_min_volume.gcode;0.13
+experimental;coasting_speed;Coasting Speed;float;90.0;900.0 [coasting_enable=true];keine Veraenderung;;gcode_output/coasting_speed.gcode;0.13
+experimental;cross_infill_pocket_size;Cross 3D Pocket Size;float;2.0;20.0 [infill_pattern=cross_3d, zig_zaggify_infill=true];keine Veraenderung;;gcode_output/cross_infill_pocket_size.gcode;0.14
+experimental;support_conical_enabled;Enable Conical Support;bool;false;true [support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_conical_enabled.gcode;0.21
+experimental;support_conical_angle;Conical Support Angle;float;30.0;90.0 [support_conical_enabled=true, support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_conical_angle.gcode;0.15
+experimental;support_conical_min_width;Conical Support Minimum Width;float;5.0;50.0 [support_conical_enabled=true, support_enable=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Stuetzstruktur-Bewegungen;gcode_output/support_conical_min_width.gcode;0.23
+experimental;magic_fuzzy_skin_enabled;Fuzzy Skin;bool;false;true;Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-Y, Wand-Bewegungen;gcode_output/magic_fuzzy_skin_enabled.gcode;0.14
+experimental;magic_fuzzy_skin_outside_only;Fuzzy Skin Outside Only;bool;false;true [magic_fuzzy_skin_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Wand-Bewegungen;gcode_output/magic_fuzzy_skin_outside_only.gcode;0.14
+experimental;magic_fuzzy_skin_thickness;Fuzzy Skin Thickness;float;0.3;3.0 [magic_fuzzy_skin_enabled=true];Veraenderung;Filament, Extr.-Distanz, Wand-Bewegungen;gcode_output/magic_fuzzy_skin_thickness.gcode;0.14
+experimental;magic_fuzzy_skin_point_density;Fuzzy Skin Density;float;1.25;6.666667 +1 kask. [magic_fuzzy_skin_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Wand-Bewegungen;gcode_output/magic_fuzzy_skin_point_density.gcode;0.2
+experimental;magic_fuzzy_skin_point_dist;Fuzzy Skin Point Distance;float;0.8;8.0 [magic_fuzzy_skin_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Wand-Bewegungen;gcode_output/magic_fuzzy_skin_point_dist.gcode;0.13
+experimental;flow_rate_max_extrusion_offset;Flow Rate Compensation Max Extrusion Offset;float;0.0;1.0 (Ersatz);Veraenderung;Filament, Wand-Bewegungen;gcode_output/flow_rate_max_extrusion_offset.gcode;0.13
+experimental;flow_rate_extrusion_offset_factor;Flow Rate Compensation Factor;float;100.0;1000.0;keine Veraenderung;;gcode_output/flow_rate_extrusion_offset_factor.gcode;0.13
+experimental;adaptive_layer_height_enabled;Use Adaptive Layers;bool;false;true;Veraenderung;Layer-Anzahl, Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/adaptive_layer_height_enabled.gcode;0.11
+experimental;adaptive_layer_height_variation;Adaptive Layers Maximum Variation;float;0.1;1.0 [adaptive_layer_height_enabled=true];Veraenderung;Layer-Anzahl, Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/adaptive_layer_height_variation.gcode;0.11
+experimental;adaptive_layer_height_variation_step;Adaptive Layers Variation Step Size;float;0.01;0.1 [adaptive_layer_height_enabled=true];Veraenderung;Layer-Anzahl, Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen, Infill-Bewegungen, Wand-Bewegungen;gcode_output/adaptive_layer_height_variation_step.gcode;0.11
+experimental;adaptive_layer_height_threshold;Adaptive Layers Topography Size;float;0.2;2.0 [adaptive_layer_height_enabled=true];keine Veraenderung;;gcode_output/adaptive_layer_height_threshold.gcode;0.13
+experimental;wall_overhang_angle;Overhanging Wall Angle;float;90.0;45.0;keine Veraenderung;;gcode_output/wall_overhang_angle.gcode;0.14
+experimental;cool_min_layer_time_overhang;Minimum Layer Time with Overhang;float;5.0;50.0;keine Veraenderung;;gcode_output/cool_min_layer_time_overhang.gcode;0.13
+experimental;cool_min_layer_time_overhang_min_segment_length;Minimum Overhang Segment Length;float;5.0;50.0;keine Veraenderung;;gcode_output/cool_min_layer_time_overhang_min_segment_length.gcode;0.13
+experimental;seam_overhang_angle;Seam Overhanging Wall Angle;float;90.0;45.0;keine Veraenderung;;gcode_output/seam_overhang_angle.gcode;0.13
+experimental;wall_overhang_speed_factors;Overhanging Wall Speeds;[int];[100];[50];keine Veraenderung;;gcode_output/wall_overhang_speed_factors.gcode;0.13
+experimental;bridge_settings_enabled;Enable Bridge Settings;bool;false;true;keine Veraenderung;;gcode_output/bridge_settings_enabled.gcode;0.13
+experimental;bridge_wall_min_length;Minimum Bridge Wall Length;float;5.0;50.0 [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_wall_min_length.gcode;0.13
+experimental;bridge_skin_support_threshold;Bridge Skin Support Threshold;float;50.0;100.0 [bridge_settings_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Skin-Bewegungen;gcode_output/bridge_skin_support_threshold.gcode;0.13
+experimental;bridge_wall_coast;Bridge Wall Coasting;float;100.0;500.0 [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_wall_coast.gcode;0.13
+experimental;bridge_wall_speed;Bridge Wall Speed;float;15.0;150.0 [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_wall_speed.gcode;0.13
+experimental;bridge_wall_material_flow;Bridge Wall Flow;float;50.0;500.0 [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_wall_material_flow.gcode;0.13
+experimental;bridge_skin_speed;Bridge Skin Speed;float;15.0;150.0 +3 kask. [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_skin_speed.gcode;0.13
+experimental;bridge_skin_material_flow;Bridge Skin Flow;float;60.0;600.0 +1 kask. [bridge_settings_enabled=true];Veraenderung;Filament;gcode_output/bridge_skin_material_flow.gcode;0.13
+experimental;bridge_skin_density;Bridge Skin Density;float;100.0;1000.0 +1 kask. [bridge_settings_enabled=true];Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Infill-Bewegungen;gcode_output/bridge_skin_density.gcode;0.28
+experimental;bridge_fan_speed;Bridge Fan Speed;float;100.0;50.0 +1 kask. [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_fan_speed.gcode;0.13
+experimental;bridge_interlace_lines;Interlace Bridge Lines;bool;false;true +1 kask. [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_interlace_lines.gcode;0.13
+experimental;bridge_enable_more_layers;Bridge Has Multiple Layers;bool;true;false [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_enable_more_layers.gcode;0.13
+experimental;bridge_skin_speed_2;Bridge Second Skin Speed;float;25.0;250.0 [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_skin_speed_2.gcode;0.13
+experimental;bridge_skin_material_flow_2;Bridge Second Skin Flow;float;100.0;1000.0 [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_skin_material_flow_2.gcode;0.13
+experimental;bridge_skin_density_2;Bridge Second Skin Density;float;75.0;750.0 [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_skin_density_2.gcode;0.14
+experimental;bridge_fan_speed_2;Bridge Second Skin Fan Speed;float;0.0;1.0 (Ersatz) [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_fan_speed_2.gcode;0.15
+experimental;bridge_skin_speed_3;Bridge Third Skin Speed;float;15.0;150.0 [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_skin_speed_3.gcode;0.13
+experimental;bridge_skin_material_flow_3;Bridge Third Skin Flow;float;110.0;1100.0 [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_skin_material_flow_3.gcode;0.13
+experimental;bridge_skin_density_3;Bridge Third Skin Density;float;80.0;800.0 [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_skin_density_3.gcode;0.13
+experimental;bridge_fan_speed_3;Bridge Third Skin Fan Speed;float;0.0;1.0 (Ersatz) [bridge_settings_enabled=true];keine Veraenderung;;gcode_output/bridge_fan_speed_3.gcode;0.13
+experimental;clean_between_layers;Wipe Nozzle Between Layers;bool;false;true;Veraenderung;Filament;gcode_output/clean_between_layers.gcode;0.13
+experimental;max_extrusion_before_wipe;Material Volume Between Wipes;float;10.0;100.0 [clean_between_layers=true];Veraenderung;Filament;gcode_output/max_extrusion_before_wipe.gcode;0.12
+experimental;wipe_retraction_enable;Wipe Retraction Enable;bool;true;false [clean_between_layers=true];Veraenderung;Filament;gcode_output/wipe_retraction_enable.gcode;0.13
+experimental;wipe_retraction_amount;Wipe Retraction Distance;float;1.0;10.0 [clean_between_layers=true];Veraenderung;Filament;gcode_output/wipe_retraction_amount.gcode;0.13
+experimental;wipe_retraction_extra_prime_amount;Wipe Retraction Extra Prime Amount;float;0.0;1.0 (Ersatz) [clean_between_layers=true];Veraenderung;Filament;gcode_output/wipe_retraction_extra_prime_amount.gcode;0.13
+experimental;wipe_retraction_speed;Wipe Retraction Speed;float;5.0;50.0 +2 kask. [clean_between_layers=true];keine Veraenderung;;gcode_output/wipe_retraction_speed.gcode;0.14
+experimental;wipe_retraction_retract_speed;Wipe Retraction Retract Speed;float;3.0;30.0 [clean_between_layers=true];keine Veraenderung;;gcode_output/wipe_retraction_retract_speed.gcode;0.13
+experimental;wipe_retraction_prime_speed;Wipe Retraction Prime Speed;float;2.0;20.0 [clean_between_layers=true];keine Veraenderung;;gcode_output/wipe_retraction_prime_speed.gcode;0.13
+experimental;wipe_pause;Wipe Pause;float;0.0;1.0 (Ersatz) [clean_between_layers=true];keine Veraenderung;;gcode_output/wipe_pause.gcode;0.13
+experimental;wipe_hop_enable;Wipe Z Hop;bool;true;false [clean_between_layers=true];Veraenderung;Filament;gcode_output/wipe_hop_enable.gcode;0.12
+experimental;wipe_hop_amount;Wipe Z Hop Height;float;1.0;10.0 [clean_between_layers=true];keine Veraenderung;;gcode_output/wipe_hop_amount.gcode;0.13
+experimental;wipe_hop_speed;Wipe Hop Speed;float;10.0;100.0 [clean_between_layers=true];keine Veraenderung;;gcode_output/wipe_hop_speed.gcode;0.14
+experimental;wipe_brush_pos_x;Wipe Brush X Position;float;100.0;1000.0 [clean_between_layers=true];keine Veraenderung;;gcode_output/wipe_brush_pos_x.gcode;0.15
+experimental;wipe_repeat_count;Wipe Repeat Count;int;5;50 [clean_between_layers=true];keine Veraenderung;;gcode_output/wipe_repeat_count.gcode;0.13
+experimental;wipe_move_distance;Wipe Move Distance;float;20.0;200.0 [clean_between_layers=true];keine Veraenderung;;gcode_output/wipe_move_distance.gcode;0.13
+experimental;small_hole_max_size;Small Hole Max Size;float;0.0;1.0 (Ersatz) +1 kask.;keine Veraenderung;;gcode_output/small_hole_max_size.gcode;0.13
+experimental;small_feature_max_length;Small Feature Max Length;float;0.0;1.0 (Ersatz) [small_hole_max_size=1];keine Veraenderung;;gcode_output/small_feature_max_length.gcode;0.14
+experimental;small_feature_speed_factor;Small Feature Speed;float;50.0;500.0 +1 kask. [small_hole_max_size=1];keine Veraenderung;;gcode_output/small_feature_speed_factor.gcode;0.14
+experimental;small_feature_speed_factor_0;Small Feature Initial Layer Speed;float;50.0;500.0 [small_hole_max_size=1];keine Veraenderung;;gcode_output/small_feature_speed_factor_0.gcode;0.13
+experimental;material_alternate_walls;Alternate Wall Directions;bool;false;true;Veraenderung;Filament, Seam-X, Seam-Y;gcode_output/material_alternate_walls.gcode;0.14
+experimental;group_outer_walls;Group Outer Walls;bool;true;false;Veraenderung;Filament, Seam-Y;gcode_output/group_outer_walls.gcode;0.13
+experimental;retraction_during_travel_ratio;Retraction During Travel Move;float;0.0;1.0 (Ersatz);keine Veraenderung;;gcode_output/retraction_during_travel_ratio.gcode;0.14
+experimental;keep_retracting_during_travel;Keep Retracting During Travel;bool;false;true [retraction_during_travel_ratio=1];keine Veraenderung;;gcode_output/keep_retracting_during_travel.gcode;0.13
+experimental;prime_during_travel_ratio;Prime During Travel Move;float;0.0;1.0 (Ersatz);Veraenderung;Extr.-Distanz, Extr.-Bewegungen, Wand-Bewegungen;gcode_output/prime_during_travel_ratio.gcode;0.13
+experimental;scarf_joint_seam_length;Scarf Seam Length;float;0.0;1.0 (Ersatz);Veraenderung;Filament, Extr.-Distanz, Extr.-Bewegungen, Seam-Y, Wand-Bewegungen;gcode_output/scarf_joint_seam_length.gcode;0.13
+experimental;scarf_joint_seam_start_height_ratio;Scarf Seam Start Height;float;0.0;1.0 (Ersatz) [scarf_joint_seam_length=1];keine Veraenderung;;gcode_output/scarf_joint_seam_start_height_ratio.gcode;0.14
+experimental;scarf_split_distance;Scarf Seam Step Length;float;1.0;10.0 [scarf_joint_seam_length=1];keine Veraenderung;;gcode_output/scarf_split_distance.gcode;0.16
+experimental;wall_0_start_speed_ratio;Outer Wall Start Speed Ratio;float;100.0;50.0;Veraenderung;Extr.-Bewegungen, Seam-Y, Wand-Bewegungen;gcode_output/wall_0_start_speed_ratio.gcode;0.15
+experimental;wall_0_acceleration;Outer Wall Start Acceleration;float;20.0;200.0;keine Veraenderung;;gcode_output/wall_0_acceleration.gcode;0.14
+experimental;wall_0_end_speed_ratio;Outer Wall End Speed Ratio;float;100.0;50.0;Veraenderung;Extr.-Bewegungen, Wand-Bewegungen;gcode_output/wall_0_end_speed_ratio.gcode;0.14
+experimental;wall_0_deceleration;Outer Wall End Deceleration;float;20.0;200.0;keine Veraenderung;;gcode_output/wall_0_deceleration.gcode;0.14
+experimental;wall_0_speed_split_distance;Outer Wall Speed Split Distance;float;1.0;10.0;keine Veraenderung;;gcode_output/wall_0_speed_split_distance.gcode;0.13
+experimental;material_delta_temperature_roofing;Temperature Delta Top Surface;float;0.0;1.0 (Ersatz) [roofing_layer_count=1];keine Veraenderung;;gcode_output/material_delta_temperature_roofing.gcode;0.13
+ppr;ppr_enable;Enable Print Process Reporting;bool;false;;Permanent deaktiviert;;;
+ppr;flow_warn_limit;Flow Warning;float;15.0;150.0 [ppr_enable=true];keine Veraenderung;;gcode_output/flow_warn_limit.gcode;0.2
+ppr;flow_anomaly_limit;Flow Limit;float;25.0;250.0 [ppr_enable=true];keine Veraenderung;;gcode_output/flow_anomaly_limit.gcode;0.13
+ppr;print_temp_warn_limit;Print temperature Warning;float;3.0;30.0 [ppr_enable=true];keine Veraenderung;;gcode_output/print_temp_warn_limit.gcode;0.13
+ppr;print_temp_anomaly_limit;Print temperature Limit;float;7.0;70.0 [ppr_enable=true];keine Veraenderung;;gcode_output/print_temp_anomaly_limit.gcode;0.13
+ppr;bv_temp_warn_limit;Build Volume temperature Warning;float;7.5;75.0 [ppr_enable=true];keine Veraenderung;;gcode_output/bv_temp_warn_limit.gcode;0.13
+ppr;bv_temp_anomaly_limit;Build Volume temperature Limit;float;10.0;100.0 [ppr_enable=true];keine Veraenderung;;gcode_output/bv_temp_anomaly_limit.gcode;0.13
